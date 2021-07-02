@@ -5,29 +5,24 @@ Tambien es importante no trabajar de mas de a 1 en el mismo archivo, a lo sumo j
 
 ## Comandos utiles GIT
 
-ver rama en la que estoy: git branch
-crear rama local: git branch {nombre de la rama}
-moverse entre ramas locales: git checkout {nombre de la rama}
-crear una rama local y moverse a ella: git checkout -b {nombre de la rama}
-
-borrar rama local: git branch -d {nombre de la rama local}
-borrar rama remota: git push origin --delete {nombre de la rama remota}
-
-actualizar el repo local con lo que hay en el remoto: git pull (git pull !== pull request)
-
-interfaz visual de git para ver las ramas: gitk
-
-interfaz en consola para ver las ramas: git log --oneline --graph
-
-pushear cambios: git push origin {nombre de la rama} (indicar el nombre de la rama para asegurarse que pusheamos a esa rama)
+- ver rama en la que estoy: git branch
+- crear rama local: git branch {nombre de la rama}
+- moverse entre ramas locales: git checkout {nombre de la rama}
+- crear una rama local y moverse a ella: git checkout -b {nombre de la rama}
+- borrar rama local: git branch -d {nombre de la rama local}
+- borrar rama remota: git push origin --delete {nombre de la rama remota}
+- actualizar el repo local con lo que hay en el remoto: git pull (git pull !== pull request)
+- interfaz visual de git para ver las ramas: gitk
+- interfaz en consola para ver las ramas: git log --oneline --graph
+- pushear cambios: git push origin {nombre de la rama} (indicar el nombre de la rama para asegurarse que pusheamos a esa rama)
 
 
 ## Branches
 
 Vamos a trabajar con 2 ramas básicas, más las que vayamos necesitando para agregar features, correcciones, etc
 Las ramas principales son:
--Main: Esta va a ser la rama estable porlas lleguemos a romper o pase algo, no se debe hacer el pull request a esta rama
--Prueba: Esta va a ser la rama staging, de produccion, donde vamos a ir haciendo pull request y mergeando todo lo que vayamos haciendo. Y cada tanto vamos a pasar estos cambios a la main asegurandonos de que sea estable lo que tenemos.
+- Main: Esta va a ser la rama estable porlas lleguemos a romper o pase algo, no se debe hacer el pull request a esta rama
+- Prueba: Esta va a ser la rama staging, de produccion, donde vamos a ir haciendo pull request y mergeando todo lo que vayamos haciendo. Y cada tanto vamos a pasar estos cambios a la main asegurandonos de que sea estable lo que tenemos.
 
 Luego vamos a creando ramas descriptivas cada vez que vayamos a trabajar en algo. 
 Por descriptivas es por ej: feat/user_creation, fix/currency_with_decimal, chore/lint_ci, refactor/auth_routing.
