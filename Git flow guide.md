@@ -45,7 +45,7 @@ En la consola de git bash sale la rama en la que estas parado entre parentesis, 
 /d/Repositorios/Pruebas/pruebasgit (main)
 
 
-###Trabajo local
+### Trabajo local
 
 Crear una rama local con git branch {nombre de la rama}, o git checkout -b {nombre de la rama} para crearla y moverse a esa rama en un solo comando
 Es recomendable hacer un commit por cada cosa o correccion pequeña separada que se vaya agregando, para no perder todo el laburo de esa rama si algo entra en conflicto. Si tienen que tocar varias secciones, consideren hacerlo en distintos Pull Requests (copypasteado esto)
@@ -58,7 +58,7 @@ Es importante marcarle el nombre de la rama porque hasta el momento la rama que 
 Todo esto siempre parado en la rama local que corresponde al laburo que queremos hacer, no en main o prueba
 
 
-###Pull request
+### Pull request
 
 Luego de pusheada la rama y creada en el repo remoto va a aparecer en el repo en github la opcion para hacer la comparacion y el pull request, con el nombre de la rama creada
 Entras en compare and pull request y muuuuuy importante que la comparacion sea con la rama prueba, no main
@@ -69,7 +69,7 @@ A la derecha elegir en reviewers 1 code reviewer (o 2 si son cambios grandes o n
 Esto crea la pull request y ahi debereriamos avisarle al o los code reviewers que elegimos que ya esta listo el pull request para que lo revise
 
 
-###Code review
+### Code review
 
 En la parte de pull requests salen los PRs activos
 El code reviewer puede:
@@ -81,7 +81,7 @@ En la parte de files changed va a salir una comparacion con los archivos que fue
 A parte del mensaje en si del PR, en la misma linea del codigo se puede hacer comentarios con lo que creen que esta mal o la sugerencia
 
 
-###Pull request aprobado
+### Pull request aprobado
 
 Si la configuracion de github lo permite (no lo se aun si esta bien configurado para que cualquiera pueda, de ultima avisar para que el own repository lo haga)
 El autor de la rama mergea los cambios aprobados de su rama a la rama prueba.
