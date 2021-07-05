@@ -6,7 +6,7 @@ function Landing() {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getAllProducts())
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
