@@ -8,6 +8,6 @@ export const getAllProducts = () => {
         dispatch({
             type: GET_ALL_PRODUCTS,
             payload: response
-        }))
+        })) 
     }
 }

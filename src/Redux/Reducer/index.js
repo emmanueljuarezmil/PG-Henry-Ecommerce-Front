@@ -16,8 +16,8 @@ const initialState = {
     total_price: 0, // Precio total de la compra
     total_items: 0, // Total para cart
     // logged: false, // 
-    // admin: false, // 
-};
+    // admin: false, 
+}; 
 
 
  const rootReducer = (state = initialState, action) => {
