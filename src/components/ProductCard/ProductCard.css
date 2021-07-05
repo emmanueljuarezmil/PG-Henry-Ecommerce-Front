@@ -33,3 +33,14 @@
     object-position: center center;
     box-shadow: 3px 3px 5px rgb(20 20 20 / 80%);
 }
+
+.container button{
+background-image: linear-gradient(to right, #f7e5cc 0%, #e7caa3  51%, #ecd9bd  100%);
+font-size: 17px;
+position: absolute;
+right: 25px;
+bottom: 20px;
+cursor: pointer;
+border-radius: 7px;
+transition: transform 250ms;
+}
