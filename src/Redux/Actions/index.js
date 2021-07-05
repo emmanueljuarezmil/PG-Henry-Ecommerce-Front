@@ -1,4 +1,4 @@
-import { GET_ALL_PRODUCTS } from "../constants";
+import { GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL } from "../constants";
 
 export const getAllProducts = () => {
     return (dispatch) => {
@@ -10,4 +10,16 @@ export const getAllProducts = () => {
             payload: response
         })) 
     }
-}
+};
+
+export const getProductDetail = (id) => {
+    return (dispatch) => {
+        fetch(`http://18.191.253.15:3000/products/${id}`)
+        .then((response) => response.json())
+        .then((response) => 
+        dispatch({
+            type: GET_PRODUCT_DETAIL,
+            payload: response
+        })) 
+    }
+};
