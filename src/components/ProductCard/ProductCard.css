@@ -1,0 +1,35 @@
+.container{
+    animation: fadeIn ease 5s;
+    -webkit-animation: fadeIn ease 5s;
+    -moz-animation: fadeIn ease 5s;
+    -o-animation: fadeIn ease 5s;
+    -ms-animation: fadeIn ease 5s;
+    margin-top: 160px;
+   position: relative;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    width: 360px;
+    height: 480px;
+    text-align: center;
+    background-color: hsla(0,0%,94.1%,.8);
+    border-radius: 16px;
+    margin: 32px;
+    border: 1.6px solid hsla(0,0%,100%,.4);
+    color: #464646;
+    box-shadow: 3px 3px 16px rgb(20 20 20 / 80%); 
+}
+
+.container img {
+    display: block;
+    position: absolute;
+    top: 105px;
+    left: 57px;
+    border-radius: 16px;
+    height: 192px;
+    width: 250px;
+    object-fit: cover;
+    object-position: center center;
+    box-shadow: 3px 3px 5px rgb(20 20 20 / 80%);
+}
