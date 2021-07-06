@@ -3,7 +3,7 @@ import {Route} from 'react-router-dom';
 import React from 'react';
 
 import LandingPage from './components/Landing/Landing';
-import SearchBar from './components/SearchBar/SearchBar'
+import SearchBar from './components/SearchBar/SearchBar';
 
 function App() {
   return (
