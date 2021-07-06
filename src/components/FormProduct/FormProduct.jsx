@@ -1,6 +1,5 @@
 import React, {useState, useRef} from 'react'
 import Select from 'react-select'
-const productsHardcoded = require('./DBproductsform.json')
 
 function FormProduct() {
 
