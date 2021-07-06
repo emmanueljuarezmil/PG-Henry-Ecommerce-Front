@@ -5,16 +5,16 @@ const productsHardcoded = require('./DBproductsform.json')
 function FormProduct() {
 
     // como admin poder
-    // 1) Cargar un producto nuevo
-    // 1)a) Form (name, photos (max 3), description, stock, selled, perc_desc, price, categories)
-    // 2) Ver facilmente todos los productos y buscar por nombre o categoria para acceder al detalle y asi modificarlos o eliminarlos
-    // 2)a) Ver todos los productos de una forma practia
-    // 2)b) Buscar productos por nombre
-    // 2)c) Buscar productos por categoria
-    // 2)d) Seleccionar un producto y (form)
-    //      Ver todos sus datos
-    //      Modificar sus datos
-    //      Borrarlo
+    // 1) cargar un producto nuevo
+    // 1)a) form (name, photos (max 3), description, stock, selled, perc_desc, price, category)
+    // 2) ver facilmente todos los productos y buscar por nombre o categoria para acceder al detalle y asi modificarlos o eliminarlos
+    // 2)a) ver todos los productos de una forma practica
+    // 2)b) buscar productos por nombre
+    // 2)c) buscar productos por categoria
+    // 2)d) seleccionar un producto y (form)
+    //      ver todos sus datos
+    //      modificar sus datos
+    //      borrarlo
     //
     // validar el input antes de mostrar boton de enviar y mostrar mensaje de error
     // mensaje de confirmacion al querer crear actualizar eliminar
@@ -51,6 +51,7 @@ function FormProduct() {
             onChange={(e) => setActionType(e.value)}>
             </Select>
             {
+                // form para crear producto nuevo
                 actionType === 'create' ?
                 <form action="">
                     <div>
@@ -101,6 +102,7 @@ function FormProduct() {
                         <p>Imagenes ya cargadas</p>
                     </div>
                 </form> :
+                // barra de busqueda y lista de productos existentes
                 <p>Lista de productos y barra de busqueda</p>
             }
             
