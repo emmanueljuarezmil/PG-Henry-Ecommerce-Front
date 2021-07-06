@@ -2,7 +2,7 @@ import { GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL } from "../constants";
 
 export const getAllProducts = () => {
     return (dispatch) => {
-        fetch("http://18.191.253.15:3000/products")
+        fetch("http://3.15.15.92:3000/products")
         .then((response) => response.json())
         .then((response) => 
         dispatch({
@@ -14,7 +14,7 @@ export const getAllProducts = () => {
 
 export const getProductDetail = (id) => {
     return (dispatch) => {
-        fetch(`http://18.191.253.15:3000/products/${id}`)
+        fetch(`http://3.15.15.92:3000/products/${id}`)
         .then((response) => response.json())
         .then((response) => 
         dispatch({
