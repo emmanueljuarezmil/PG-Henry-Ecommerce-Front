@@ -1,3 +1,4 @@
+import { GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL } from "../constants";
 
 const initialState = {
     all_products: [], // Todos los productos
@@ -15,51 +16,26 @@ const initialState = {
     total_price: 0, // Precio total de la compra
     total_items: 0, // Total para cart
     // logged: false, // 
-    // admin: false, // 
-};
+    // admin: false, 
+}; 
 
-const products = (state = initialState, action) => {
+
+ const rootReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'ADD_PRODUCT':
-            return {
-                ...state,
-                product_created: action.payload
-            }
-        case 'GET_PRODUCTS':
+        case GET_ALL_PRODUCTS: 
             return {
                 ...state,
                 all_products: action.payload
             }
-        case 'GET_PRODUCT_BY_ID':
+            case GET_PRODUCT_DETAIL: 
             return {
                 ...state,
                 product_detail: action.payload
-            }
-        case 'GET_PRODUCT_BY_NAME':
-            return {
-                ...state,
-                product_search: action.payload
-            }
-        case 'GET_CATEGORIES':
-            return {
-                ...state,
-                categories: action.payload
-            }
-        case 'GET_CATEGORY_BY_ID':
-            return {
-                ...state,
-                category_detail: action.payload
-            }
-        case 'GET_SUB_CATEGORY_BY_NAME':
-            return {
-                ...state,
-                sub_categories: action.payload
-            }
+            }    
+
         default:
             return state
     }
-};
+}
 
-export default products;
-
-
+export default rootReducer;

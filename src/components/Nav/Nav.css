@@ -1,0 +1,7 @@
+.nav_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    background-color: rgb(233, 238, 168);
+}
