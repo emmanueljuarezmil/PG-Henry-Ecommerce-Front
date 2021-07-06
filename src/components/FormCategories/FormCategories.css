@@ -1,0 +1,40 @@
+p.danger {
+    color: red;
+    font-size: 10px;
+    margin-left: 1rem;
+  }
+  
+input.danger {
+  border: 2px solid red;
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.2rem;
+  width: 100%;
+  font-family: "Font Awesome 5 Free"; font-weight: 900;
+  text-align: center;
+  /* border: 2px solid #d3d6e4; */
+  box-shadow: 0 4px 5px rgba(0 0 0 /0.45);
+  margin-left: 1rem;
+
+}
+.input-name{
+  margin-bottom: 0.5rem;
+  margin-left: 1rem;
+}
+.form-cont{
+  display: flex;
+  flex-direction: column;
+  width: 15rem;
+}
+.Cinput{
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.2rem;
+  width: 100%;
+  font-family: "Font Awesome 5 Free"; font-weight: 900;
+  text-align: center;
+  border: 2px solid #d3d6e4;
+  box-shadow: 0 4px 5px rgba(0 0 0 /0.45);
+  margin-left: 1rem;
+}
+.submit-button{
+  margin-left: 1rem;
+}
