@@ -1,47 +1,39 @@
-import React,{useState} from 'react'
-import './FormCategories.css'
+import React, { useState } from 'react';
+import validate from './ValidateInput';
+
+import './FormCategories.css';
 
 function FormCategories() {
-    const [name,setName]=useState('');
-    const [errors,setErrors]=useState('');
+    const [name, setName] = useState('');
+    const [errors, setErrors] = useState({});
 
-    const handleChange=(e)=>{
+    const handleChange = (e) => {
         e.preventDefault();
         setName(e.target.value)
         setErrors(validate(name))
     }
-    const handleSubmit=(e)=>{
+    const handleSubmit = (e) => {
         e.preventDefault()
-        if(name===''){
-            setErrors('Name is required!!')
-        }
-        else if(name.length<3){
-            setErrors('Name must have at least three length characters')
-        }
-        else if(!errors){
+        if (Object.keys(errors).length === 0) {
             //aqui pondriamos el post
+            setName({});
+            alert('Category created');
         }
+        else alert('You must type a correct category name');
     }
 
     return (
         <div>
-            <form  className='form-cont' onSubmit={handleSubmit}>
+            <form className='form-cont' onSubmit={handleSubmit}>
                 <label className='input-name'>New category name: </label>
-                <input className={classAsign(errors,'Cinput')} type="text" value={name} onChange={handleChange} name='name' placeholder=' to add' />
+                <input className={classAsign(errors, 'Cinput')} type="text" value={name} onChange={handleChange} name='name' placeholder=' to add' />
                 <p className='danger'>{errors}</p>
                 <button className='submit-button' type='submit'>Add</button>
             </form>
         </div>
     )
 }
-function classAsign(errors,classname){
-    return errors? 'danger':classname;
+function classAsign(errors, classname) {
+    return errors ? 'danger' : classname;
 }
-export default FormCategories
-export function validate(input) {
-    let errors = '';
-    if (input.length<2) {
-      errors = 'Name must have at least three length characters';
-    }
-    return errors
-}
+export default FormCategories;
