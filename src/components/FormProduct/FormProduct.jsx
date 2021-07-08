@@ -4,7 +4,7 @@ import {AiTwotoneEdit} from 'react-icons/ai'
 import {useTable} from 'react-table'
 import Dropzone, {useDropzone} from 'react-dropzone'
 import Select from 'react-select'
-
+import './FormProduct.css'
 
 function FormProduct() {
     
@@ -23,16 +23,22 @@ function FormProduct() {
     // validar el input antes de mostrar boton de enviar y mostrar mensaje de error
     // mensaje de confirmacion al querer crear actualizar eliminar
 
+    // FEATURES/FALTANTES:
+    // stock en rojo cuando es 0
+    // paginar tabla
+    // filtros de tabla
+    // textarea grande para description
+    // boton eliminar en form    
+    // boton agregar cambios en form
+    // combinar dropzone con fotos ya existentes, limitar a 3 (urls + arraybuffer)
+    // 
+    // 
+    // 
+
         
             
     // function onSumbit(e) {
     //     e.preventDefault()
-    // }
-        
-    // async function uploadImage() {
-    //     subir las imagenes del dropzone a una nube
-    //     obtener el enlace 
-    //     guardarlo en el state
     // }
     
     
@@ -53,25 +59,57 @@ function FormProduct() {
             [name]: value
         });
     }
+
+
+    // const toBase64 = file => new Promise((resolve, reject) => {
+    //     const reader = new FileReader();
+    //     reader.readAsDataURL(file);
+    //     reader.onload = () => resolve(reader.result);
+    //     reader.onerror = error => reject(error)
+    // })
     
     
-    const onDrop = useCallback(async acceptedFiles => {
+    const onDrop = useCallback((acceptedFiles) => {
+        acceptedFiles.forEach((file) => {
+          const reader = new FileReader()
+    
+          reader.onabort = () => console.log('file reading was aborted')
+          reader.onerror = () => console.log('file reading has failed')
+          reader.onload = () => {
+          // Do whatever you want with the file contents
+            const binaryStr = reader.result
+            console.log(binaryStr)
+          }
+          reader.readAsArrayBuffer(file)
+        })
         
-    }, [])
+      }, [])
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
     // getRootProps
     // getInputProps
     // isDragActive
     const maxImageSize = 250000
+    // // Encode to base64
+    // var encodedImage = new Buffer(data, 'binary').toString('base64');
+
+    // // Decode from base64
+    // var decodedImage = new Buffer(encodedImage, 'base64').toString('binary');
 
     const deleteProduct = (id) => {
-        console.log(`Intentas eliminar el producto con el id ${id}`)
+        alert(`Intentas eliminar el producto con el id ${id}`)
     }
     
     const editProduct = (id) => {
         const product = productsHardcoded.find(product => product.id === id)
         setInput(product)
         setActionType('create')
+    }
+
+    const deleteFoto = (deletedFoto) => {
+        setInput({
+            ...input,
+            foto: input.foto.filter(foto => foto !== deletedFoto)
+        })
     }
 
     const data = React.useMemo(() => 
@@ -181,10 +219,11 @@ function FormProduct() {
                         <Dropzone 
                         onDrop={acceptedFiles => onDrop(acceptedFiles)}
                         maxSize={maxImageSize}
-                        accept='image/*'>
+                        accept='image/*'
+                        >
                             {({getRootProps, getInputProps}) => (
                                 <section>
-                                <div {...getRootProps()}>
+                                <div {...getRootProps()} className="dropzone">
                                     <input {...getInputProps()} />
                                     <p>Arrastra y suelta tus fotos aqui o haz click para cargar desde el explorador</p>
                                 </div>
@@ -197,7 +236,8 @@ function FormProduct() {
                                 input.foto && input.foto.length ?
                                 input.foto.map(foto => (
                                     <div>
-                                        <img src={foto} alt="Img not found" />
+                                        <img src={foto} 
+                                        alt="Img not found" onClick={() => deleteFoto(foto)}/>
                                     </div>
                                 )) :
                                 null
