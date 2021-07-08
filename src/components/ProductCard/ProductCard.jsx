@@ -18,8 +18,16 @@ function ProductCard(props) {
                     Read More
                 </button>
             </Link>
-            {/* Comment */}
         </div>
+        <div className='category_card'>
+                {props.product.category?.map((category, index) => (
+                  <span key={index}>
+                    <p>
+                      {category} 
+                    </p>
+                  </span>
+                ))}   
+                </div>
     </div>
     )
 };

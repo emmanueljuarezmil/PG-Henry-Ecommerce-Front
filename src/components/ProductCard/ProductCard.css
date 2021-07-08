@@ -44,3 +44,32 @@ cursor: pointer;
 border-radius: 7px;
 transition: transform 250ms;
 }
+
+.category_card{
+    text-align: justify;
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 50px;
+    margin: 10px;
+    flex-wrap: wrap;
+    -webkit-justify-content: space-evenly;
+    -webkit-align-items: center;
+    -webkit-flex-wrap: wrap;
+    
+}
+.category_card span{
+    font-size: 15px;
+    margin: 0.5px;
+    padding: 0px 4px;
+    margin-right: 5px;
+    margin-bottom: 7px;
+    border-radius: 4px;
+    background-color: #f0d9b9;
+    box-shadow: 3px 3px 5px rgb(20 20 20 / 80%);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
