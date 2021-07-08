@@ -45,9 +45,8 @@ function FormProduct() {
     const productsHardcoded = require('./DBproductsform.json')
     
     const [actionType, setActionType] = useState('create')
-    const [input, setInput] = useState({
-        addedPhotos: []
-    })
+    const [input, setInput] = useState({})
+    const [addedPhotos, setAddedPhotos] = useState([])
     const actionOptions = [
         { value: 'create', label: 'Crear un nuevo producto' },
         { value: 'readAndModified', label: 'Ver los productos existentes, editarlos o eliminarlos' }
@@ -64,10 +63,6 @@ function FormProduct() {
 
     
     const onDrop = useCallback((acceptedFiles) => {
-        setInput({
-            ...input,
-            addedPhotos: []
-        })
         acceptedFiles.forEach((file) => {
           const reader = new FileReader()
     
@@ -76,14 +71,10 @@ function FormProduct() {
           reader.onload = () => {
           // Do whatever you want with the file contents
             const binaryStr = reader.result
-            setInput({
-                ...input,
-                addedPhotos: [...input.addedPhotos, binaryStr]
-            })
+            setAddedPhotos([...addedPhotos,binaryStr])
           }
           reader.readAsArrayBuffer(file)
         })
-        
       }, [])
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
     // getRootProps
@@ -251,20 +242,20 @@ function FormProduct() {
                         </div>
                         <div>
                             <p>Fotos renderizadas desde el ArrayBuffer</p>
-                            <p>No funciona aun :(</p>
-                            {/* {
-                                input.addedPhotos && input.addedPhotos.length ?
-                                input.addedPhotos.map((foto, index) => {
-                                    var aBlob = new Blob(foto)
+                            {
+                                addedPhotos && addedPhotos.length ?
+                                addedPhotos.map((foto, index) => {
+                                    var blob = new Blob( [ foto ])
+                                    var imageUrl = URL.createObjectURL( blob )
                                     return (
                                         <div>
-                                            <img src={'data:image/bmp;base64,' + Base64.encode(aBlob)} 
+                                            <img src={imageUrl} 
                                             alt="Img not found" onClick={() => deleteFoto(index)}/>
                                         </div>
                                     )
                                 }) :
                                 null
-                            } */}
+                            }
                         </div>
                     </div>
                 </form> :
