@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useMemo} from 'react'
 import {BsTrash} from 'react-icons/bs'
 import {AiTwotoneEdit} from 'react-icons/ai'
 import {useTable} from 'react-table'
@@ -87,7 +87,7 @@ function FormProduct() {
             reader.readAsArrayBuffer(file)
         })
       }
-    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+    useDropzone({onDrop})
     
     const maxImageSize = 250000
 
@@ -121,8 +121,9 @@ function FormProduct() {
 
 
     // tabla con todos los productos
-
-    const data = React.useMemo(() => 
+    
+    // eslint-disable-next-line
+    const data = useMemo(() => 
         productsHardcoded.map(product => {
             return {
                 col1: product.name.length > 50 ? `${product.name.slice(0, 50)} ...` : product.name,
@@ -134,7 +135,7 @@ function FormProduct() {
             }
         }))
     
-    const columns = React.useMemo(
+    const columns = useMemo(
         () => [
             {
                 Header: 'Eliminar',
@@ -275,27 +276,6 @@ function FormProduct() {
                                 null
                             }
                         </div>
-                        {/* <div>
-                            {
-                                addedPhotos.length ?
-                                addedPhotos.map((foto, index) => {                                
-                                    return (
-                                        <div key={index}>
-                                            <img src={arrayBufferPhotoToBlob(foto)} 
-                                            alt="Img not found"/>
-                                            <button
-                                                onClick={(e) => {
-                                                    e.preventDefault()
-                                                    deletePhotoCharged(index)}
-                                                }>
-                                            Eliminar foto
-                                            </button>
-                                        </div>
-                                    )
-                                }) :
-                                null
-                            }
-                        </div> */}
                     </div>
                 </form> :
                 <table {...getTableProps()}>
