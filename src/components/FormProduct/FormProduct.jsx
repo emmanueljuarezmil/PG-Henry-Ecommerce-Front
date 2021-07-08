@@ -1,7 +1,7 @@
 import React, {useState, useMemo} from 'react'
 import {BsTrash} from 'react-icons/bs'
 import {AiTwotoneEdit} from 'react-icons/ai'
-import {useTable} from 'react-table'
+import {useTable, usePagination} from 'react-table'
 import Dropzone, {useDropzone} from 'react-dropzone'
 import Select from 'react-select'
 import './FormProduct.css'
@@ -128,57 +128,76 @@ function FormProduct() {
     // tabla con todos los productos
     
     // eslint-disable-next-line
-    const data = useMemo(() => 
-        productsHardcoded.map(product => {
-            return {
-                col1: product.name.length > 50 ? `${product.name.slice(0, 50)} ...` : product.name,
-                col2: product.category.join(', '),
-                col3: `$ ${product.price}`,
-                col4: product.stock,
-                col5: (<BsTrash onClick={() => deleteProduct(product.id)}/>),
-                col6: (<AiTwotoneEdit onClick={() => editProduct(product.id)}/>)
-            }
-        }))
+    const dataTable = productsHardcoded.map(product => {
+        return {
+            col1: (<BsTrash onClick={() => deleteProduct(product.id)}/>),
+            col2: (<AiTwotoneEdit onClick={() => editProduct(product.id)}/>),
+            col3: product.name.length > 50 ? `${product.name.slice(0, 50)} ...` : product.name,
+            col4: product.category.join(', '),
+            col5: `$ ${product.price}`,
+            col6: product.stock,
+        }
+    })
     
-    const columns = useMemo(
-        () => [
+    const columnsTable = [
             {
                 Header: 'Eliminar',
-                accessor: 'col5', // accessor is the "key" in the data
-            },
-            {
-                Header: 'Editar',
-                accessor: 'col6', // accessor is the "key" in the data
-            },
-            {
-                Header: 'Nombre',
                 accessor: 'col1', // accessor is the "key" in the data
             },
             {
+                Header: 'Editar',
+                accessor: 'col2', // accessor is the "key" in the data
+            },
+            {
+                Header: 'Nombre',
+                accessor: 'col3', // accessor is the "key" in the data
+            },
+            {
                 Header: 'Categorias',
-                accessor: 'col2',
+                accessor: 'col4',
             },
             {
                 Header: 'Precio',
-                accessor: 'col3',
+                accessor: 'col5',
             },
             {
                 Header: 'Stock',
-                accessor: 'col4',
+                accessor: 'col6',
             },
-        ],
-        []
-    )
+        ]
+    
+    // eslint-disable-next-line
+    const columns = useMemo(() => columnsTable, [])
+    // eslint-disable-next-line
+    const data = useMemo(() => dataTable, [])
 
     const {
         getTableProps,
         getTableBodyProps,
         headerGroups,
         rows,
+        page,
+        nextPage,
+        previousPage,
+        canNextPage,
+        canPreviousPage,
+        pageOptions,
+        gotoPage,
+        pageCount,
+        setPageSize,
+        state,
         prepareRow,
-      } = useTable({ columns, data })
-
-
+    } = useTable({
+            columns,
+            data,
+            initialState: {
+                pageSize: 20
+            }
+        },
+          usePagination
+        )
+    
+    const {pageIndex, pageSize} = state
     
     //  Return de React
     return (
@@ -286,47 +305,95 @@ function FormProduct() {
                         </div>
                     </div>
                 </form> :
-                <table {...getTableProps()}>
-                    <thead>
-                    {// Loop over the header rows
-                    headerGroups.map(headerGroup => (
-                        // Apply the header row props
-                        <tr {...headerGroup.getHeaderGroupProps()}>
-                        {// Loop over the headers in each row
-                        headerGroup.headers.map(column => (
-                            // Apply the header cell props
-                            <th {...column.getHeaderProps()}>
-                            {// Render the header
-                            column.render('Header')}
-                            </th>
+                <div>
+
+                    <table {...getTableProps()}>
+                        <thead>
+                        {// Loop over the header rows
+                        headerGroups.map(headerGroup => (
+                            // Apply the header row props
+                            <tr {...headerGroup.getHeaderGroupProps()}>
+                            {// Loop over the headers in each row
+                            headerGroup.headers.map(column => (
+                                // Apply the header cell props
+                                <th {...column.getHeaderProps()}>
+                                {// Render the header
+                                column.render('Header')}
+                                </th>
+                            ))}
+                            </tr>
                         ))}
-                        </tr>
-                    ))}
-                    </thead>
-                    {/* Apply the table body props */}
-                    <tbody {...getTableBodyProps()}>
-                    {// Loop over the table rows
-                    rows.map(row => {
-                        // Prepare the row for display
-                        prepareRow(row)
-                        return (
-                        // Apply the row props
-                        <tr {...row.getRowProps()}>
-                            {// Loop over the rows cells
-                            row.cells.map(cell => {
-                            // Apply the cell props
+                        </thead>
+                        {/* Apply the table body props */}
+                        <tbody {...getTableBodyProps()}>
+                        {// Loop over the table rows
+                        page.map(row => {
+                            // Prepare the row for display
+                            prepareRow(row)
                             return (
-                                <td {...cell.getCellProps()}>
-                                {// Render the cell contents
-                                cell.render('Cell')}
-                                </td>
+                            // Apply the row props
+                            <tr {...row.getRowProps()}>
+                                {// Loop over the rows cells
+                                row.cells.map(cell => {
+                                // Apply the cell props
+                                return (
+                                    <td {...cell.getCellProps()}>
+                                    {// Render the cell contents
+                                    cell.render('Cell')}
+                                    </td>
+                                )
+                                })}
+                            </tr>
                             )
-                            })}
-                        </tr>
-                        )
-                    })}
-                    </tbody>
-                </table>
+                        })}
+                        </tbody>
+                    </table>
+                    <div>
+                        <button
+                        onClick={() => gotoPage(0)}
+                        disabled={!canPreviousPage}>
+                            {'<<'}
+                        </button>
+                        <button 
+                        onClick={() => previousPage()}
+                        disabled={!canPreviousPage}>
+                            Anterior
+                        </button>
+                        <span>
+                            Página
+                            <strong>
+                                {` ${pageIndex + 1} `}
+                            </strong>
+                            {`de ${pageOptions.length}`}
+                        </span>
+                        <button 
+                        onClick={() => nextPage()}
+                        disabled={!canNextPage}>
+                            Siguiente
+                        </button>
+                        <button
+                        onClick={() => gotoPage(pageCount - 1)}
+                        disabled={!canNextPage}>
+                            {'>>'}
+                        </button>
+                        <select value={pageSize} 
+                        onChange={e => setPageSize(Number(e.target.value))}>
+                            {
+                                [10, 50, 100, dataTable.length].map((pageSize, i) => (
+                                    i !== 3 ? 
+                                    <option key={pageSize}
+                                    value={pageSize}>
+                                    Ver de a {pageSize} items
+                                    </option> :
+                                    <option key={dataTable.length}
+                                    value={dataTable.length}>
+                                    Ver todo
+                                    </option>
+                                ) )
+                            }
+                        </select>
+                    </div>
+                </div>
             }
             
         </div>
