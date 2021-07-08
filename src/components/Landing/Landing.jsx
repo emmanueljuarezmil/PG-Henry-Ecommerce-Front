@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react'
 import { useDispatch } from 'react-redux';
-import { getAllProducts } from '../../Redux/Actions'
+import { getAllProducts, getAllCategories } from '../../Redux/Actions'
 
 function Landing() {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getAllProducts())
-        //eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+        dispatch(getAllCategories())
+    }, [dispatch])
 
     return (
         <div>

@@ -1,4 +1,4 @@
-import { GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL } from "../constants";
+import { GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES } from "../constants";
 
 export const getAllProducts = () => {
     return (dispatch) => {
@@ -23,3 +23,15 @@ export const getProductDetail = (id) => {
         })) 
     };
 };
+
+export const getAllCategories = () => {
+    return (dispatch) => {
+        fetch("http://3.15.15.92:3000/categories")
+        .then((response) => response.json())
+        .then((response) => 
+        dispatch({
+            type: GET_ALL_CATEGORIES,
+            payload: response
+        })) 
+    }
+}
