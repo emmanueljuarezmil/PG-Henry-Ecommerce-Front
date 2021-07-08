@@ -24,24 +24,29 @@ function FormProduct() {
     // mensaje de confirmacion al querer crear actualizar eliminar
     
     // FEATURES/FALTANTES:
-    // stock en rojo cuando es 0
-    // paginar tabla
-    // filtros de tabla
+    // dar opcion de paginar tabla a 100 (default), o todo
+    // filtros de tabla: precio mayor que menor que ingresado por admin, categoria,
+    // ordenamientos: precio, categorias, stock
     // textarea grande para description
     // boton eliminar producto en form    
     // boton agregar cambios en form
-    // combinar dropzone con fotos ya existentes, limitar a 3 (urls + arraybuffer)
-    // 
-    // 
-    // 
-    
-    
-    
+    // hovers en botones
+    // conectar con back
+    // validar input + requireds
+    // pasar de useState al store de redux
+    // post new product funcional
+    // put producto existente funcional
+    // delete producto existente funcional
+    // multi select para marcar varios productos para eliminar de una
+    // multi delete productos existentes funcional   
+    // modularizar funciones
+    // stock en rojo cuando es 0
+    // estilos cuando la mayoria de las features ya esten
     
     
     // function onSumbit(e) {
-        //     e.preventDefault()
-        // }
+    //     e.preventDefault()
+    // }
         
         
     const productsHardcoded = require('./DBproductsform.json')
@@ -86,7 +91,7 @@ function FormProduct() {
             }
             reader.readAsArrayBuffer(file)
         })
-      }
+    }
     useDropzone({onDrop})
     
     const maxImageSize = 250000
@@ -163,9 +168,7 @@ function FormProduct() {
             },
         ],
         []
-      )
-
-    const tableInstance = useTable({ columns, data })
+    )
 
     const {
         getTableProps,
@@ -173,7 +176,7 @@ function FormProduct() {
         headerGroups,
         rows,
         prepareRow,
-      } = tableInstance
+      } = useTable({ columns, data })
 
 
     
@@ -204,6 +207,7 @@ function FormProduct() {
                     </div>
                     <div>
                         <input type="number" 
+                        min={0}
                         name="stock" 
                         placeholder="Stock actual"
                         value={input.stock}
@@ -211,6 +215,7 @@ function FormProduct() {
                     </div>
                     <div>
                         <input type="number"
+                        min={0}
                         name="selled"
                         placeholder="Cantidades vendidas"
                         value={input.selled}
@@ -218,6 +223,7 @@ function FormProduct() {
                     </div>
                     <div>
                         <input type="number"
+                        min={0}
                         name="price"
                         placeholder="Precio del producto"
                         value={input.price}
@@ -225,6 +231,8 @@ function FormProduct() {
                     </div>
                     <div>
                         <input type="number"
+                        min={0}
+                        max={100}
                         name="perc_desc"
                         placeholder="Porcentaje de descuento"
                         value={input.perc_desc}
