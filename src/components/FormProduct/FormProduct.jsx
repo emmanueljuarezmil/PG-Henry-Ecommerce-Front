@@ -24,24 +24,33 @@ function FormProduct() {
     // mensaje de confirmacion al querer crear actualizar eliminar
     
     // FEATURES/FALTANTES:
-    // dar opcion de paginar tabla a 100 (default), o todo
+    // conectar con back
+    // 
+    // validar input + requireds
+    // 
+    // post new product funcional
+    // 
+    // put producto existente funcional
+    // boton agregar cambios en form
+    // 
+    // delete producto existente en detalle
+    // boton eliminar producto en form
+    // 
+    // multi select para marcar varios productos para eliminar de una
+    // multi delete productos existentes funcional
+    // boton eliminar todos  
+    //  
+    // pasar de useState al store de redux
     // filtros de tabla: precio mayor que menor que ingresado por admin, categoria,
     // ordenamientos: precio, categorias, stock
+    // 
+    // estilos
     // textarea grande para description
-    // boton eliminar producto en form    
-    // boton agregar cambios en form
     // hovers en botones
-    // conectar con back
-    // validar input + requireds
-    // pasar de useState al store de redux
-    // post new product funcional
-    // put producto existente funcional
-    // delete producto existente funcional
-    // multi select para marcar varios productos para eliminar de una
-    // multi delete productos existentes funcional   
-    // modularizar funciones
     // stock en rojo cuando es 0
     // estilos cuando la mayoria de las features ya esten
+    // 
+    // modularizar funciones
     
     
     // function onSumbit(e) {
