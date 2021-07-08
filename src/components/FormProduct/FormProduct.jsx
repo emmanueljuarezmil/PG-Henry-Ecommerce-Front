@@ -49,7 +49,7 @@ function FormProduct() {
     const [input, setInput] = useState({
         foto: []
     })
-    const [addedPhotos, setAddedPhotos] = useState([])
+    // const [addedPhotos, setAddedPhotos] = useState([])
     const actionOptions = [
         { value: 'create', label: 'Crear un nuevo producto' },
         { value: 'readAndModified', label: 'Ver los productos existentes, editarlos o eliminarlos' }
@@ -79,7 +79,10 @@ function FormProduct() {
             reader.onload = () => {
             // Do whatever you want with the file contents
                 const binaryStr = reader.result
-                setAddedPhotos([...addedPhotos,binaryStr])
+                setInput({
+                    ...input,
+                    foto: [...input.foto, binaryStr]
+                })
             }
             reader.readAsArrayBuffer(file)
         })
@@ -108,13 +111,13 @@ function FormProduct() {
     }
 
     // cambia el estado pero no actualiza
-    const deletePhotoCharged = (index) => {
-        console.log(`se intenta borrar el elemento ${index}`)
-        const photos = addedPhotos
-        photos.splice(index,1)
-        console.log(photos)
-        setAddedPhotos(photos)
-    }
+    // const deletePhotoCharged = (index) => {
+    //     console.log(`se intenta borrar el elemento ${index}`)
+    //     const photos = addedPhotos
+    //     photos.splice(index,1)
+    //     console.log(photos)
+    //     setAddedPhotos(photos)
+    // }
 
 
     // tabla con todos los productos
@@ -228,7 +231,7 @@ function FormProduct() {
                     </div>
                     <div>
                         {
-                            input.foto.length + addedPhotos.length < 3 ?
+                            input.foto.length < 3 ?
                                 <Dropzone 
                                 onDrop={acceptedFiles => onDrop(acceptedFiles)}
                                 maxSize={maxImageSize}
@@ -272,7 +275,7 @@ function FormProduct() {
                                 null
                             }
                         </div>
-                        <div>
+                        {/* <div>
                             {
                                 addedPhotos.length ?
                                 addedPhotos.map((foto, index) => {                                
@@ -292,7 +295,7 @@ function FormProduct() {
                                 }) :
                                 null
                             }
-                        </div>
+                        </div> */}
                     </div>
                 </form> :
                 <table {...getTableProps()}>
