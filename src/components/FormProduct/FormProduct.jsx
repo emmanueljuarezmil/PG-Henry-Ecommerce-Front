@@ -1,7 +1,10 @@
-import { div } from 'prelude-ls'
 import React, {useState, useCallback} from 'react'
+import {BsTrash} from 'react-icons/bs'
+import {AiTwotoneEdit} from 'react-icons/ai'
+import {useTable} from 'react-table'
 import Dropzone, {useDropzone} from 'react-dropzone'
 import Select from 'react-select'
+import './FormProduct.css'
 
 function FormProduct() {
     
@@ -20,55 +23,154 @@ function FormProduct() {
     // validar el input antes de mostrar boton de enviar y mostrar mensaje de error
     // mensaje de confirmacion al querer crear actualizar eliminar
 
+    // FEATURES/FALTANTES:
+    // stock en rojo cuando es 0
+    // paginar tabla
+    // filtros de tabla
+    // textarea grande para description
+    // boton eliminar en form    
+    // boton agregar cambios en form
+    // combinar dropzone con fotos ya existentes, limitar a 3 (urls + arraybuffer)
+    // 
+    // 
+    // 
+
         
-    // const allProducts = productsHardcoded.map(product => {
-        //     return {
-            //         value: product.id,
-            //         label: product.name
-            //     }
-            // })
-            // allProducts.unshift({value: '', label: ''})
-            //aca iria un map de una ruta nueva del back que traiga solamente nombre y id de los productos o algun dato mas pero que no sea full para que no sea tan pesado
-            // una vez que seleccionas un producto, se pide todo el detalle al back y se carga en el input del formulario para ver si queres borrarlo, editarlo o no hacer nada
             
-            // function onSumbit(e) {
-                //     e.preventDefault()
-                // }
-                
-                // async function uploadImage() {
-                    //     subir las imagenes del dropzone a una nube
-                    //     obtener el enlace 
-                    //     guardarlo en el state
-                    // }
-                    
-                    const [actionType, setActionType] = useState(null)
-                    const [input, setInput] = useState({})
-                    const actionOptions = [
-                        { value: 'create', label: 'Crear un nuevo producto' },
-                        { value: 'readAndModified', label: 'Ver los productos existentes, editarlos o eliminarlos' }
-                    ]
-                    
-                    function handleChange(e) {
-                        e.preventDefault()
-                        const { value, name } = e.target;
-                        setInput({
-                            ...input,
-                            [name]: value
-                        });
-                    }
-                    
-                    
-                    const onDrop = useCallback(async acceptedFiles => {
-                        
-                    }, [])
-                    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
-                    // getRootProps
-                    // getInputProps
-                    // isDragActive
-                    const maxImageSize = 250000
-                    
-                    return (
-                        <div>
+    // function onSumbit(e) {
+    //     e.preventDefault()
+    // }
+    
+    
+    const productsHardcoded = require('./DBproductsform.json')
+    
+    const [actionType, setActionType] = useState('create')
+    const [input, setInput] = useState({
+        addedPhotos: []
+    })
+    const actionOptions = [
+        { value: 'create', label: 'Crear un nuevo producto' },
+        { value: 'readAndModified', label: 'Ver los productos existentes, editarlos o eliminarlos' }
+    ]
+    
+    function handleChange(e) {
+        e.preventDefault()
+        const { value, name } = e.target;
+        setInput({
+            ...input,
+            [name]: value
+        });
+    }
+
+    
+    const onDrop = useCallback((acceptedFiles) => {
+        setInput({
+            ...input,
+            addedPhotos: []
+        })
+        acceptedFiles.forEach((file) => {
+          const reader = new FileReader()
+    
+          reader.onabort = () => console.log('file reading was aborted')
+          reader.onerror = () => console.log('file reading has failed')
+          reader.onload = () => {
+          // Do whatever you want with the file contents
+            const binaryStr = reader.result
+            setInput({
+                ...input,
+                addedPhotos: [...input.addedPhotos, binaryStr]
+            })
+          }
+          reader.readAsArrayBuffer(file)
+        })
+        
+      }, [])
+    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+    // getRootProps
+    // getInputProps
+    // isDragActive
+    const maxImageSize = 250000
+    // // Encode to base64
+    // var encodedImage = new Buffer(data, 'binary').toString('base64');
+
+    // // Decode from base64
+    // var decodedImage = new Buffer(encodedImage, 'base64').toString('binary');
+
+    const deleteProduct = (id) => {
+        alert(`Intentas eliminar el producto con el id ${id}`)
+    }
+    
+    const editProduct = (id) => {
+        const product = productsHardcoded.find(product => product.id === id)
+        setInput(product)
+        setActionType('create')
+    }
+
+    const deleteFoto = (index) => {
+        const fotos = input.foto
+        fotos.splice(index,1)
+        setInput({
+            ...input,
+            foto: fotos
+        })
+    }
+
+    const data = React.useMemo(() => 
+        productsHardcoded.map(product => {
+            return {
+                col1: product.name.length > 50 ? `${product.name.slice(0, 50)} ...` : product.name,
+                col2: product.category.join(', '),
+                col3: `$ ${product.price}`,
+                col4: product.stock,
+                col5: (<BsTrash onClick={() => deleteProduct(product.id)}/>),
+                col6: (<AiTwotoneEdit onClick={() => editProduct(product.id)}/>)
+            }
+        }))
+    const columns = React.useMemo(
+        () => [
+            {
+                Header: 'Eliminar',
+                accessor: 'col5', // accessor is the "key" in the data
+            },
+            {
+                Header: 'Editar',
+                accessor: 'col6', // accessor is the "key" in the data
+            },
+            {
+                Header: 'Nombre',
+                accessor: 'col1', // accessor is the "key" in the data
+            },
+            {
+                Header: 'Categorias',
+                accessor: 'col2',
+            },
+            {
+                Header: 'Precio',
+                accessor: 'col3',
+            },
+            {
+                Header: 'Stock',
+                accessor: 'col4',
+            },
+        ],
+        []
+      )
+
+    const tableInstance = useTable({ columns, data })
+
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        rows,
+        prepareRow,
+      } = tableInstance
+    
+    const arrayBufferToImage = (image) => {
+    }
+
+    return (
+        <div>
             <h2>Accion que deseas realizar:</h2>
             <Select options={actionOptions}
             onChange={(e) => setActionType(e.value)}>
@@ -123,10 +225,11 @@ function FormProduct() {
                         <Dropzone 
                         onDrop={acceptedFiles => onDrop(acceptedFiles)}
                         maxSize={maxImageSize}
-                        accept='image/*'>
+                        accept='image/*'
+                        >
                             {({getRootProps, getInputProps}) => (
                                 <section>
-                                <div {...getRootProps()}>
+                                <div {...getRootProps()} className="dropzone">
                                     <input {...getInputProps()} />
                                     <p>Arrastra y suelta tus fotos aqui o haz click para cargar desde el explorador</p>
                                 </div>
@@ -134,21 +237,78 @@ function FormProduct() {
                             )}
                         </Dropzone>
                         <div>
-                            <p>Fotos</p>
+                            <p>Fotos url</p>
                             {
                                 input.foto && input.foto.length ?
-                                input.foto.map(foto => (
+                                input.foto.map((foto, index) => (
                                     <div>
-                                        <img src={foto} alt="Img not found" />
+                                        <img src={foto} 
+                                        alt="Img not found" onClick={() => deleteFoto(index)}/>
                                     </div>
                                 )) :
                                 null
                             }
                         </div>
+                        <div>
+                            <p>Fotos renderizadas desde el ArrayBuffer</p>
+                            <p>No funciona aun :(</p>
+                            {/* {
+                                input.addedPhotos && input.addedPhotos.length ?
+                                input.addedPhotos.map((foto, index) => {
+                                    var aBlob = new Blob(foto)
+                                    return (
+                                        <div>
+                                            <img src={'data:image/bmp;base64,' + Base64.encode(aBlob)} 
+                                            alt="Img not found" onClick={() => deleteFoto(index)}/>
+                                        </div>
+                                    )
+                                }) :
+                                null
+                            } */}
+                        </div>
                     </div>
                 </form> :
-                // barra de busqueda y lista de productos existentes
-                <p>Lista de productos y barra de busqueda</p>
+                <table {...getTableProps()}>
+                    <thead>
+                    {// Loop over the header rows
+                    headerGroups.map(headerGroup => (
+                        // Apply the header row props
+                        <tr {...headerGroup.getHeaderGroupProps()}>
+                        {// Loop over the headers in each row
+                        headerGroup.headers.map(column => (
+                            // Apply the header cell props
+                            <th {...column.getHeaderProps()}>
+                            {// Render the header
+                            column.render('Header')}
+                            </th>
+                        ))}
+                        </tr>
+                    ))}
+                    </thead>
+                    {/* Apply the table body props */}
+                    <tbody {...getTableBodyProps()}>
+                    {// Loop over the table rows
+                    rows.map(row => {
+                        // Prepare the row for display
+                        prepareRow(row)
+                        return (
+                        // Apply the row props
+                        <tr {...row.getRowProps()}>
+                            {// Loop over the rows cells
+                            row.cells.map(cell => {
+                            // Apply the cell props
+                            return (
+                                <td {...cell.getCellProps()}>
+                                {// Render the cell contents
+                                cell.render('Cell')}
+                                </td>
+                            )
+                            })}
+                        </tr>
+                        )
+                    })}
+                    </tbody>
+                </table>
             }
             
         </div>
