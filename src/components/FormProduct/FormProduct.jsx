@@ -184,7 +184,6 @@ function FormProduct() {
         getTableProps,
         getTableBodyProps,
         headerGroups,
-        rows,
         page,
         nextPage,
         previousPage,
