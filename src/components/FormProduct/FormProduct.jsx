@@ -45,7 +45,9 @@ function FormProduct() {
     const productsHardcoded = require('./DBproductsform.json')
     
     const [actionType, setActionType] = useState('create')
-    const [input, setInput] = useState({})
+    const [input, setInput] = useState({
+        addedPhotos: []
+    })
     const actionOptions = [
         { value: 'create', label: 'Crear un nuevo producto' },
         { value: 'readAndModified', label: 'Ver los productos existentes, editarlos o eliminarlos' }
@@ -60,16 +62,12 @@ function FormProduct() {
         });
     }
 
-
-    // const toBase64 = file => new Promise((resolve, reject) => {
-    //     const reader = new FileReader();
-    //     reader.readAsDataURL(file);
-    //     reader.onload = () => resolve(reader.result);
-    //     reader.onerror = error => reject(error)
-    // })
-    
     
     const onDrop = useCallback((acceptedFiles) => {
+        setInput({
+            ...input,
+            addedPhotos: []
+        })
         acceptedFiles.forEach((file) => {
           const reader = new FileReader()
     
@@ -78,7 +76,10 @@ function FormProduct() {
           reader.onload = () => {
           // Do whatever you want with the file contents
             const binaryStr = reader.result
-            console.log(binaryStr)
+            setInput({
+                ...input,
+                addedPhotos: [...input.addedPhotos, binaryStr]
+            })
           }
           reader.readAsArrayBuffer(file)
         })
@@ -105,10 +106,12 @@ function FormProduct() {
         setActionType('create')
     }
 
-    const deleteFoto = (deletedFoto) => {
+    const deleteFoto = (index) => {
+        const fotos = input.foto
+        fotos.splice(index,1)
         setInput({
             ...input,
-            foto: input.foto.filter(foto => foto !== deletedFoto)
+            foto: fotos
         })
     }
 
@@ -163,6 +166,9 @@ function FormProduct() {
         prepareRow,
       } = tableInstance
     
+    const arrayBufferToImage = (image) => {
+    }
+
     return (
         <div>
             <h2>Accion que deseas realizar:</h2>
@@ -231,62 +237,78 @@ function FormProduct() {
                             )}
                         </Dropzone>
                         <div>
-                            <p>Fotos</p>
+                            <p>Fotos url</p>
                             {
                                 input.foto && input.foto.length ?
-                                input.foto.map(foto => (
+                                input.foto.map((foto, index) => (
                                     <div>
                                         <img src={foto} 
-                                        alt="Img not found" onClick={() => deleteFoto(foto)}/>
+                                        alt="Img not found" onClick={() => deleteFoto(index)}/>
                                     </div>
                                 )) :
                                 null
                             }
                         </div>
+                        <div>
+                            <p>Fotos renderizadas desde el ArrayBuffer</p>
+                            <p>No funciona aun :(</p>
+                            {/* {
+                                input.addedPhotos && input.addedPhotos.length ?
+                                input.addedPhotos.map((foto, index) => {
+                                    var aBlob = new Blob(foto)
+                                    return (
+                                        <div>
+                                            <img src={'data:image/bmp;base64,' + Base64.encode(aBlob)} 
+                                            alt="Img not found" onClick={() => deleteFoto(index)}/>
+                                        </div>
+                                    )
+                                }) :
+                                null
+                            } */}
+                        </div>
                     </div>
                 </form> :
-                // barra de busqueda y lista de productos existentes
                 <table {...getTableProps()}>
-     <thead>
-       {// Loop over the header rows
-       headerGroups.map(headerGroup => (
-         // Apply the header row props
-         <tr {...headerGroup.getHeaderGroupProps()}>
-           {// Loop over the headers in each row
-           headerGroup.headers.map(column => (
-             // Apply the header cell props
-             <th {...column.getHeaderProps()}>
-               {// Render the header
-               column.render('Header')}
-             </th>
-           ))}
-         </tr>
-       ))}
-     </thead>
-     {/* Apply the table body props */}
-     <tbody {...getTableBodyProps()}>
-       {// Loop over the table rows
-       rows.map(row => {
-         // Prepare the row for display
-         prepareRow(row)
-         return (
-           // Apply the row props
-           <tr {...row.getRowProps()}>
-             {// Loop over the rows cells
-             row.cells.map(cell => {
-               // Apply the cell props
-               return (
-                 <td {...cell.getCellProps()}>
-                   {// Render the cell contents
-                   cell.render('Cell')}
-                 </td>
-               )
-             })}
-           </tr>
-         )
-       })}
-     </tbody>
-   </table>
+                    <thead>
+                    {// Loop over the header rows
+                    headerGroups.map(headerGroup => (
+                        // Apply the header row props
+                        <tr {...headerGroup.getHeaderGroupProps()}>
+                        {// Loop over the headers in each row
+                        headerGroup.headers.map(column => (
+                            // Apply the header cell props
+                            <th {...column.getHeaderProps()}>
+                            {// Render the header
+                            column.render('Header')}
+                            </th>
+                        ))}
+                        </tr>
+                    ))}
+                    </thead>
+                    {/* Apply the table body props */}
+                    <tbody {...getTableBodyProps()}>
+                    {// Loop over the table rows
+                    rows.map(row => {
+                        // Prepare the row for display
+                        prepareRow(row)
+                        return (
+                        // Apply the row props
+                        <tr {...row.getRowProps()}>
+                            {// Loop over the rows cells
+                            row.cells.map(cell => {
+                            // Apply the cell props
+                            return (
+                                <td {...cell.getCellProps()}>
+                                {// Render the cell contents
+                                cell.render('Cell')}
+                                </td>
+                            )
+                            })}
+                        </tr>
+                        )
+                    })}
+                    </tbody>
+                </table>
             }
             
         </div>
