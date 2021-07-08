@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react'
+import React, {useState, useMemo} from 'react'
 import {BsTrash} from 'react-icons/bs'
 import {AiTwotoneEdit} from 'react-icons/ai'
 import {useTable} from 'react-table'
@@ -22,31 +22,34 @@ function FormProduct() {
     //
     // validar el input antes de mostrar boton de enviar y mostrar mensaje de error
     // mensaje de confirmacion al querer crear actualizar eliminar
-
+    
     // FEATURES/FALTANTES:
     // stock en rojo cuando es 0
     // paginar tabla
     // filtros de tabla
     // textarea grande para description
-    // boton eliminar en form    
+    // boton eliminar producto en form    
     // boton agregar cambios en form
     // combinar dropzone con fotos ya existentes, limitar a 3 (urls + arraybuffer)
     // 
     // 
     // 
-
-        
-            
+    
+    
+    
+    
+    
     // function onSumbit(e) {
-    //     e.preventDefault()
-    // }
-    
-    
+        //     e.preventDefault()
+        // }
+        
+        
     const productsHardcoded = require('./DBproductsform.json')
-    
     const [actionType, setActionType] = useState('create')
-    const [input, setInput] = useState({})
-    const [addedPhotos, setAddedPhotos] = useState([])
+    const [input, setInput] = useState({
+        foto: []
+    })
+    // const [addedPhotos, setAddedPhotos] = useState([])
     const actionOptions = [
         { value: 'create', label: 'Crear un nuevo producto' },
         { value: 'readAndModified', label: 'Ver los productos existentes, editarlos o eliminarlos' }
@@ -60,29 +63,33 @@ function FormProduct() {
             [name]: value
         });
     }
-
     
-    const onDrop = useCallback((acceptedFiles) => {
+    const arrayBufferPhotoToBlob = (photo) => {
+        var blob = new Blob([photo])
+        var imageUrl = URL.createObjectURL( blob )
+        return imageUrl
+    }
+    
+    const onDrop = (acceptedFiles) => {
         acceptedFiles.forEach((file) => {
-          const reader = new FileReader()
-    
-          reader.onabort = () => console.log('file reading was aborted')
-          reader.onerror = () => console.log('file reading has failed')
-          reader.onload = () => {
-          // Do whatever you want with the file contents
-            const binaryStr = reader.result
-            setAddedPhotos([...addedPhotos,binaryStr])
-          }
-          reader.readAsArrayBuffer(file)
+            console.log(`Se esta ejecutando el callback de onDrop`)
+            const reader = new FileReader()    
+            reader.onabort = () => console.log('file reading was aborted')
+            reader.onerror = () => console.log('file reading has failed')
+            reader.onload = () => {
+            // Do whatever you want with the file contents
+                const binaryStr = reader.result
+                setInput({
+                    ...input,
+                    foto: [...input.foto, binaryStr]
+                })
+            }
+            reader.readAsArrayBuffer(file)
         })
-      }, [])
-    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+      }
+    useDropzone({onDrop})
+    
     const maxImageSize = 250000
-    // // Encode to base64
-    // var encodedImage = new Buffer(data, 'binary').toString('base64');
-
-    // // Decode from base64
-    // var decodedImage = new Buffer(encodedImage, 'base64').toString('binary');
 
     const deleteProduct = (id) => {
         alert(`Intentas eliminar el producto con el id ${id}`)
@@ -94,16 +101,29 @@ function FormProduct() {
         setActionType('create')
     }
 
-    const deleteFoto = (index) => {
-        const fotos = input.foto
-        fotos.splice(index,1)
+    const deletePhoto = (index) => {
+        const photos = input.foto
+        photos.splice(index,1)
         setInput({
             ...input,
-            foto: fotos
+            foto: photos
         })
     }
 
-    const data = React.useMemo(() => 
+    // cambia el estado pero no actualiza
+    // const deletePhotoCharged = (index) => {
+    //     console.log(`se intenta borrar el elemento ${index}`)
+    //     const photos = addedPhotos
+    //     photos.splice(index,1)
+    //     console.log(photos)
+    //     setAddedPhotos(photos)
+    // }
+
+
+    // tabla con todos los productos
+    
+    // eslint-disable-next-line
+    const data = useMemo(() => 
         productsHardcoded.map(product => {
             return {
                 col1: product.name.length > 50 ? `${product.name.slice(0, 50)} ...` : product.name,
@@ -114,7 +134,8 @@ function FormProduct() {
                 col6: (<AiTwotoneEdit onClick={() => editProduct(product.id)}/>)
             }
         }))
-    const columns = React.useMemo(
+    
+    const columns = useMemo(
         () => [
             {
                 Header: 'Eliminar',
@@ -154,6 +175,9 @@ function FormProduct() {
         prepareRow,
       } = tableInstance
 
+
+    
+    //  Return de React
     return (
         <div>
             <h2>Accion que deseas realizar:</h2>
@@ -207,47 +231,48 @@ function FormProduct() {
                         onChange={handleChange}/>
                     </div>
                     <div>
-                        <Dropzone 
-                        onDrop={acceptedFiles => onDrop(acceptedFiles)}
-                        maxSize={maxImageSize}
-                        accept='image/*'
-                        >
-                            {({getRootProps, getInputProps}) => (
-                                <section>
-                                <div {...getRootProps()} className="dropzone">
-                                    <input {...getInputProps()} />
-                                    <p>Arrastra y suelta tus fotos aqui o haz click para cargar desde el explorador</p>
-                                </div>
-                                </section>
-                            )}
-                        </Dropzone>
+                        {
+                            input.foto.length < 3 ?
+                                <Dropzone 
+                                onDrop={acceptedFiles => onDrop(acceptedFiles)}
+                                maxSize={maxImageSize}
+                                maxFiles={3}
+                                accept='image/*'
+                                >
+                                    {({getRootProps, getInputProps}) => (
+                                        <section>
+                                        <div {...getRootProps()} className="dropzone">
+                                            <input {...getInputProps()} />
+                                            <p>Arrastra y suelta tus fotos aqui o haz click para cargar desde el explorador(máx {maxImageSize/1000}kb)</p>
+                                        </div>
+                                        </section>
+                                    )}
+                                </Dropzone> :
+                                <h2>Puedes cargar hasta un maximo de 3 fotos, elimina alguna si quieres cargar una nueva</h2>
+                        }
                         <div>
-                            <p>Fotos url</p>
                             {
                                 input.foto && input.foto.length ?
                                 input.foto.map((foto, index) => (
-                                    <div>
-                                        <img src={foto} 
-                                        alt="Img not found" onClick={() => deleteFoto(index)}/>
+                                    <div key={index}>
+                                        <img src={
+                                            typeof foto === 'string' ?
+                                            foto :
+                                            arrayBufferPhotoToBlob(foto)
+                                        } 
+                                        alt="Img not found" 
+                                        
+                                        />
+                                        <button
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            deletePhoto(index)
+                                        }
+                                        }>
+                                            Eliminar foto
+                                        </button>
                                     </div>
                                 )) :
-                                null
-                            }
-                        </div>
-                        <div>
-                            <p>Fotos renderizadas desde el ArrayBuffer</p>
-                            {
-                                addedPhotos && addedPhotos.length ?
-                                addedPhotos.map((foto, index) => {
-                                    var blob = new Blob( [ foto ])
-                                    var imageUrl = URL.createObjectURL( blob )
-                                    return (
-                                        <div>
-                                            <img src={imageUrl} 
-                                            alt="Img not found" onClick={() => deleteFoto(index)}/>
-                                        </div>
-                                    )
-                                }) :
                                 null
                             }
                         </div>
@@ -299,5 +324,7 @@ function FormProduct() {
         </div>
     )
 }
+
+
 
 export default FormProduct
