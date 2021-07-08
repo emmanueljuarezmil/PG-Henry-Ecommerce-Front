@@ -77,9 +77,6 @@ function FormProduct() {
         })
       }, [])
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
-    // getRootProps
-    // getInputProps
-    // isDragActive
     const maxImageSize = 250000
     // // Encode to base64
     // var encodedImage = new Buffer(data, 'binary').toString('base64');
@@ -156,9 +153,6 @@ function FormProduct() {
         rows,
         prepareRow,
       } = tableInstance
-    
-    const arrayBufferToImage = (image) => {
-    }
 
     return (
         <div>
