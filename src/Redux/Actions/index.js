@@ -49,7 +49,7 @@ export const getFiltratedCategories = (cat) => {
         }
     }
     return (dispatch) => {
-        axios.get(`http://localhost:3000/category/p_name/${cat}`)
+        axios.get(`${url}/category/p_name/${cat}`)
         .then((response) => 
         dispatch({
             type: GET_FILTRATED_CATEGORIES,
