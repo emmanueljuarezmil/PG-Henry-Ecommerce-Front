@@ -6,6 +6,8 @@ import Dropzone, {useDropzone} from 'react-dropzone'
 import Select from 'react-select'
 import {useSelector} from 'react-redux' 
 import './FormProduct.css'
+import axios from 'axios'
+import {url} from '../../constantURL'
 
 function FormProduct() {
     
@@ -54,10 +56,6 @@ function FormProduct() {
     // modularizar funciones
     
     
-    // function onSumbit(e) {
-    //     e.preventDefault()
-    // }
-        
     const categories= useSelector((state)=>state.categories);
     function seter (array){
         let obj={}
@@ -74,11 +72,11 @@ function FormProduct() {
     const [input, setInput] = useState({
         foto: []
     })
-
+    
     const [cat,setCat]=useState(seter(categories))
     const handleCheck = (event) => {
         setCat({ ...cat, [event.target.value]: event.target.checked });
-      };
+    };
     // const [addedPhotos, setAddedPhotos] = useState([])
     const actionOptions = [
         { value: 'create', label: 'Crear un nuevo producto' },
@@ -107,7 +105,7 @@ function FormProduct() {
             reader.onabort = () => console.log('file reading was aborted')
             reader.onerror = () => console.log('file reading has failed')
             reader.onload = () => {
-            // Do whatever you want with the file contents
+                // Do whatever you want with the file contents
                 const binaryStr = reader.result
                 setInput({
                     ...input,
@@ -120,7 +118,7 @@ function FormProduct() {
     useDropzone({onDrop})
     
     const maxImageSize = 250000
-
+    
     const deleteProduct = (id) => {
         alert(`Intentas eliminar el producto con el id ${id}`)
     }
@@ -130,7 +128,7 @@ function FormProduct() {
         setInput(product)
         setActionType('create')
     }
-
+    
     const deletePhoto = (index) => {
         const photos = input.foto
         photos.splice(index,1)
@@ -139,24 +137,24 @@ function FormProduct() {
             foto: photos
         })
     }
-
+    
     // cambia el estado pero no actualiza
     // const deletePhotoCharged = (index) => {
-    //     console.log(`se intenta borrar el elemento ${index}`)
-    //     const photos = addedPhotos
-    //     photos.splice(index,1)
-    //     console.log(photos)
-    //     setAddedPhotos(photos)
-    // }
-
-
-    // tabla con todos los productos
-    
-    // eslint-disable-next-line
-    const dataTable = productsHardcoded.map(product => {
-        return {
-            col1: (<BsTrash onClick={() => deleteProduct(product.id)}/>),
-            col2: (<AiTwotoneEdit onClick={() => editProduct(product.id)}/>),
+        //     console.log(`se intenta borrar el elemento ${index}`)
+        //     const photos = addedPhotos
+        //     photos.splice(index,1)
+        //     console.log(photos)
+        //     setAddedPhotos(photos)
+        // }
+        
+        
+        // tabla con todos los productos
+        
+        // eslint-disable-next-line
+        const dataTable = productsHardcoded.map(product => {
+            return {
+                col1: (<BsTrash onClick={() => deleteProduct(product.id)}/>),
+                col2: (<AiTwotoneEdit onClick={() => editProduct(product.id)}/>),
             col3: product.name.length > 50 ? `${product.name.slice(0, 50)} ...` : product.name,
             col4: product.category.join(', '),
             col5: `$ ${product.price}`,
@@ -165,37 +163,37 @@ function FormProduct() {
     })
     
     const columnsTable = [
-            {
-                Header: 'Eliminar',
-                accessor: 'col1', // accessor is the "key" in the data
-            },
-            {
-                Header: 'Editar',
-                accessor: 'col2', // accessor is the "key" in the data
-            },
-            {
-                Header: 'Nombre',
-                accessor: 'col3', // accessor is the "key" in the data
-            },
-            {
-                Header: 'Categorias',
-                accessor: 'col4',
-            },
-            {
-                Header: 'Precio',
-                accessor: 'col5',
-            },
-            {
-                Header: 'Stock',
-                accessor: 'col6',
-            },
-        ]
+        {
+            Header: 'Eliminar',
+            accessor: 'col1', // accessor is the "key" in the data
+        },
+        {
+            Header: 'Editar',
+            accessor: 'col2', // accessor is the "key" in the data
+        },
+        {
+            Header: 'Nombre',
+            accessor: 'col3', // accessor is the "key" in the data
+        },
+        {
+            Header: 'Categorias',
+            accessor: 'col4',
+        },
+        {
+            Header: 'Precio',
+            accessor: 'col5',
+        },
+        {
+            Header: 'Stock',
+            accessor: 'col6',
+        },
+    ]
     
     // eslint-disable-next-line
     const columns = useMemo(() => columnsTable, [])
     // eslint-disable-next-line
     const data = useMemo(() => dataTable, [])
-
+    
     const {
         getTableProps,
         getTableBodyProps,
@@ -212,17 +210,28 @@ function FormProduct() {
         state,
         prepareRow,
     } = useTable({
-            columns,
-            data,
-            initialState: {
-                pageSize: 20
-            }
-        },
-          usePagination
-        )
+        columns,
+        data,
+        initialState: {
+            pageSize: 20
+        }
+    },
+    usePagination
+    )
     
     const {pageIndex, pageSize} = state
     
+    async function onSubmit(e) {
+        e.preventDefault()
+        const body = {
+            name: input.name,
+            price: input.price,
+            stock: input.stock,
+        }
+        const response = await axios.post(`${url}/products`, body)
+        console.log(response)
+    }
+        
     //  Return de React
     return (
         <div>
@@ -233,7 +242,8 @@ function FormProduct() {
             {
                 // form para crear producto nuevo
                 actionType === 'create' ?
-                <form action="">
+                <form onSubmit={(e) => onSubmit(e)}>
+                    <button type="submit">Enviar</button>
                     <div>
                         <input type="text"
                         name="name" 
