@@ -1,26 +1,25 @@
 import React from 'react'
-import {NavLink} from 'react-router-dom';
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import {getFiltratedCategories} from '../../Redux/Actions/index'
 
-function Filter() {
-
-    const { categories } = useSelector((state) => state)
-
-
+const Filter = () =>{
+    const categories = useSelector(state => state.categories)
+    const dispatch = useDispatch()
+    const handleCategory = (e) => {
+		dispatch(getFiltratedCategories(e.target.value));
+	};
     return (
         <div>
-            <select name='Category'>
+            <select name='Category' onChange={(e) => handleCategory(e)}>
                 <option value='All'>Todas</option>
                 {categories?.map((c, i) => (
-                    <NavLink to={`/category/${c.name}`} className='link'>
-                        <option key={i} value={c.name}>
-                            {c.name}
-                     </option>
-                    </NavLink>
+                    <option key={i} value={c.name}>
+                        {c.name}
+                    </option>
                 ))}
             </select>
         </div>
     )
 }
 
-export default Filter
+export default Filter;

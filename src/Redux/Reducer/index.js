@@ -1,7 +1,10 @@
-import { GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_PRODUCT_BY_NAME } from "../constants";
+
+import { GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_PRODUCT_BY_NAME, RESTART_PRODUCTS, GET_FILTRATED_CATEGORIES } from "../constants";
+
 
 const initialState = {
     all_products: [], // Todos los productos
+    filtered_products:[],
     product_detail: {}, // Detalle del producto seleccionado
     product_search: [], // Resultados de la busqueda por search bar
     categories: [], // Categorias de productos
@@ -37,10 +40,20 @@ const initialState = {
                 ...state,
                 categories: action.payload
             }
+
         case GET_PRODUCT_BY_NAME:
             return{
                 ...state,
                 product_search:action.payload
+        case GET_FILTRATED_CATEGORIES: 
+            return {
+                ...state,
+                filtered_products: action.payload
+            }
+        case RESTART_PRODUCTS: 
+            return {
+                ...state,
+                filtered_products: []
             }
         default:
             return state
