@@ -1,9 +1,12 @@
+
 import { GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_FILTRATED_CATEGORIES } from "../constants";
 import axios from 'axios';
+import {url} from '../../constantURL'
 
 export const getAllProducts = () => {
     return (dispatch) => {
-        fetch("http://localhost:3000/products")
+        fetch(`${url}/products`)
+
         .then((response) => response.json())
         .then((response) => 
         dispatch({
@@ -15,7 +18,7 @@ export const getAllProducts = () => {
 
 export const getProductDetail = (id) => {
     return (dispatch) => {
-        fetch(`http://localhost:3000/products/${id}`)
+        fetch(`${url}/products/${id}`)
         .then((response) => response.json())
         .then((response) => 
         dispatch({
@@ -27,7 +30,7 @@ export const getProductDetail = (id) => {
 
 export const getAllCategories = () => {
     return (dispatch) => {
-        fetch("http://localhost:3000/categories")
+        fetch(`${url}/categories`)
         .then((response) => response.json())
         .then((response) => 
         dispatch({
