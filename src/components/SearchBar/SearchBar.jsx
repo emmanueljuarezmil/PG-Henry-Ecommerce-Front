@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import './SearchBar.css'
 import {connect} from 'react-redux'
-import { getProductByName } from '../../Redux/Products/ProductActions'
+import { getProductByName } from '../../Redux/Actions/index'
 
 
 

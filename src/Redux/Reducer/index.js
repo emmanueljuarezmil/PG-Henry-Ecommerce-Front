@@ -1,4 +1,4 @@
-import { GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES } from "../constants";
+import { GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_PRODUCT_BY_NAME } from "../constants";
 
 const initialState = {
     all_products: [], // Todos los productos
@@ -36,6 +36,11 @@ const initialState = {
             return {
                 ...state,
                 categories: action.payload
+            }
+        case GET_PRODUCT_BY_NAME:
+            return{
+                ...state,
+                product_search:action.payload
             }
         default:
             return state
