@@ -2,6 +2,7 @@ import { GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES } from "../con
 
 const initialState = {
     all_products: [], // Todos los productos
+    filtered_products:[],
     product_detail: {}, // Detalle del producto seleccionado
     product_search: [], // Resultados de la busqueda por search bar
     categories: [], // Categorias de productos
@@ -36,6 +37,16 @@ const initialState = {
             return {
                 ...state,
                 categories: action.payload
+            }
+        case 'GET_FILTRATED_CATEGORIES': 
+            return {
+                ...state,
+                filtered_products: action.payload
+            }
+        case 'RESTART_PRODUCTS': 
+            return {
+                ...state,
+                filtered_products: []
             }
         default:
             return state

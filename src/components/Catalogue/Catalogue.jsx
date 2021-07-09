@@ -5,10 +5,13 @@ import ProductCard from '../ProductCard/ProductCard';
 
 function Catalogue() {
     const products = useSelector((state) => state.all_products);
+    const filter= useSelector((state)=> state.filtered_products)
     
     return (
         <div className='catalogue_container'>
-            {products?.map((product, index) => (
+            {filter.length? filter.map((product, index) => (
+                <ProductCard index={index} product={product}/>
+            )):products?.map((product, index) => (
                 <ProductCard index={index} product={product}/>
             ))}
         </div>
