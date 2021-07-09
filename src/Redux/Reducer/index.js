@@ -45,6 +45,7 @@ const initialState = {
             return{
                 ...state,
                 product_search:action.payload
+            }
         case GET_FILTRATED_CATEGORIES: 
             return {
                 ...state,

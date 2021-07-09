@@ -9,3 +9,15 @@
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
 }
+.next{
+    position: fixed;
+    bottom: 2rem;
+    right: 35rem;
+    z-index: 100;
+}
+.prev{
+    position: fixed;
+    bottom: 2rem;
+    right: 45rem;
+    z-index: 100;
+}
