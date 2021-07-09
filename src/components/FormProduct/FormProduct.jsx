@@ -4,6 +4,7 @@ import {AiTwotoneEdit} from 'react-icons/ai'
 import {useTable, usePagination} from 'react-table'
 import Dropzone, {useDropzone} from 'react-dropzone'
 import Select from 'react-select'
+import {useSelector} from 'react-redux' 
 import './FormProduct.css'
 
 function FormProduct() {
@@ -57,12 +58,27 @@ function FormProduct() {
     //     e.preventDefault()
     // }
         
-        
+    const categories= useSelector((state)=>state.categories);
+    function seter (array){
+        let obj={}
+        array.map((cat)=>{
+            let a=cat.id;
+            obj[a]=false;
+            return null
+        })
+        return obj
+    }
+    
     const productsHardcoded = require('./DBproductsform.json')
     const [actionType, setActionType] = useState('create')
     const [input, setInput] = useState({
         foto: []
     })
+
+    const [cat,setCat]=useState(seter(categories))
+    const handleCheck = (event) => {
+        setCat({ ...cat, [event.target.value]: event.target.checked });
+      };
     // const [addedPhotos, setAddedPhotos] = useState([])
     const actionOptions = [
         { value: 'create', label: 'Crear un nuevo producto' },
@@ -266,6 +282,16 @@ function FormProduct() {
                         onChange={handleChange}/>
                     </div>
                     <div>
+                        {categories.map(c=>{
+                        return(
+                            <li>
+                                <input type='checkbox' value={c.id} onChange={handleCheck}/>
+                                <label>{c.name}</label>  
+                            </li>                            
+                        )                     
+                        })}                        
+                    </div>
+                    <div>
                         {
                             input.foto.length < 3 ?
                                 <Dropzone 
@@ -312,6 +338,7 @@ function FormProduct() {
                             }
                         </div>
                     </div>
+
                 </form> :
                 <div>
 
