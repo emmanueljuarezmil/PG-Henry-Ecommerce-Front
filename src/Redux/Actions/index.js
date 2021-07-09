@@ -57,3 +57,7 @@ export const getFiltratedCategories = (cat) => {
         })) 
     }
 }
+
+export const getProductByName = () => {
+    return
+}
