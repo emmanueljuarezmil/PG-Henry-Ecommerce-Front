@@ -1,7 +1,8 @@
 
-import { GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_FILTRATED_CATEGORIES } from "../constants";
+import { GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_PRODUCT_BY_NAME, GET_FILTRATED_CATEGORIES } from "../constants";
+import {url} from '../constantURL'
 import axios from 'axios';
-import {url} from '../../constantURL'
+
 
 export const getAllProducts = () => {
     return (dispatch) => {
@@ -40,6 +41,19 @@ export const getAllCategories = () => {
     }
 }
 
+export const getProductByName=(name)=>{
+    return (dispatch)=>{
+        fetch(`${url}/products?name=${name}`)
+        .then((response)=> response.json())
+        .then((response)=>
+        dispatch({
+            type:GET_PRODUCT_BY_NAME,
+            payload:response
+        }))
+    }
+}
+
+
 export const getFiltratedCategories = (cat) => {
     if (cat ==='All'){
         return (dispatch) => {
@@ -58,6 +72,3 @@ export const getFiltratedCategories = (cat) => {
     }
 }
 
-export const getProductByName = () => {
-    return
-}
