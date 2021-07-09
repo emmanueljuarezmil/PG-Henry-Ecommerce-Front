@@ -1,4 +1,4 @@
-import { GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES } from "../constants";
+import { GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_FILTRATED_CATEGORIES, RESTART_PRODUCTS } from "../constants";
 
 const initialState = {
     all_products: [], // Todos los productos
@@ -38,12 +38,12 @@ const initialState = {
                 ...state,
                 categories: action.payload
             }
-        case 'GET_FILTRATED_CATEGORIES': 
+        case GET_FILTRATED_CATEGORIES: 
             return {
                 ...state,
                 filtered_products: action.payload
             }
-        case 'RESTART_PRODUCTS': 
+        case RESTART_PRODUCTS: 
             return {
                 ...state,
                 filtered_products: []

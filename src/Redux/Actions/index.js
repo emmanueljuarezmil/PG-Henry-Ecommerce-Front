@@ -1,4 +1,4 @@
-import { GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES } from "../constants";
+import { GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_FILTRATED_CATEGORIES } from "../constants";
 import axios from 'axios';
 
 export const getAllProducts = () => {
@@ -49,7 +49,7 @@ export const getFiltratedCategories = (cat) => {
         axios.get(`http://localhost:3000/category/p_name/${cat}`)
         .then((response) => 
         dispatch({
-            type: 'GET_FILTRATED_CATEGORIES',
+            type: GET_FILTRATED_CATEGORIES,
             payload: response.data[0].Products
         })) 
     }
