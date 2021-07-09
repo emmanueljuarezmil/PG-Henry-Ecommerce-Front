@@ -1,12 +1,16 @@
 import React,{useState} from 'react'
 import './SearchBar.css'
+import {connect} from 'react-redux'
+import { getProductByName } from '../../Redux/Products/ProductActions'
 
 
-function SearchBar() {
+
+function SearchBar({getProductByName}) {
     const [search,setSearch]=useState('')
     
     const handleChange=(e)=>{
-        setSearch(e.target.value)
+        setSearch(e.target.value);
+        getProductByName(search);
     }
     return (
         <div classname='cont'>
@@ -16,5 +20,15 @@ function SearchBar() {
         </div>
     )
 }
+function mapStateToProps(state){
+    return {
+        product_search:state.product_search
+    }
+}
+function mapDispatchToProps(dispatch){
+    return {
+        getProductByName:(name)=>dispatch(getProductByName(name))
+    }
+}
+export default connect (mapStateToProps,mapDispatchToProps)(SearchBar);
 
-export default SearchBar
