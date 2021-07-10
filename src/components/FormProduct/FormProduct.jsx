@@ -66,17 +66,19 @@ function FormProduct() {
         })
         return obj
     }
+    
+    const [cat, setCat] = useState(seter(categories))
+    const handleCheck = (event) => {
+        setCat({ ...cat, [event.target.value]: event.target.checked });
+    };
 
-    const productsHardcoded = require('./DBproductsform.json')
     const [actionType, setActionType] = useState('create')
     const [input, setInput] = useState({
         foto: []
     })
 
-    const [cat, setCat] = useState(seter(categories))
-    const handleCheck = (event) => {
-        setCat({ ...cat, [event.target.value]: event.target.checked });
-    };
+    const allProducts = useSelector(state => state.all_products)
+
 
     const actionOptions = [
         { value: 'create', label: 'Crear un nuevo producto' },
@@ -125,7 +127,7 @@ function FormProduct() {
     }
 
     const editProduct = (id) => {
-        const product = productsHardcoded.find(product => product.id === id)
+        const product = allProducts.find(product => product.id === id)
         setInput(product)
         setActionType('create')
     }
@@ -140,12 +142,12 @@ function FormProduct() {
     }
 
     // eslint-disable-next-line
-    const dataTable = productsHardcoded.map(product => {
+    const dataTable = allProducts.map(product => {
         return {
             col1: (<BsTrash onClick={() => deleteProduct(product.id)} />),
             col2: (<AiTwotoneEdit onClick={() => editProduct(product.id)} />),
             col3: product.name.length > 50 ? `${product.name.slice(0, 50)} ...` : product.name,
-            col4: product.category.join(', '),
+            col4: product.Categories.map(category => category.name).join(', '),
             col5: `$ ${product.price}`,
             col6: product.stock,
         }
