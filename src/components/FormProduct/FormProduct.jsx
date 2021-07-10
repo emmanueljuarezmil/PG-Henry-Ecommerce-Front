@@ -13,7 +13,7 @@ function FormProduct() {
 
     // como admin poder
     // 1) cargar un producto nuevo
-    // 1)a) form (name, photos (max 3), description, stock, selled, perc_desc, price, category)
+    // 1)a) form (name, photos (max 3), descrip, stock, selled, perc_desc, price, category)
     // 2) ver facilmente todos los productos y buscar por nombre o categoria para acceder al detalle y asi modificarlos o eliminarlos
     // 2)a) ver todos los productos de una forma practica
     // 2)b) buscar productos por nombre
@@ -48,7 +48,7 @@ function FormProduct() {
     // ordenamientos: precio, categorias, stock
     // 
     // estilos
-    // textarea grande para description
+    // textarea grande para descrip
     // hovers en botones
     // stock en rojo cuando es 0
     // estilos cuando la mayoria de las features ya esten
@@ -66,21 +66,26 @@ function FormProduct() {
         })
         return obj
     }
+    
+    const [cat, setCat] = useState(seter(categories))
+    const handleCheck = (event, id) => {
+        event ?
+        setCat({ ...cat, [event.target.value]: event.target.checked }) :
+        setCat({...cat, [id]: true})
+    };
 
-    const productsHardcoded = require('./DBproductsform.json')
     const [actionType, setActionType] = useState('create')
     const [input, setInput] = useState({
-        foto: []
+        photo: []
     })
 
-    const [cat, setCat] = useState(seter(categories))
-    const handleCheck = (event) => {
-        setCat({ ...cat, [event.target.value]: event.target.checked });
-    };
+    const allProducts = useSelector(state => state.all_products)
+
 
     const actionOptions = [
         { value: 'create', label: 'Crear un nuevo producto' },
-        { value: 'readAndModified', label: 'Ver los productos existentes, editarlos o eliminarlos' }
+        { value: 'read', label: 'Ver los productos existentes' },
+        { value: 'update', label: 'Editar un producto' }
     ]
 
     function handleChange(e) {
@@ -109,7 +114,7 @@ function FormProduct() {
                     const img = data.url
                     setInput({
                         ...input,
-                        foto: [...input.foto, img]
+                        photo: [...input.photo, img]
                     })
                 })
                 .catch((err) => console.error(err))
@@ -124,28 +129,30 @@ function FormProduct() {
         alert(`Intentas eliminar el producto con el id ${id}`)
     }
 
-    const editProduct = (id) => {
-        const product = productsHardcoded.find(product => product.id === id)
-        setInput(product)
-        setActionType('create')
+    const editProduct = async (id) => {
+        const response = await axios.get(`${url}/products/p/${id}`)
+        setInput(response.data)
+        const categories = cat
+        response.data.Categories.map(category => category.id).forEach(cat => handleCheck(null, cat))
+        setActionType('update')
     }
 
     const deletePhoto = (index) => {
-        const photos = input.foto
+        const photos = input.photo
         photos.splice(index, 1)
         setInput({
             ...input,
-            foto: photos
+            photo: photos
         })
     }
 
     // eslint-disable-next-line
-    const dataTable = productsHardcoded.map(product => {
+    const dataTable = allProducts.map(product => {
         return {
             col1: (<BsTrash onClick={() => deleteProduct(product.id)} />),
             col2: (<AiTwotoneEdit onClick={() => editProduct(product.id)} />),
             col3: product.name.length > 50 ? `${product.name.slice(0, 50)} ...` : product.name,
-            col4: product.category.join(', '),
+            col4: product.Categories.map(category => category.name).join(', '),
             col5: `$ ${product.price}`,
             col6: product.stock,
         }
@@ -223,7 +230,7 @@ function FormProduct() {
             name: input.name,
             price: input.price,
             stock: input.stock,
-            photo: input.foto,
+            photo: input.photo,
             category
         }
         console.log(body)
@@ -240,7 +247,7 @@ function FormProduct() {
             </Select>
             {
                 // form para crear producto nuevo
-                actionType === 'create' ?
+                actionType === 'create' || actionType === 'update' ?
                     <form onSubmit={(e) => onSubmit(e)}>
                         <button type="submit">Enviar</button>
                         <div>
@@ -253,10 +260,10 @@ function FormProduct() {
                         </div>
                         <div>
                             <input type="text"
-                                name="description"
+                                name="descrip"
                                 pattern="^[a-zA-Z0-9 ,.-]+$"
                                 placeholder="Descripcion del producto"
-                                value={input.description}
+                                value={input.descrip}
                                 onChange={handleChange} />
                         </div>
                         <div>
@@ -309,7 +316,7 @@ function FormProduct() {
                             <div>
 
                                 {
-                                    input.foto.length < 3 ?
+                                    input.photo && input.photo.length < 3 ?
                                         <Dropzone
                                             onDrop={acceptedFiles => onDrop(acceptedFiles)}
                                             maxSize={maxImageSize}
@@ -319,20 +326,20 @@ function FormProduct() {
                                                 <section>
                                                     <div {...getRootProps()} className="dropzone">
                                                         <input {...getInputProps()} />
-                                                        <p>Arrastra y suelta tus fotos aqui o haz click para cargar desde el explorador(máx {maxImageSize / 1000}kb)</p>
+                                                        <p>Arrastra y suelta tus photos aqui o haz click para cargar desde el explorador(máx {maxImageSize / 1000}kb)</p>
                                                     </div>
                                                 </section>
                                             )}
                                         </Dropzone> :
-                                        <h2>Puedes cargar hasta un maximo de 3 fotos, elimina alguna si quieres cargar una nueva</h2>
+                                        <h2>Puedes cargar hasta un maximo de 3 photos, elimina alguna si quieres cargar una nueva</h2>
                                 }
                             </div>
                             <div>
                                 {
-                                    input.foto && input.foto.length ?
-                                        input.foto.map((foto, index) => (
+                                    input.photo && input.photo.length ?
+                                        input.photo.map((photo, index) => (
                                             <div key={index}>
-                                                <img src={foto}
+                                                <img src={photo}
                                                     alt="Img not found" />
                                                 <button
                                                     onClick={(e) => {
@@ -340,7 +347,7 @@ function FormProduct() {
                                                         deletePhoto(index)
                                                     }
                                                     }>
-                                                    Eliminar foto
+                                                    Eliminar photo
                                                 </button>
                                             </div>
                                         )) :
