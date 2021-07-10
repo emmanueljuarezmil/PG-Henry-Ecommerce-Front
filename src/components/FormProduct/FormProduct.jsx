@@ -68,8 +68,10 @@ function FormProduct() {
     }
     
     const [cat, setCat] = useState(seter(categories))
-    const handleCheck = (event) => {
-        setCat({ ...cat, [event.target.value]: event.target.checked });
+    const handleCheck = (event, id) => {
+        event ?
+        setCat({ ...cat, [event.target.value]: event.target.checked }) :
+        setCat({...cat, [id]: true})
     };
 
     const [actionType, setActionType] = useState('create')
@@ -82,7 +84,8 @@ function FormProduct() {
 
     const actionOptions = [
         { value: 'create', label: 'Crear un nuevo producto' },
-        { value: 'readAndModified', label: 'Ver los productos existentes, editarlos o eliminarlos' }
+        { value: 'read', label: 'Ver los productos existentes' },
+        { value: 'update', label: 'Editar un producto' }
     ]
 
     function handleChange(e) {
@@ -129,7 +132,9 @@ function FormProduct() {
     const editProduct = async (id) => {
         const response = await axios.get(`${url}/products/p/${id}`)
         setInput(response.data)
-        setActionType('create')
+        const categories = cat
+        response.data.Categories.map(category => category.id).forEach(cat => handleCheck(null, cat))
+        setActionType('update')
     }
 
     const deletePhoto = (index) => {
@@ -242,7 +247,7 @@ function FormProduct() {
             </Select>
             {
                 // form para crear producto nuevo
-                actionType === 'create' ?
+                actionType === 'create' || actionType === 'update' ?
                     <form onSubmit={(e) => onSubmit(e)}>
                         <button type="submit">Enviar</button>
                         <div>
