@@ -126,8 +126,8 @@ function FormProduct() {
         alert(`Intentas eliminar el producto con el id ${id}`)
     }
 
-    const editProduct = (id) => {
-        const product = allProducts.find(product => product.id === id)
+    const editProduct = async (id) => {
+        const product = await axios.get(`${url}/products/p/${id}`)
         setInput(product)
         setActionType('create')
     }
