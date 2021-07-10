@@ -132,7 +132,6 @@ function FormProduct() {
     const editProduct = async (id) => {
         const response = await axios.get(`${url}/products/p/${id}`)
         setInput(response.data)
-        const categories = cat
         response.data.Categories.map(category => category.id).forEach(cat => handleCheck(null, cat))
         setActionType('update')
     }
