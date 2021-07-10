@@ -77,7 +77,7 @@ function FormProduct() {
     const handleCheck = (event) => {
         setCat({ ...cat, [event.target.value]: event.target.checked });
     };
-    // const [addedPhotos, setAddedPhotos] = useState([])
+
     const actionOptions = [
         { value: 'create', label: 'Crear un nuevo producto' },
         { value: 'readAndModified', label: 'Ver los productos existentes, editarlos o eliminarlos' }
@@ -92,29 +92,30 @@ function FormProduct() {
         });
     }
     
-    const arrayBufferPhotoToBlob = (photo) => {
-        var blob = new Blob([photo])
-        var imageUrl = URL.createObjectURL( blob )
-        return imageUrl
-    }
-    
     const onDrop = (acceptedFiles) => {
-        acceptedFiles.forEach((file) => {
-            console.log(`Se esta ejecutando el callback de onDrop`)
-            const reader = new FileReader()    
-            reader.onabort = () => console.log('file reading was aborted')
-            reader.onerror = () => console.log('file reading has failed')
-            reader.onload = () => {
-                // Do whatever you want with the file contents
-                const binaryStr = reader.result
+        acceptedFiles.forEach(async (file) => {
+            const url = 'https://api.cloudinary.com/v1_1/dn6fn4w40/image/upload'
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("upload_preset", "spjvomor");
+            fetch(url, {
+                method: 'POST',
+                body: formData
+            })
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                const img = data.url
                 setInput({
                     ...input,
-                    foto: [...input.foto, binaryStr]
+                    foto: [...input.foto, img]
                 })
-            }
-            reader.readAsArrayBuffer(file)
+            })
+            .catch((err) => console.error(err))
         })
     }
+
     useDropzone({onDrop})
     
     const maxImageSize = 250000
@@ -137,24 +138,12 @@ function FormProduct() {
             foto: photos
         })
     }
-    
-    // cambia el estado pero no actualiza
-    // const deletePhotoCharged = (index) => {
-        //     console.log(`se intenta borrar el elemento ${index}`)
-        //     const photos = addedPhotos
-        //     photos.splice(index,1)
-        //     console.log(photos)
-        //     setAddedPhotos(photos)
-        // }
         
-        
-        // tabla con todos los productos
-        
-        // eslint-disable-next-line
-        const dataTable = productsHardcoded.map(product => {
-            return {
-                col1: (<BsTrash onClick={() => deleteProduct(product.id)}/>),
-                col2: (<AiTwotoneEdit onClick={() => editProduct(product.id)}/>),
+    // eslint-disable-next-line
+    const dataTable = productsHardcoded.map(product => {
+        return {
+            col1: (<BsTrash onClick={() => deleteProduct(product.id)}/>),
+            col2: (<AiTwotoneEdit onClick={() => editProduct(product.id)}/>),
             col3: product.name.length > 50 ? `${product.name.slice(0, 50)} ...` : product.name,
             col4: product.category.join(', '),
             col5: `$ ${product.price}`,
@@ -223,11 +212,21 @@ function FormProduct() {
     
     async function onSubmit(e) {
         e.preventDefault()
+        const category = []
+        for (let categ in cat) {
+            if(cat[categ]) {
+                category.push(categ)
+            }
+        }
+        console.log(category)
         const body = {
             name: input.name,
             price: input.price,
             stock: input.stock,
+            photo: input.foto,
+            category
         }
+        console.log(body)
         const response = await axios.post(`${url}/products`, body)
         console.log(response)
     }
@@ -302,38 +301,33 @@ function FormProduct() {
                         })}                        
                     </div>
                     <div>
-                        {
-                            input.foto.length < 3 ?
-                                <Dropzone 
-                                onDrop={acceptedFiles => onDrop(acceptedFiles)}
-                                maxSize={maxImageSize}
-                                maxFiles={3}
-                                accept='image/*'
-                                >
-                                    {({getRootProps, getInputProps}) => (
-                                        <section>
-                                        <div {...getRootProps()} className="dropzone">
-                                            <input {...getInputProps()} />
-                                            <p>Arrastra y suelta tus fotos aqui o haz click para cargar desde el explorador(máx {maxImageSize/1000}kb)</p>
-                                        </div>
-                                        </section>
-                                    )}
-                                </Dropzone> :
-                                <h2>Puedes cargar hasta un maximo de 3 fotos, elimina alguna si quieres cargar una nueva</h2>
-                        }
+                        <div>
+                            {
+                                input.foto.length < 3 ?
+                                    <Dropzone 
+                                    onDrop={acceptedFiles => onDrop(acceptedFiles)}
+                                    maxSize={maxImageSize}
+                                    maxFiles={3}
+                                    accept='image/*'>
+                                        {({getRootProps, getInputProps}) => (
+                                            <section>
+                                            <div {...getRootProps()} className="dropzone">
+                                                <input {...getInputProps()} />
+                                                <p>Arrastra y suelta tus fotos aqui o haz click para cargar desde el explorador(máx {maxImageSize/1000}kb)</p>
+                                            </div>
+                                            </section>
+                                        )}
+                                    </Dropzone> :
+                                    <h2>Puedes cargar hasta un maximo de 3 fotos, elimina alguna si quieres cargar una nueva</h2>
+                            }
+                        </div>
                         <div>
                             {
                                 input.foto && input.foto.length ?
                                 input.foto.map((foto, index) => (
                                     <div key={index}>
-                                        <img src={
-                                            typeof foto === 'string' ?
-                                            foto :
-                                            arrayBufferPhotoToBlob(foto)
-                                        } 
-                                        alt="Img not found" 
-                                        
-                                        />
+                                        <img src={foto} 
+                                        alt="Img not found" />
                                         <button
                                         onClick={(e) => {
                                             e.preventDefault()
@@ -444,7 +438,5 @@ function FormProduct() {
         </div>
     )
 }
-
-
 
 export default FormProduct
