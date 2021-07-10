@@ -1,5 +1,18 @@
+<<<<<<< Updated upstream
 import React, {useState} from 'react'
 import Select from 'react-select'
+=======
+import React, { useState, useMemo } from 'react';
+import { BsTrash } from 'react-icons/bs';
+import { AiTwotoneEdit } from 'react-icons/ai';
+import { useTable, usePagination } from 'react-table';
+import Dropzone, { useDropzone } from 'react-dropzone';
+import Select from 'react-select';
+import { useSelector } from 'react-redux';
+import './FormProduct.css';
+import axios from 'axios';
+import { url } from '../../constantURL';
+>>>>>>> Stashed changes
 
 function FormProduct() {
 
@@ -17,6 +30,62 @@ function FormProduct() {
     //
     // validar el input antes de mostrar boton de enviar y mostrar mensaje de error
     // mensaje de confirmacion al querer crear actualizar eliminar
+<<<<<<< Updated upstream
+=======
+
+    // FEATURES/FALTANTES:
+    // conectar con back
+    // 
+    // validar input + requireds
+    // 
+    // post new product funcional
+    // 
+    // put producto existente funcional
+    // boton agregar cambios en form
+    // 
+    // delete producto existente en detalle
+    // boton eliminar producto en form
+    // 
+    // multi select para marcar varios productos para eliminar de una
+    // multi delete productos existentes funcional
+    // boton eliminar todos  
+    //  
+    // pasar de useState al store de redux
+    // filtros de tabla: precio mayor que menor que ingresado por admin, categoria,
+    // ordenamientos: precio, categorias, stock
+    // 
+    // estilos
+    // textarea grande para description
+    // hovers en botones
+    // stock en rojo cuando es 0
+    // estilos cuando la mayoria de las features ya esten
+    // 
+    // modularizar funciones
+
+
+    const categories = useSelector((state) => state.categories);
+    function seter(array) {
+        let obj = {}
+        array.map((cat) => {
+            let a = cat.id;
+            obj[a] = false;
+            return null
+        })
+        return obj
+    }
+
+    const productsHardcoded = require('./DBproductsform.json')
+    const [actionType, setActionType] = useState('create')
+    const [input, setInput] = useState({
+        foto: []
+    })
+    
+
+    const [cat, setCat] = useState(seter(categories))
+    const handleCheck = (event) => {
+        setCat({ ...cat, [event.target.value]: event.target.checked });
+    };
+>>>>>>> Stashed changes
 
     const [actionType, setActionType] = useState(null)
     const [input, setInput] = useState({})
@@ -24,6 +93,7 @@ function FormProduct() {
         { value: 'create', label: 'Crear un nuevo producto' },
         { value: 'readAndModified', label: 'Ver los productos existentes, editarlos o eliminarlos' }
     ]
+<<<<<<< Updated upstream
     // const allProducts = productsHardcoded.map(product => {
     //     return {
     //         value: product.id,
@@ -34,24 +104,175 @@ function FormProduct() {
     //aca iria un map de una ruta nueva del back que traiga solamente nombre y id de los productos o algun dato mas pero que no sea full para que no sea tan pesado
     // una vez que seleccionas un producto, se pide todo el detalle al back y se carga en el input del formulario para ver si queres borrarlo, editarlo o no hacer nada
     
+=======
+
+>>>>>>> Stashed changes
     function handleChange(e) {
         e.preventDefault()
         const { value, name } = e.target;
         setInput({
             ...input,
             [name]: value
-        });
+        });        
+    }
+<<<<<<< Updated upstream
+
+=======
+
+    const onDrop = (acceptedFiles) => {
+        acceptedFiles.forEach(async (file) => {
+            const url = 'https://api.cloudinary.com/v1_1/dn6fn4w40/image/upload'
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("upload_preset", "spjvomor");
+            fetch(url, {
+                method: 'POST',
+                body: formData
+            })
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    const img = data.url
+                    setInput({
+                        ...input,
+                        foto: [...input.foto, img]
+                    })
+                })
+                .catch((err) => console.error(err))
+        })
     }
 
+    useDropzone({ onDrop })
+
+    const maxImageSize = 250000
+
+    const deleteProduct = (id) => {
+        alert(`Intentas eliminar el producto con el id ${id}`)
+    }
+
+    const editProduct = (id) => {
+        const product = productsHardcoded.find(product => product.id === id)
+        setInput(product)
+        setActionType('create')
+    }
+
+    const deletePhoto = (index) => {
+        const photos = input.foto
+        photos.splice(index, 1)
+        setInput({
+            ...input,
+            foto: photos
+        })
+    }
+
+    // eslint-disable-next-line
+    const dataTable = productsHardcoded.map(product => {
+        return {
+            col1: (<BsTrash onClick={() => deleteProduct(product.id)} />),
+            col2: (<AiTwotoneEdit onClick={() => editProduct(product.id)} />),
+            col3: product.name.length > 50 ? `${product.name.slice(0, 50)} ...` : product.name,
+            col4: product.category.join(', '),
+            col5: `$ ${product.price}`,
+            col6: product.stock,
+        }
+    })
+
+    const columnsTable = [
+        {
+            Header: 'Eliminar',
+            accessor: 'col1', // accessor is the "key" in the data
+        },
+        {
+            Header: 'Editar',
+            accessor: 'col2', // accessor is the "key" in the data
+        },
+        {
+            Header: 'Nombre',
+            accessor: 'col3', // accessor is the "key" in the data
+        },
+        {
+            Header: 'Categorias',
+            accessor: 'col4',
+        },
+        {
+            Header: 'Precio',
+            accessor: 'col5',
+        },
+        {
+            Header: 'Stock',
+            accessor: 'col6',
+        },
+    ]
+
+    // eslint-disable-next-line
+    const columns = useMemo(() => columnsTable, [])
+    // eslint-disable-next-line
+    const data = useMemo(() => dataTable, [])
+
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        page,
+        nextPage,
+        previousPage,
+        canNextPage,
+        canPreviousPage,
+        pageOptions,
+        gotoPage,
+        pageCount,
+        setPageSize,
+        state,
+        prepareRow,
+    } = useTable({
+        columns,
+        data,
+        initialState: {
+            pageSize: 20
+        }
+    },
+        usePagination
+    )
+
+    const { pageIndex, pageSize } = state
+
+    async function onSubmit(e) {
+        e.preventDefault()
+        const category = []
+        for (let categ in cat) {
+            if (cat[categ]) {
+                category.push(categ)
+            }
+        }
+        console.log(category)
+        const body = {
+            name: input.name,
+            price: input.price,
+            stock: input.stock,
+            photo: input.foto,
+            category
+        }
+        console.log(body)              
+            await axios.post(`${url}/products`, body)
+            setInput({});
+        
+    }
+
+    
+
+    //  Return de React
+>>>>>>> Stashed changes
     return (
         <div>
             <h2>Accion que deseas realizar:</h2>
             <Select options={actionOptions}
-            onChange={(e) => setActionType(e.value)}>
+                onChange={(e) => setActionType(e.value)}>
             </Select>
             {
                 // form para crear producto nuevo
                 actionType === 'create' ?
+<<<<<<< Updated upstream
                 <form action="">
                     <div>
                         <input type="text"
@@ -103,8 +324,207 @@ function FormProduct() {
                 </form> :
                 // barra de busqueda y lista de productos existentes
                 <p>Lista de productos y barra de busqueda</p>
+=======
+                    <form onSubmit={(e) => onSubmit(e)}>
+                        <button type="submit">Enviar</button>
+                        <div>
+                            <input type="text"
+                                name="name"
+                                placeholder="Nombre del producto"
+                                pattern="^[a-zA-Z ,.-]+$"
+                                value={input.name}
+                                onChange={handleChange} />
+                        </div>
+                        <div>
+                            <input type="text"
+                                name="description"
+                                pattern="^[a-zA-Z0-9 ,.-]+$"
+                                placeholder="Descripcion del producto"
+                                value={input.description}
+                                onChange={handleChange} />
+                        </div>
+                        <div>
+                            <input type="number"
+                                min={0}
+                                max={500}
+                                name="stock"
+                                placeholder="Stock actual"
+                                value={input.stock}
+                                onChange={handleChange} />
+                        </div>
+                        <div>
+                            <input type="number"
+                                min={0}
+                                max={500}
+                                name="selled"
+                                placeholder="Cantidades vendidas"
+                                value={input.selled}
+                                onChange={handleChange} />
+                        </div>
+                        <div>
+                            <input type="number"
+                                min={0}
+                                max={1000000000}
+                                name="price"
+                                placeholder="Precio del producto"
+                                value={input.price}
+                                onChange={handleChange} />
+                        </div>
+                        <div>
+                            <input type="number"
+                                min={0}
+                                max={100}
+                                name="perc_desc"
+                                placeholder="Porcentaje de descuento"
+                                value={input.perc_desc}
+                                onChange={handleChange} />
+                        </div>
+                        <div>
+                            {categories.map(c => {
+                                return (
+                                    <li>
+                                        <input type='checkbox' value={c.id} onChange={handleCheck} />
+                                        <label>{c.name}</label>
+                                    </li>
+                                )
+                            })}
+                        </div>
+                        <div>
+                            <div>
+                                {
+                                    input.foto.length < 3 ?
+                                        <Dropzone
+                                            onDrop={acceptedFiles => onDrop(acceptedFiles)}
+                                            maxSize={maxImageSize}
+                                            maxFiles={3}
+                                            accept='image/*'>
+                                            {({ getRootProps, getInputProps }) => (
+                                                <section>
+                                                    <div {...getRootProps()} className="dropzone">
+                                                        <input {...getInputProps()} />
+                                                        <p>Arrastra y suelta tus fotos aqui o haz click para cargar desde el explorador(máx {maxImageSize / 1000}kb)</p>
+                                                    </div>
+                                                </section>
+                                            )}
+                                        </Dropzone> :
+                                        <h2>Puedes cargar hasta un maximo de 3 fotos, elimina alguna si quieres cargar una nueva</h2>
+                                }
+                            </div>
+                            <div>
+                                {
+                                    input.foto && input.foto.length ?
+                                        input.foto.map((foto, index) => (
+                                            <div key={index}>
+                                                <img src={foto}
+                                                    alt="Img not found" />
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.preventDefault()
+                                                        deletePhoto(index)
+                                                    }
+                                                    }>
+                                                    Eliminar foto
+                                                </button>
+                                            </div>
+                                        )) :
+                                        null
+                                }
+                            </div>
+                        </div>
+
+                    </form> :
+                    <div>
+
+                        <table {...getTableProps()}>
+                            <thead>
+                                {// Loop over the header rows
+                                    headerGroups.map(headerGroup => (
+                                        // Apply the header row props
+                                        <tr {...headerGroup.getHeaderGroupProps()}>
+                                            {// Loop over the headers in each row
+                                                headerGroup.headers.map(column => (
+                                                    // Apply the header cell props
+                                                    <th {...column.getHeaderProps()}>
+                                                        {// Render the header
+                                                            column.render('Header')}
+                                                    </th>
+                                                ))}
+                                        </tr>
+                                    ))}
+                            </thead>
+                            {/* Apply the table body props */}
+                            <tbody {...getTableBodyProps()}>
+                                {// Loop over the table rows
+                                    page.map(row => {
+                                        // Prepare the row for display
+                                        prepareRow(row)
+                                        return (
+                                            // Apply the row props
+                                            <tr {...row.getRowProps()}>
+                                                {// Loop over the rows cells
+                                                    row.cells.map(cell => {
+                                                        // Apply the cell props
+                                                        return (
+                                                            <td {...cell.getCellProps()}>
+                                                                {// Render the cell contents
+                                                                    cell.render('Cell')}
+                                                            </td>
+                                                        )
+                                                    })}
+                                            </tr>
+                                        )
+                                    })}
+                            </tbody>
+                        </table>
+                        <div>
+                            <button
+                                onClick={() => gotoPage(0)}
+                                disabled={!canPreviousPage}>
+                                {'<<'}
+                            </button>
+                            <button
+                                onClick={() => previousPage()}
+                                disabled={!canPreviousPage}>
+                                Anterior
+                            </button>
+                            <span>
+                                Página
+                                <strong>
+                                    {` ${pageIndex + 1} `}
+                                </strong>
+                                {`de ${pageOptions.length}`}
+                            </span>
+                            <button
+                                onClick={() => nextPage()}
+                                disabled={!canNextPage}>
+                                Siguiente
+                            </button>
+                            <button
+                                onClick={() => gotoPage(pageCount - 1)}
+                                disabled={!canNextPage}>
+                                {'>>'}
+                            </button>
+                            <select value={pageSize}
+                                onChange={e => setPageSize(Number(e.target.value))}>
+                                {
+                                    [10, 50, 100, dataTable.length].map((pageSize, i) => (
+                                        i !== 3 ?
+                                            <option key={pageSize}
+                                                value={pageSize}>
+                                                Ver de a {pageSize} items
+                                            </option> :
+                                            <option key={dataTable.length}
+                                                value={dataTable.length}>
+                                                Ver todo
+                                            </option>
+                                    ))
+                                }
+                            </select>
+                        </div>
+                    </div>
+>>>>>>> Stashed changes
             }
-            
+
         </div>
     )
 }
