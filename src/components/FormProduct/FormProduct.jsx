@@ -212,11 +212,21 @@ function FormProduct() {
     
     async function onSubmit(e) {
         e.preventDefault()
+        const category = []
+        for (let categ in cat) {
+            if(cat[categ]) {
+                category.push(categ)
+            }
+        }
+        console.log(category)
         const body = {
             name: input.name,
             price: input.price,
             stock: input.stock,
+            photo: input.foto,
+            category
         }
+        console.log(body)
         const response = await axios.post(`${url}/products`, body)
         console.log(response)
     }
