@@ -253,14 +253,14 @@ function FormProduct() {
                             <input type="text"
                                 name="name"
                                 placeholder="Nombre del producto"
-                                pattern="^[a-zA-Z ,.-]+$"
+                                pattern="^[a-zA-Z0-9 ,.-]+$"
                                 value={input.name}
                                 onChange={handleChange} />
                         </div>
                         <div>
                             <input type="text"
                                 name="descrip"
-                                pattern="^[a-zA-Z0-9 ,.-]+$"
+                                pattern="^[a-zA-Z0-9 ,.-?]+$"
                                 placeholder="Descripcion del producto"
                                 value={input.descrip}
                                 onChange={handleChange} />
