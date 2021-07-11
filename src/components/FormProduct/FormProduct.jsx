@@ -4,60 +4,18 @@ import { AiTwotoneEdit } from 'react-icons/ai'
 import { useTable, usePagination } from 'react-table'
 import Dropzone, { useDropzone } from 'react-dropzone'
 import Select from 'react-select'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { getAllProducts } from '../../Redux/Actions'
 import './FormProduct.css'
 import axios from 'axios'
 // import { url } from '../../constantURL' no funca dentro de un async, toma la url local
 
 function FormProduct() {
 
-    // como admin poder
-    // 1) cargar un producto nuevo
-    // 1)a) form (name, photos (max 3), descrip, stock, selled, perc_desc, price, category)
-    // 2) ver facilmente todos los productos y buscar por nombre o categoria para acceder al detalle y asi modificarlos o eliminarlos
-    // 2)a) ver todos los productos de una forma practica
-    // 2)b) buscar productos por nombre
-    // 2)c) buscar productos por categoria
-    // 2)d) seleccionar un producto y (form)
-    //      ver todos sus datos
-    //      modificar sus datos
-    //      borrarlo
-    //
-    // validar el input antes de mostrar boton de enviar y mostrar mensaje de error
-    // mensaje de confirmacion al querer crear actualizar eliminar
-
-    // FEATURES/FALTANTES:
-    // conectar con back
-    // 
-    // validar input + requireds
-    // 
-    // post new product funcional
-    // 
-    // put producto existente funcional
-    // boton agregar cambios en form
-    // 
-    // delete producto existente en detalle
-    // boton eliminar producto en form
-    // 
-    // multi select para marcar varios productos para eliminar de una
-    // multi delete productos existentes funcional
-    // boton eliminar todos  
-    //  
-    // pasar de useState al store de redux
-    // filtros de tabla: precio mayor que menor que ingresado por admin, categoria,
-    // ordenamientos: precio, categorias, stock
-    // 
-    // estilos
-    // textarea grande para descrip
-    // hovers en botones
-    // stock en rojo cuando es 0
-    // estilos cuando la mayoria de las features ya esten
-    // 
-    // modularizar funciones
-
-
     const categories = useSelector((state) => state.categories);
-    function seter(array) {
+    const allProducts = useSelector(state => state.all_products)
+    
+    const seter = (array) => {
         let obj = {}
         array.map((cat) => {
             let a = cat.id;
@@ -66,21 +24,21 @@ function FormProduct() {
         })
         return obj
     }
-    
+
     const [cat, setCat] = useState(seter(categories))
+    const [actionType, setActionType] = useState('create')
+    const [input, setInput] = useState({
+        photo: []
+    })
+    
+    const dispatch = useDispatch()
+
+    
     const handleCheck = (event, id) => {
         event ?
         setCat({ ...cat, [event.target.value]: event.target.checked }) :
         setCat({...cat, [id]: true})
     };
-
-    const [actionType, setActionType] = useState('create')
-    const [input, setInput] = useState({
-        photo: []
-    })
-
-    const allProducts = useSelector(state => state.all_products)
-
 
     const actionOptions = [
         { value: 'create', label: 'Crear un nuevo producto' },
@@ -125,8 +83,17 @@ function FormProduct() {
 
     const maxImageSize = 250000
 
-    const deleteProduct = (id) => {
-        alert(`Intentas eliminar el producto con el id ${id}`)
+    const deleteProduct = async (id) => {
+        try {
+            await axios.delete(`http://localhost:3000/products`, {
+                data: {id}
+            })
+            dispatch(getAllProducts())
+            window.alert('Se ha eliminado el producto con exito')
+        } catch(err) {
+            window.alert('ocurrió un problema y no se pudo eliminar el producto')
+            console.error(err)
+        }
     }
 
     const editProduct = async (id) => {
@@ -197,7 +164,7 @@ function FormProduct() {
     // eslint-disable-next-line
     const columns = useMemo(() => columnsTable, [])
     // eslint-disable-next-line
-    const data = useMemo(() => dataTable, [])
+    const data = useMemo(() => dataTable, [allProducts])
 
     const {
         getTableProps,
@@ -264,7 +231,7 @@ function FormProduct() {
                 window.alert('Ocurrió un problema y no se pudo actualizar el producto')
             }
         }
-        
+        dispatch(getAllProducts())        
     }
 
     //  Return de React
