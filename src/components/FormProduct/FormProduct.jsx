@@ -130,11 +130,20 @@ function FormProduct() {
     }
 
     const editProduct = async (id) => {
-        const response = await axios.get(`${url}/products/p/${id}`)
-        setInput(response.data)
-        const categories = cat
-        response.data.Categories.map(category => category.id).forEach(cat => handleCheck(null, cat))
-        setActionType('update')
+        try {
+            const response = await axios.get(`http://3.15.15.92:3000/products/p/${id}`)
+            setActionType('update') 
+            setInput(response.data)
+            const catTrueObj = {}
+
+            Object.keys(cat).forEach( key => catTrueObj[key] = false )
+
+            response.data.Categories.map(category => category.id).forEach(category => catTrueObj[category] = true)
+            setCat({...catTrueObj})
+        }
+        catch(err){
+            console.error(err)
+        }
     }
 
     const deletePhoto = (index) => {
@@ -217,7 +226,7 @@ function FormProduct() {
 
     const { pageIndex, pageSize } = state
 
-    async function onSubmit(e) {
+    const onSubmit = async (e) => {
         e.preventDefault()
         const category = []
         for (let categ in cat) {
@@ -225,7 +234,6 @@ function FormProduct() {
                 category.push(categ)
             }
         }
-        console.log(category)
         const body = {
             name: input.name,
             price: input.price,
@@ -233,9 +241,7 @@ function FormProduct() {
             photo: input.photo,
             category
         }
-        console.log(body)
         const response = await axios.post(`${url}/products`, body)
-        console.log(response)
     }
 
     //  Return de React
@@ -243,7 +249,8 @@ function FormProduct() {
         <div>
             <h2>Accion que deseas realizar:</h2>
             <Select options={actionOptions}
-                onChange={(e) => setActionType(e.value)}>
+                onChange={(e) => setActionType(e.value)}
+                value={actionOptions.filter(option => option.value === actionType)}>
             </Select>
             {
                 // form para crear producto nuevo
@@ -306,7 +313,10 @@ function FormProduct() {
                             {categories.map(c => {
                                 return (
                                     <li>
-                                        <input type='checkbox' value={c.id} onChange={handleCheck} />
+                                        <input type='checkbox'
+                                        value={c.id}
+                                        onChange={handleCheck}
+                                        {...(cat[c.id] ? {checked: 'checked'} : {checked: false})} />
                                         <label>{c.name}</label>
                                     </li>
                                 )
