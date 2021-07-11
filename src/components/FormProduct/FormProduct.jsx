@@ -6,9 +6,11 @@ import Dropzone, { useDropzone } from 'react-dropzone'
 import Select from 'react-select'
 import { useSelector, useDispatch } from 'react-redux'
 import { getAllProducts } from '../../Redux/Actions'
+import {url} from '../../constantURL'
 import './FormProduct.css'
 import axios from 'axios'
-import { backendUrl } from '../../constantURL.js'
+
+const backendUrl = url
 
 function FormProduct() {
 
