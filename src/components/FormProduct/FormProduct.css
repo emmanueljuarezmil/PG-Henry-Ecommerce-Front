@@ -1,5 +1,36 @@
-.dropzone {
+.formproduct-container {
+}
+
+.formproduct-form-container{
+}
+
+.formproduct-dropzone-container {
+}
+
+.formproduct-dropzone-dropzone {
     width: 80%;
     height: 20%;
     border: dashed black;
+}
+
+.formproduct-table-container {
+}
+
+.formproduct-table-table {
+}
+
+.formproduct-table-pagination-container {
+
+}
+
+.formproduct-images-container {
+
+}
+
+.formproduct-images-item-container {
+
+}
+
+.formproduct-images-item-image {
+    
 }
