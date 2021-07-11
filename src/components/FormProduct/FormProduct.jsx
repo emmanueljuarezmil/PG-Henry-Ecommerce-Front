@@ -87,15 +87,19 @@ function FormProduct() {
     const maxImageSize = 300*1024
 
     const deleteProduct = async (id) => {
-        try {
-            await axios.delete(`${backendUrl}/products`, {
-                data: {id}
-            })
-            dispatch(getAllProducts())
-            window.alert('Se ha eliminado el producto con exito')
-        } catch(err) {
-            window.alert('ocurrió un problema y no se pudo eliminar el producto')
-            console.error(err)
+        const name = allProducts.filter(product => product.id === id)[0].name
+        const result = window.confirm(`Estás seguro de que deseas eliminar ${name}`)
+        if(result) {
+            try {
+                await axios.delete(`${backendUrl}/products`, {
+                    data: {id}
+                })
+                dispatch(getAllProducts())
+                window.alert('Se ha eliminado el producto con exito')
+            } catch(err) {
+                window.alert('ocurrió un problema y no se pudo eliminar el producto')
+                console.error(err)
+            }
         }
     }
 
