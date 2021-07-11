@@ -13,11 +13,12 @@ import About from './components/About/About';
 import User from './components/User/User';
 import Nav from './components/Nav/Nav';
 
+
 function App() {
   return (
       <React.Fragment>
-        <Route exact path='/' component={LandingPage}/>
         <Route path='/' component={Nav}/>
+        <Route exact path='/' component={LandingPage}/>
         <Route exact path='/home' component={Home}/>
         <Route exact path='/product/:id' component={ProductDetail}/>
         <Route exact path='/admin/product' component={FormProduct}/>

@@ -11,6 +11,7 @@ import './FormProduct.css'
 import axios from 'axios'
 
 const backendUrl = url
+const compressImageUrl = 'https://imagecompressor.com/'
 
 function FormProduct() {
 
@@ -67,34 +68,38 @@ function FormProduct() {
                 method: 'POST',
                 body: formData
             })
-                .then((response) => {
-                    return response.json();
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                const img = data.url
+                setInput({
+                    ...input,
+                    photo: [...input.photo, img]
                 })
-                .then((data) => {
-                    const img = data.url
-                    setInput({
-                        ...input,
-                        photo: [...input.photo, img]
-                    })
-                })
-                .catch((err) => console.error(err))
+            })
+            .catch((err) => console.error(err))
         })
     }
 
     useDropzone({ onDrop })
 
-    const maxImageSize = 250000
+    const maxImageSize = 300*1024
 
     const deleteProduct = async (id) => {
-        try {
-            await axios.delete(`${backendUrl}/products`, {
-                data: {id}
-            })
-            dispatch(getAllProducts())
-            window.alert('Se ha eliminado el producto con exito')
-        } catch(err) {
-            window.alert('ocurrió un problema y no se pudo eliminar el producto')
-            console.error(err)
+        const name = allProducts.filter(product => product.id === id)[0].name
+        const result = window.confirm(`Estás seguro de que deseas eliminar ${name}`)
+        if(result) {
+            try {
+                await axios.delete(`${backendUrl}/products`, {
+                    data: {id}
+                })
+                dispatch(getAllProducts())
+                window.alert('Se ha eliminado el producto con exito')
+            } catch(err) {
+                window.alert('ocurrió un problema y no se pudo eliminar el producto')
+                console.error(err)
+            }
         }
     }
 
@@ -212,8 +217,7 @@ function FormProduct() {
         }
         if(actionType === 'create') {
             try {
-                const response = await axios.post(`${backendUrl}/products`, body)
-                console.log(response)
+                await axios.post(`${backendUrl}/products`, body)
                 window.alert('Se ha creado el producto con exito')
             }
             catch(err) {
@@ -224,8 +228,7 @@ function FormProduct() {
         if(actionType === 'update') {
             try {
                 body.id = input.id
-                const response = await axios.put(`${backendUrl}/products/update`, body)
-                console.log(response)
+                await axios.put(`${backendUrl}/products/update`, body)
                 window.alert('Se ha actualizado el producto con exito')
             }
             catch(err) {
@@ -238,218 +241,227 @@ function FormProduct() {
 
     //  Return de React
     return (
-        <div>
+        <div className='formproduct-container'>
             <h2>Accion que deseas realizar:</h2>
             <Select options={actionOptions}
                 onChange={(e) => setActionType(e.value)}
                 value={actionOptions.filter(option => option.value === actionType)}>
             </Select>
-            {
-                // form para crear producto nuevo
-                actionType === 'create' || actionType === 'update' ?
-                    <form onSubmit={(e) => onSubmit(e)}>
-                        <button type="submit">Enviar</button>
-                        <div>
-                            <input type="text"
-                                name="name"
-                                placeholder="Nombre del producto"
-                                pattern="^[a-zA-Z0-9 ,.-]+$"
-                                value={input.name}
-                                onChange={handleChange} />
-                        </div>
-                        <div>
-                            <input type="text"
-                                name="descrip"
-                                pattern="^[a-zA-Z0-9 ,.-?]+$"
-                                placeholder="Descripcion del producto"
-                                value={input.descrip}
-                                onChange={handleChange} />
-                        </div>
-                        <div>
-                            <input type="number"
-                                min={0}
-                                max={500}
-                                name="stock"
-                                placeholder="Stock actual"
-                                value={input.stock}
-                                onChange={handleChange} />
-                        </div>
-                        <div>
-                            <input type="number"
-                                min={0}
-                                max={500}
-                                name="selled"
-                                placeholder="Cantidades vendidas"
-                                value={input.selled}
-                                onChange={handleChange} />
-                        </div>
-                        <div>
-                            <input type="number"
-                                min={0}
-                                max={1000000000}
-                                name="price"
-                                placeholder="Precio del producto"
-                                value={input.price}
-                                onChange={handleChange} />
-                        </div>
-                        <div>
-                            <input type="number"
-                                min={0}
-                                max={100}
-                                name="perc_desc"
-                                placeholder="Porcentaje de descuento"
-                                value={input.perc_desc}
-                                onChange={handleChange} />
-                        </div>
-                        <div>
-                            {categories.map(c => {
-                                return (
-                                    <li>
-                                        <input type='checkbox'
-                                        value={c.id}
-                                        onChange={handleCheck}
-                                        {...(cat[c.id] ? {checked: 'checked'} : {checked: false})} />
-                                        <label>{c.name}</label>
-                                    </li>
-                                )
-                            })}
-                        </div>
-                        <div>
+            <div className='formproduct-form-container'>
+                {
+                    actionType === 'create' || actionType === 'update' ?
+                        <form onSubmit={(e) => onSubmit(e)}>
+                            <button type="submit">Enviar</button>
                             <div>
-
-                                {
-                                    input.photo && input.photo.length < 3 ?
-                                        <Dropzone
-                                            onDrop={acceptedFiles => onDrop(acceptedFiles)}
-                                            maxSize={maxImageSize}
-                                            maxFiles={3}
-                                            accept='image/*'>
-                                            {({ getRootProps, getInputProps }) => (
-                                                <section>
-                                                    <div {...getRootProps()} className="dropzone">
-                                                        <input {...getInputProps()} />
-                                                        <p>Arrastra y suelta tus photos aqui o haz click para cargar desde el explorador(máx {maxImageSize / 1000}kb)</p>
-                                                    </div>
-                                                </section>
-                                            )}
-                                        </Dropzone> :
-                                        <h2>Puedes cargar hasta un maximo de 3 photos, elimina alguna si quieres cargar una nueva</h2>
-                                }
+                                <input type="text"
+                                    name="name"
+                                    placeholder="Nombre del producto"
+                                    pattern="^[a-zA-Z0-9 ,.-]+$"
+                                    value={input.name}
+                                    onChange={handleChange} />
                             </div>
                             <div>
-                                {
-                                    input.photo && input.photo.length ?
-                                        input.photo.map((photo, index) => (
-                                            <div key={index}>
-                                                <img src={photo}
-                                                    alt="Img not found" />
-                                                <button
-                                                    onClick={(e) => {
-                                                        e.preventDefault()
-                                                        deletePhoto(index)
-                                                    }
-                                                    }>
-                                                    Eliminar photo
-                                                </button>
-                                            </div>
-                                        )) :
-                                        null
-                                }
+                                <input type="text"
+                                    name="descrip"
+                                    pattern="^[a-zA-Z0-9 ,.-?]+$"
+                                    placeholder="Descripcion del producto"
+                                    value={input.descrip}
+                                    onChange={handleChange} />
                             </div>
-                        </div>
+                            <div>
+                                <input type="number"
+                                    min={0}
+                                    max={500}
+                                    name="stock"
+                                    placeholder="Stock actual"
+                                    value={input.stock}
+                                    onChange={handleChange} />
+                            </div>
+                            <div>
+                                <input type="number"
+                                    min={0}
+                                    max={500}
+                                    name="selled"
+                                    placeholder="Cantidades vendidas"
+                                    value={input.selled}
+                                    onChange={handleChange} />
+                            </div>
+                            <div>
+                                <input type="number"
+                                    min={0}
+                                    max={1000000000}
+                                    name="price"
+                                    placeholder="Precio del producto"
+                                    value={input.price}
+                                    onChange={handleChange} />
+                            </div>
+                            <div>
+                                <input type="number"
+                                    min={0}
+                                    max={100}
+                                    name="perc_desc"
+                                    placeholder="Porcentaje de descuento"
+                                    value={input.perc_desc}
+                                    onChange={handleChange} />
+                            </div>
+                            <div>
+                                {categories.map(c => {
+                                    return (
+                                        <li>
+                                            <input type='checkbox'
+                                            value={c.id}
+                                            onChange={handleCheck}
+                                            {...(cat[c.id] ? {checked: 'checked'} : {checked: false})} />
+                                            <label>{c.name}</label>
+                                        </li>
+                                    )
+                                })}
+                            </div>
+                            <div>
+                                <div className="formproduct-dropzone-container">
 
-                    </form> :
-                    <div>
+                                    {
+                                        input.photo && input.photo.length < 3 ?
+                                            <Dropzone
+                                                onDrop={acceptedFiles => onDrop(acceptedFiles)}
+                                                maxSize={maxImageSize}
+                                                maxFiles={3}
+                                                accept='image/*'>
+                                                {({ getRootProps, getInputProps }) => (
+                                                    <section>
+                                                        <div {...getRootProps()} className='formproduct-dropzone-dropzone'>
+                                                            <input {...getInputProps()} />
+                                                            <p>Arrastra y suelta tus photos aqui o haz click para cargar desde el explorador(máx {maxImageSize / 1024}kb)</p>
+                                                        </div>
+                                                        <a rel="noopener noreferrer" href={compressImageUrl} target="_blank">Tu imagen excede el tamaño permitido? Pulsa aqui para comprimirla</a>
+                                                    </section>
+                                                )}
+                                            </Dropzone> :
+                                            <h2>Puedes cargar hasta un maximo de 3 photos, elimina alguna si quieres cargar una nueva</h2>
+                                    }
+                                </div>
+                                <div className='formproduct-images-container'>
+                                    {
+                                        input.photo && input.photo.length ?
+                                            input.photo.map((photo, index) => (
+                                                <div key={index}
+                                                className='formproduct-images-item-container'>
+                                                    <img src={photo}
+                                                        alt="Img not found"
+                                                        className='formproduct-images-item-image'/>
+                                                    <button
+                                                        onClick={(e) => {
+                                                            e.preventDefault()
+                                                            deletePhoto(index)
+                                                        }
+                                                        }>
+                                                        Eliminar foto
+                                                    </button>
+                                                </div>
+                                            )) :
+                                            null
+                                    }
+                                </div>
+                            </div>
 
-                        <table {...getTableProps()}>
-                            <thead>
-                                {// Loop over the header rows
-                                    headerGroups.map(headerGroup => (
-                                        // Apply the header row props
-                                        <tr {...headerGroup.getHeaderGroupProps()}>
-                                            {// Loop over the headers in each row
-                                                headerGroup.headers.map(column => (
-                                                    // Apply the header cell props
-                                                    <th {...column.getHeaderProps()}>
-                                                        {// Render the header
-                                                            column.render('Header')}
-                                                    </th>
-                                                ))}
-                                        </tr>
-                                    ))}
-                            </thead>
-                            {/* Apply the table body props */}
-                            <tbody {...getTableBodyProps()}>
-                                {// Loop over the table rows
-                                    page.map(row => {
-                                        // Prepare the row for display
-                                        prepareRow(row)
-                                        return (
-                                            // Apply the row props
-                                            <tr {...row.getRowProps()}>
-                                                {// Loop over the rows cells
-                                                    row.cells.map(cell => {
-                                                        // Apply the cell props
-                                                        return (
-                                                            <td {...cell.getCellProps()}>
-                                                                {// Render the cell contents
-                                                                    cell.render('Cell')}
-                                                            </td>
-                                                        )
-                                                    })}
+                        </form> :
+                        null
+                }
+            </div>
+            <div className='formproduct-table-container'>
+                {
+                    actionType === 'read' ?
+                        <div className='formproduct-table-table'>
+                            <table {...getTableProps()}>
+                                <thead>
+                                    {// Loop over the header rows
+                                        headerGroups.map(headerGroup => (
+                                            // Apply the header row props
+                                            <tr {...headerGroup.getHeaderGroupProps()}>
+                                                {// Loop over the headers in each row
+                                                    headerGroup.headers.map(column => (
+                                                        // Apply the header cell props
+                                                        <th {...column.getHeaderProps()}>
+                                                            {// Render the header
+                                                                column.render('Header')}
+                                                        </th>
+                                                    ))}
                                             </tr>
-                                        )
-                                    })}
-                            </tbody>
-                        </table>
-                        <div>
-                            <button
-                                onClick={() => gotoPage(0)}
-                                disabled={!canPreviousPage}>
-                                {'<<'}
-                            </button>
-                            <button
-                                onClick={() => previousPage()}
-                                disabled={!canPreviousPage}>
-                                Anterior
-                            </button>
-                            <span>
-                                Página
-                                <strong>
-                                    {` ${pageIndex + 1} `}
-                                </strong>
-                                {`de ${pageOptions.length}`}
-                            </span>
-                            <button
-                                onClick={() => nextPage()}
-                                disabled={!canNextPage}>
-                                Siguiente
-                            </button>
-                            <button
-                                onClick={() => gotoPage(pageCount - 1)}
-                                disabled={!canNextPage}>
-                                {'>>'}
-                            </button>
-                            <select value={pageSize}
-                                onChange={e => setPageSize(Number(e.target.value))}>
-                                {
-                                    [10, 50, 100, dataTable.length].map((pageSize, i) => (
-                                        i !== 3 ?
-                                            <option key={pageSize}
-                                                value={pageSize}>
-                                                Ver de a {pageSize} items
-                                            </option> :
-                                            <option key={dataTable.length}
-                                                value={dataTable.length}>
-                                                Ver todo
-                                            </option>
-                                    ))
-                                }
-                            </select>
-                        </div>
-                    </div>
-            }
-
+                                        ))}
+                                </thead>
+                                {/* Apply the table body props */}
+                                <tbody {...getTableBodyProps()}>
+                                    {// Loop over the table rows
+                                        page.map(row => {
+                                            // Prepare the row for display
+                                            prepareRow(row)
+                                            return (
+                                                // Apply the row props
+                                                <tr {...row.getRowProps()}>
+                                                    {// Loop over the rows cells
+                                                        row.cells.map(cell => {
+                                                            // Apply the cell props
+                                                            return (
+                                                                <td {...cell.getCellProps()}>
+                                                                    {// Render the cell contents
+                                                                        cell.render('Cell')}
+                                                                </td>
+                                                            )
+                                                        })}
+                                                </tr>
+                                            )
+                                        })}
+                                </tbody>
+                            </table>
+                            <div className='formproduct-table-pagination-container'>
+                                <button
+                                    onClick={() => gotoPage(0)}
+                                    disabled={!canPreviousPage}>
+                                    {'<<'}
+                                </button>
+                                <button
+                                    onClick={() => previousPage()}
+                                    disabled={!canPreviousPage}>
+                                    Anterior
+                                </button>
+                                <span>
+                                    Página
+                                    <strong>
+                                        {` ${pageIndex + 1} `}
+                                    </strong>
+                                    {`de ${pageOptions.length}`}
+                                </span>
+                                <button
+                                    onClick={() => nextPage()}
+                                    disabled={!canNextPage}>
+                                    Siguiente
+                                </button>
+                                <button
+                                    onClick={() => gotoPage(pageCount - 1)}
+                                    disabled={!canNextPage}>
+                                    {'>>'}
+                                </button>
+                                <select value={pageSize}
+                                    onChange={e => setPageSize(Number(e.target.value))}>
+                                    {
+                                        [10, 50, 100, dataTable.length].map((pageSize, i) => (
+                                            i !== 3 ?
+                                                <option key={pageSize}
+                                                    value={pageSize}>
+                                                    Ver de a {pageSize} items
+                                                </option> :
+                                                <option key={dataTable.length}
+                                                    value={dataTable.length}>
+                                                    Ver todo
+                                                </option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                        </div> :
+                        null
+                }
+            </div>
         </div>
     )
 }
