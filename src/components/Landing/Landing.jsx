@@ -1,6 +1,8 @@
 import React, {useEffect} from 'react'
 import { useDispatch } from 'react-redux';
 import { getAllProducts, getAllCategories } from '../../Redux/Actions'
+import CarouselComponent from '../CarouselComponent/CarouselComponent'
+
 
 function Landing() {
     const dispatch = useDispatch()
@@ -11,7 +13,7 @@ function Landing() {
 
     return (
         <div>
-            <h1>Esta es la Landing page</h1>
+            <CarouselComponent/>
         </div>
     )
 }
