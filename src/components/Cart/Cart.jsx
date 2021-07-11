@@ -1,10 +1,11 @@
 import React from 'react'
 
+import './Cart.css';
 
 function Cart() {
     return (
         <div>
-            <h1>HOLA SOY EL CART</h1>
+            <h1>Ruta no disponible en este momento</h1>
         </div>
     )
 }

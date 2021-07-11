@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
 import { resetAllProductsHome } from '../../Redux/Actions/index';
+import ModoVintage from './ModoVintage.png';
 
 import './Nav.css';
 
@@ -11,30 +12,30 @@ function Nav() {
 
     return (
         <div className='nav_container'>
-            <div>
-                <NavLink to='/home' onClick={ () => dispatch(resetAllProductsHome()) }>Inicio</NavLink>
+            <div className='nav_item'>
+                <NavLink className="NavLink" to='/home' onClick={() => dispatch(resetAllProductsHome())}>Inicio</NavLink>
             </div>
-            <div>
-                <NavLink to='/about'>Nosotros</NavLink>
+            <div className='nav_item'>
+                <NavLink className="NavLink" to='/about'>Nosotros</NavLink>
             </div>
-            <div>
+            <div className='nav_item'>
                 <h4>LOGO</h4>
             </div>
-            <div>
-                <button>Modo Vintage</button>
+            <div className='nav_item'>
+                <img className='modo_vintage_icon' src={ModoVintage} alt="ModoVintage" />
             </div>
-            <div>
-                <NavLink to='/admin/product'>ADMIN FORM</NavLink>
+            <div className='nav_item'>
+                <NavLink to='/admin/product' className="NavLink">ADMIN FORM</NavLink>
             </div>
-            <div>
-                <NavLink to='/cart'>Carrito</NavLink>
+            <div className='nav_item'>
+                <NavLink className="NavLink" to='/cart'>Carrito</NavLink>
             </div>
-            <div>
-                <NavLink to='/user_settings'>Cuenta</NavLink>
+            <div className='nav_item'>
+                <NavLink className="NavLink" to='/user_settings'>Cuenta</NavLink>
             </div>
-            <div>
-                <SearchBar />
-            </div>
+            {/*<div>
+                 <SearchBar /> 
+            </div>*/}
         </div>
     )
 }

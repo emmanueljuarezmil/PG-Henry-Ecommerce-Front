@@ -1,9 +1,11 @@
 import React from 'react'
 
+import './User.css';
+
 function User() {
     return (
         <div>
-            <h1> HOLA SOY USER SETTINGS </h1>
+            <h1>Ruta no disponible en este momento</h1>
         </div>
     )
 }
