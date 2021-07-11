@@ -7,7 +7,7 @@ import Select from 'react-select'
 import { useSelector } from 'react-redux'
 import './FormProduct.css'
 import axios from 'axios'
-import { url } from '../../constantURL'
+// import { url } from '../../constantURL' no funca dentro de un async, toma la url local
 
 function FormProduct() {
 
@@ -88,7 +88,7 @@ function FormProduct() {
         { value: 'update', label: 'Editar un producto' }
     ]
 
-    function handleChange(e) {
+    const handleChange = (e) => {
         e.preventDefault()
         const { value, name } = e.target;
         setInput({
@@ -131,7 +131,7 @@ function FormProduct() {
 
     const editProduct = async (id) => {
         try {
-            const response = await axios.get(`http://3.15.15.92:3000/products/p/${id}`)
+            const response = await axios.get(`http://localhost:3000/products/p/${id}`)
             setActionType('update') 
             setInput(response.data)
             const catTrueObj = {}
@@ -241,7 +241,30 @@ function FormProduct() {
             photo: input.photo,
             category
         }
-        const response = await axios.post(`${url}/products`, body)
+        if(actionType === 'create') {
+            try {
+                const response = await axios.post(`http://localhost:3000/products`, body)
+                console.log(response)
+                window.alert('Se ha creado el producto con exito')
+            }
+            catch(err) {
+                console.error(err)
+                window.alert('Ocurrió un problema y no se pudo crear el producto')
+            }
+        }
+        if(actionType === 'update') {
+            try {
+                body.id = input.id
+                const response = await axios.put(`http://localhost:3000/products/update`, body)
+                console.log(response)
+                window.alert('Se ha actualizado el producto con exito')
+            }
+            catch(err) {
+                console.error(err)
+                window.alert('Ocurrió un problema y no se pudo actualizar el producto')
+            }
+        }
+        
     }
 
     //  Return de React
