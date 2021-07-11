@@ -44,7 +44,7 @@ const initialState = {
         case GET_PRODUCT_BY_NAME:
             return{
                 ...state,
-                product_search:action.payload
+                product_search: action.payload
             }
         case GET_FILTRATED_CATEGORIES: 
             return {
@@ -54,7 +54,8 @@ const initialState = {
         case RESTART_PRODUCTS: 
             return {
                 ...state,
-                filtered_products: []
+                filtered_products: [],
+                product_search: []
             }
         default:
             return state

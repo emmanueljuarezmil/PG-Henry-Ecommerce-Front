@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import ProductCard from '../ProductCard/ProductCard';
+import Nav from '../Nav/Nav';
 
-import './Catalogue.css';
+import './SearchRoot.css';
 
-function Catalogue() {
-    const products = useSelector((state) => state.all_products);
-    const filter = useSelector((state) => state.filtered_products);
+function SearchRoot() {
+    const searched = useSelector((state) => state.product_search);
 
     const productsPerPage = 15;
     // const [loading,setLoading]=useState(false);
@@ -17,13 +17,8 @@ function Catalogue() {
     let currentProducts = [];
     let pagesNumber = 1;
 
-    if (filter.length) {
-        currentProducts = filter.slice(indexOfFirstProduct, indexOfLastProduct);
-        pagesNumber = Math.ceil(filter.length / productsPerPage);
-    } else {
-        currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
-        pagesNumber = Math.ceil(products.length / productsPerPage);
-    };
+    currentProducts = searched.slice(indexOfFirstProduct, indexOfLastProduct);
+    pagesNumber = Math.ceil(searched.length / productsPerPage);
 
     const nextPage = () => {
         if (currentPage < pagesNumber) {
@@ -38,6 +33,7 @@ function Catalogue() {
 
     return (
         <div>
+            {/* ACA IRIA LA NAV*/}
             <div className='catalogue_container'>
                 {
                     currentProducts?.map((product, index) => (
@@ -53,4 +49,4 @@ function Catalogue() {
     )
 };
 
-export default Catalogue
+export default SearchRoot;

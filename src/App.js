@@ -11,8 +11,7 @@ import Cart from './components/Cart/Cart';
 import FormProduct from './components/FormProduct/FormProduct';
 import About from './components/About/About';
 import User from './components/User/User';
-import Nav from './components/Nav/Nav'
-
+import Nav from './components/Nav/Nav';
 
 function App() {
   return (

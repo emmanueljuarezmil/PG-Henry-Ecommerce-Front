@@ -1,14 +1,18 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
+import { resetAllProductsHome } from '../../Redux/Actions/index';
 
 import './Nav.css';
 
 function Nav() {
+    const dispatch = useDispatch()
+
     return (
         <div className='nav_container'>
             <div>
-                <NavLink to='/home'>Inicio</NavLink>
+                <NavLink to='/home' onClick={ () => dispatch(resetAllProductsHome()) }>Inicio</NavLink>
             </div>
             <div>
                 <NavLink to='/about'>Nosotros</NavLink>
