@@ -1,12 +1,16 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { getAllProducts, getAllCategories } from '../../Redux/Actions'
 import Filter from '../Filter/Filter';
+import { useSelector } from 'react-redux';
+import SearchRoot from '../SearchRoot/SearchRoot';
 import Catalogue from '../Catalogue/Catalogue';
 
 function Home() {
+    const searched = useSelector((state) => state.product_search);
+
     const dispatch = useDispatch()
-    
+
     useEffect(() => {
         dispatch(getAllProducts())
         dispatch(getAllCategories())
@@ -14,8 +18,13 @@ function Home() {
 
     return (
         <div>
-            <Filter/>
-            <Catalogue/>
+            {searched.length ?
+                <SearchRoot /> :
+                <div>
+                    <Filter />
+                    <Catalogue />
+                </div>
+            }
         </div>
     )
 }

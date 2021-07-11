@@ -1,6 +1,7 @@
+import { GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_PRODUCT_BY_NAME, GET_FILTRATED_CATEGORIES, RESTART_PRODUCTS } from "../constants";
+import {url} from '../constantURL'
 
-import { GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_PRODUCT_BY_NAME, GET_FILTRATED_CATEGORIES } from "../constants";
-import {url} from '../../constantURL'
+
 import axios from 'axios';
 
 
@@ -58,7 +59,7 @@ export const getFiltratedCategories = (cat) => {
     if (cat ==='All'){
         return (dispatch) => {
             dispatch({
-                type: 'RESTART_PRODUCTS',
+                type: RESTART_PRODUCTS,
             })
         }
     }
@@ -72,3 +73,10 @@ export const getFiltratedCategories = (cat) => {
     }
 }
 
+export const resetAllProductsHome = () => {
+    return (dispatch) => {
+        dispatch({
+            type: RESTART_PRODUCTS,
+        })
+    }
+}

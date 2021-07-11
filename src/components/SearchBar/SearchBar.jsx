@@ -1,35 +1,33 @@
-import React,{useState} from 'react'
-import './SearchBar.css'
-import {connect} from 'react-redux'
-import { getProductByName } from '../../Redux/Actions/index'
+import React, { useState } from 'react';
+import { useDispatch } from "react-redux";
+import { getProductByName } from '../../Redux/Actions/index';
+import { Link } from 'react-router-dom';
 
+import './SearchBar.css';
 
+function SearchBar() {
+    const [search, setSearch] = useState('')
 
+    const dispatch = useDispatch()
 
-function SearchBar({getProductByName}) {
-    const [search,setSearch]=useState('')
-    
-    const handleChange=(e)=>{
+    const handleChange = (e) => {
         setSearch(e.target.value);
-        getProductByName(search);
-    }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(getProductByName(search))
+        setSearch('')
+    };
+
     return (
         <div classname='cont'>
-            <form>
-                <input className='input-icon' type="text" value={search} onChange={handleChange} placeholder=" Search"/>
+            <form onSubmit={handleSubmit}>
+                <input className='input-icon' type="text" value={search} onChange={handleChange} placeholder=" Search" />
             </form>
         </div>
     )
-}
-function mapStateToProps(state){
-    return {
-        product_search:state.product_search
-    }
-}
-function mapDispatchToProps(dispatch){
-    return {
-        getProductByName:(name)=>dispatch(getProductByName(name))
-    }
-}
-export default connect (mapStateToProps,mapDispatchToProps)(SearchBar);
+};
+
+export default SearchBar;
 
