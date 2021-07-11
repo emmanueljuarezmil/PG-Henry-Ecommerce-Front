@@ -2,6 +2,27 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    font-size: 1rem;
     justify-content: space-around;
-    background-color: rgb(233, 238, 168);
+    padding-top: 0.7rem;
+    padding-bottom: 0.4rem;
+}
+
+
+.NavLink, .nav_container h4, button {
+    color: black;    
+    text-decoration: none;
+    box-shadow: 0.3px 0.1px 3px rgb(20 20 20 / 80%);
+    padding: 0.3rem 0.8rem ;
+    border-radius: 4px;
+    font-weight: 800;
+}
+
+.NavLink:hover {
+    box-shadow: 1px 1px 5px rgb(20 20 20 / 80%); 
+}
+
+.modo_vintage_icon {
+    height: 3.5rem;
+    width: 4rem;
 }

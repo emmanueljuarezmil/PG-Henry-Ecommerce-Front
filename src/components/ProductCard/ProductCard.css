@@ -1,46 +1,68 @@
-.card_container{
-    animation: fadeIn ease 5s;
-    -webkit-animation: fadeIn ease 5s;
-    -moz-animation: fadeIn ease 5s;
-    -o-animation: fadeIn ease 5s;
-    -ms-animation: fadeIn ease 5s;
-    margin-top: 160px;
-   position: relative;
-    display: block;
+.card_container {
+    width: 27rem;
+    height: 20rem;
+    border: solid blue 5px;
+    display:flex
+}
+.card_container_link {
+    width:100%;
+    height: 15rem;
+    display: flex;
     justify-content: center;
     align-items: center;
     align-content: center;
-    width: 360px;
-    height: 480px;
     text-align: center;
     background-color: hsla(0,0%,94.1%,.8);
-    border-radius: 16px;
-    margin: 32px;
+    border-radius: 0.3rem;
     border: 1.6px solid hsla(0,0%,100%,.4);
     color: #464646;
-    box-shadow: 3px 3px 16px rgb(20 20 20 / 80%); 
+    box-shadow: 1px 1px 5px rgb(20 20 20 / 80%);
+    border: solid yellow 5px;
+    margin: auto 0;
 }
 
-.card_container img {
-    display: block;
-    position: absolute;
-    top: 105px;
-    left: 57px;
-    border-radius: 16px;
-    height: 192px;
-    width: 250px;
-    object-fit: cover;
-    object-position: center center;
+.card_container_link:hover{
+    box-shadow: 1px 1px 10px rgb(20 20 20 / 80%);
+    transition: transform .5s ease;
+    transform: scale(1.03);
+}
+
+.card_container_item {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 13rem;
+    max-width: 13rem;
+    height: 100%;
+    margin: 0.5rem;
+    border: solid green 5px
+}
+
+.card_container_item_img {
+    width: 13rem;
+    margin: 0.5rem;
+    border: solid brown 5px;
+}
+
+.product_img {
+    max-width: 5rem;
+    border-radius: 0.2rem;
     box-shadow: 3px 3px 5px rgb(20 20 20 / 80%);
+    border: solid magenta 5px;
+    object-fit: cover;
 }
 
-.card_container button{
-background-image: linear-gradient(to right, #f7e5cc 0%, #e7caa3  51%, #ecd9bd  100%);
-font-size: 17px;
-position: absolute;
-right: 25px;
-bottom: 20px;
-cursor: pointer;
-border-radius: 7px;
-transition: transform 250ms;
+.product_name {
+    font-size: 1rem;
+    text-overflow: ellipsis;
+    border: 5px solid red;
+    max-width: 12rem;
+    margin: auto;
+}
+
+.product_price {
+    font-size: 2rem;
+    font-weight: 700;
+    border: solid orange 5px;
+    margin: auto
 }

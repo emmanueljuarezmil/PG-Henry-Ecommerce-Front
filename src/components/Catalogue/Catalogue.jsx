@@ -31,7 +31,7 @@ function Catalogue() {
         } else setCurrentPage(1);
     }
     const prevPage = () => {
-        if (currentPage !== 1) {
+        if (currentPage > 1) {
             setCurrentPage(currentPage - 1);
         } else setCurrentPage(pagesNumber);
     };
@@ -45,12 +45,21 @@ function Catalogue() {
                     ))
                 }
             </div>
-            <div className='catalogue_buttons'>
-                <button className='prev' onClick={nextPage}>{'< prev'}</button>
-                <button className='next' onClick={prevPage}>{'next >'}</button>
-            </div>
+            {currentPage === 1 ?
+                <div>
+                    <div className='catalogue_buttons'>
+                        <button className='next' onClick={prevPage}>{'siguiente >'}</button>
+                    </div>
+                </div>
+                : <div>
+                    <div className='catalogue_buttons'>
+                        <button className='prev' onClick={nextPage}>{'< anterior'}</button>
+                        <button className='next' onClick={prevPage}>{'siguiente >'}</button>
+                    </div>
+                </div>
+            }
         </div>
     )
 };
 
-export default Catalogue
+export default Catalogue;
