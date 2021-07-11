@@ -1,12 +1,12 @@
 
 import { GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_PRODUCT_BY_NAME, GET_FILTRATED_CATEGORIES } from "../constants";
-import {url} from '../constantURL'
+import {backendUrl} from '../constantURL'
 import axios from 'axios';
 
 
 export const getAllProducts = () => {
     return (dispatch) => {
-        fetch(`${url}/products`)
+        fetch(`${backendUrl}/products`)
 
         .then((response) => response.json())
         .then((response) => 
@@ -19,7 +19,7 @@ export const getAllProducts = () => {
 
 export const getProductDetail = (id) => {
     return (dispatch) => {
-        fetch(`${url}/products/${id}`)
+        fetch(`${backendUrl}/products/${id}`)
         .then((response) => response.json())
         .then((response) => 
         dispatch({
@@ -31,7 +31,7 @@ export const getProductDetail = (id) => {
 
 export const getAllCategories = () => {
     return (dispatch) => {
-        fetch(`${url}/categories`)
+        fetch(`${backendUrl}/categories`)
         .then((response) => response.json())
         .then((response) => 
         dispatch({
@@ -43,7 +43,7 @@ export const getAllCategories = () => {
 
 export const getProductByName=(name)=>{
     return (dispatch)=>{
-        fetch(`${url}/products?name=${name}`)
+        fetch(`${backendUrl}/products?name=${name}`)
         .then((response)=> response.json())
         .then((response)=>
         dispatch({
@@ -63,7 +63,7 @@ export const getFiltratedCategories = (cat) => {
         }
     }
     return (dispatch) => {
-        axios.get(`${url}/category/p_name/${cat}`)
+        axios.get(`${backendUrl}/category/p_name/${cat}`)
         .then((response) => 
         dispatch({
             type: GET_FILTRATED_CATEGORIES,

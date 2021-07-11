@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getAllProducts } from '../../Redux/Actions'
 import './FormProduct.css'
 import axios from 'axios'
-// import { url } from '../../constantURL' no funca dentro de un async, toma la url local
+import { backendUrl } from '../../constantURL.js'
 
 function FormProduct() {
 
@@ -85,7 +85,7 @@ function FormProduct() {
 
     const deleteProduct = async (id) => {
         try {
-            await axios.delete(`http://localhost:3000/products`, {
+            await axios.delete(`${backendUrl}/products`, {
                 data: {id}
             })
             dispatch(getAllProducts())
@@ -98,7 +98,7 @@ function FormProduct() {
 
     const editProduct = async (id) => {
         try {
-            const response = await axios.get(`http://localhost:3000/products/p/${id}`)
+            const response = await axios.get(`${backendUrl}/products/p/${id}`)
             setActionType('update') 
             setInput(response.data)
             const catTrueObj = {}
@@ -210,7 +210,7 @@ function FormProduct() {
         }
         if(actionType === 'create') {
             try {
-                const response = await axios.post(`http://localhost:3000/products`, body)
+                const response = await axios.post(`${backendUrl}/products`, body)
                 console.log(response)
                 window.alert('Se ha creado el producto con exito')
             }
@@ -222,7 +222,7 @@ function FormProduct() {
         if(actionType === 'update') {
             try {
                 body.id = input.id
-                const response = await axios.put(`http://localhost:3000/products/update`, body)
+                const response = await axios.put(`${backendUrl}/products/update`, body)
                 console.log(response)
                 window.alert('Se ha actualizado el producto con exito')
             }
