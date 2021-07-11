@@ -19,7 +19,7 @@ export const getAllProducts = () => {
 
 export const getProductDetail = (id) => {
     return (dispatch) => {
-        fetch(`${url}/products/${id}`)
+        fetch(`${url}/products/p/${id}`)
         .then((response) => response.json())
         .then((response) => 
         dispatch({

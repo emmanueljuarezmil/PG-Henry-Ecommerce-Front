@@ -19,16 +19,13 @@ function ProductDetail({ match }) {
             <div>
                 <img src={product.photo} alt='' />
             </div>
-            <h5>Price: {product.price}</h5>
+            <h3>${product.price}</h3>
             <div>
-                <h2>Description:</h2>
-                <p>{product.description ? product.description : "There's no description available"}</p>
+                <h2>Descripcion:</h2>
+                <p>{product.descrip ? product.descrip : "There's no description available"}</p>
             </div>
             <div>
-                <p>Stock available: {product.stock}</p>
-            </div>
-            <div>
-                <p>Selled: {product.selled}</p>
+              <h3>Stock disponible:</h3><h4>{product.stock}</h4>
             </div>
         </div>
     )
