@@ -1,4 +1,4 @@
-.container{
+.card_container{
     animation: fadeIn ease 5s;
     -webkit-animation: fadeIn ease 5s;
     -moz-animation: fadeIn ease 5s;
@@ -21,7 +21,7 @@
     box-shadow: 3px 3px 16px rgb(20 20 20 / 80%); 
 }
 
-.container img {
+.card_container img {
     display: block;
     position: absolute;
     top: 105px;
@@ -34,7 +34,7 @@
     box-shadow: 3px 3px 5px rgb(20 20 20 / 80%);
 }
 
-.container button{
+.card_container button{
 background-image: linear-gradient(to right, #f7e5cc 0%, #e7caa3  51%, #ecd9bd  100%);
 font-size: 17px;
 position: absolute;
@@ -43,33 +43,4 @@ bottom: 20px;
 cursor: pointer;
 border-radius: 7px;
 transition: transform 250ms;
-}
-
-.category_card{
-    text-align: justify;
-  
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    bottom: 50px;
-    margin: 10px;
-    flex-wrap: wrap;
-    -webkit-justify-content: space-evenly;
-    -webkit-align-items: center;
-    -webkit-flex-wrap: wrap;
-    
-}
-.category_card span{
-    font-size: 15px;
-    margin: 0.5px;
-    padding: 0px 4px;
-    margin-right: 5px;
-    margin-bottom: 7px;
-    border-radius: 4px;
-    background-color: #f0d9b9;
-    box-shadow: 3px 3px 5px rgb(20 20 20 / 80%);
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
 }
