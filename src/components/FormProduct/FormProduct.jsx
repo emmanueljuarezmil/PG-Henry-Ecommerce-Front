@@ -4,60 +4,20 @@ import { AiTwotoneEdit } from 'react-icons/ai'
 import { useTable, usePagination } from 'react-table'
 import Dropzone, { useDropzone } from 'react-dropzone'
 import Select from 'react-select'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { getAllProducts } from '../../Redux/Actions'
+import {url} from '../../constantURL'
 import './FormProduct.css'
 import axios from 'axios'
-import { url } from '../../constantURL'
+
+const backendUrl = url
 
 function FormProduct() {
 
-    // como admin poder
-    // 1) cargar un producto nuevo
-    // 1)a) form (name, photos (max 3), descrip, stock, selled, perc_desc, price, category)
-    // 2) ver facilmente todos los productos y buscar por nombre o categoria para acceder al detalle y asi modificarlos o eliminarlos
-    // 2)a) ver todos los productos de una forma practica
-    // 2)b) buscar productos por nombre
-    // 2)c) buscar productos por categoria
-    // 2)d) seleccionar un producto y (form)
-    //      ver todos sus datos
-    //      modificar sus datos
-    //      borrarlo
-    //
-    // validar el input antes de mostrar boton de enviar y mostrar mensaje de error
-    // mensaje de confirmacion al querer crear actualizar eliminar
-
-    // FEATURES/FALTANTES:
-    // conectar con back
-    // 
-    // validar input + requireds
-    // 
-    // post new product funcional
-    // 
-    // put producto existente funcional
-    // boton agregar cambios en form
-    // 
-    // delete producto existente en detalle
-    // boton eliminar producto en form
-    // 
-    // multi select para marcar varios productos para eliminar de una
-    // multi delete productos existentes funcional
-    // boton eliminar todos  
-    //  
-    // pasar de useState al store de redux
-    // filtros de tabla: precio mayor que menor que ingresado por admin, categoria,
-    // ordenamientos: precio, categorias, stock
-    // 
-    // estilos
-    // textarea grande para descrip
-    // hovers en botones
-    // stock en rojo cuando es 0
-    // estilos cuando la mayoria de las features ya esten
-    // 
-    // modularizar funciones
-
-
     const categories = useSelector((state) => state.categories);
-    function seter(array) {
+    const allProducts = useSelector(state => state.all_products)
+    
+    const seter = (array) => {
         let obj = {}
         array.map((cat) => {
             let a = cat.id;
@@ -66,21 +26,21 @@ function FormProduct() {
         })
         return obj
     }
-    
+
     const [cat, setCat] = useState(seter(categories))
+    const [actionType, setActionType] = useState('create')
+    const [input, setInput] = useState({
+        photo: []
+    })
+    
+    const dispatch = useDispatch()
+
+    
     const handleCheck = (event, id) => {
         event ?
         setCat({ ...cat, [event.target.value]: event.target.checked }) :
         setCat({...cat, [id]: true})
     };
-
-    const [actionType, setActionType] = useState('create')
-    const [input, setInput] = useState({
-        photo: []
-    })
-
-    const allProducts = useSelector(state => state.all_products)
-
 
     const actionOptions = [
         { value: 'create', label: 'Crear un nuevo producto' },
@@ -88,7 +48,7 @@ function FormProduct() {
         { value: 'update', label: 'Editar un producto' }
     ]
 
-    function handleChange(e) {
+    const handleChange = (e) => {
         e.preventDefault()
         const { value, name } = e.target;
         setInput({
@@ -125,15 +85,34 @@ function FormProduct() {
 
     const maxImageSize = 250000
 
-    const deleteProduct = (id) => {
-        alert(`Intentas eliminar el producto con el id ${id}`)
+    const deleteProduct = async (id) => {
+        try {
+            await axios.delete(`${backendUrl}/products`, {
+                data: {id}
+            })
+            dispatch(getAllProducts())
+            window.alert('Se ha eliminado el producto con exito')
+        } catch(err) {
+            window.alert('ocurrió un problema y no se pudo eliminar el producto')
+            console.error(err)
+        }
     }
 
     const editProduct = async (id) => {
-        const response = await axios.get(`${url}/products/p/${id}`)
-        setInput(response.data)
-        response.data.Categories.map(category => category.id).forEach(cat => handleCheck(null, cat))
-        setActionType('update')
+        try {
+            const response = await axios.get(`${backendUrl}/products/p/${id}`)
+            setActionType('update') 
+            setInput(response.data)
+            const catTrueObj = {}
+
+            Object.keys(cat).forEach( key => catTrueObj[key] = false )
+
+            response.data.Categories.map(category => category.id).forEach(category => catTrueObj[category] = true)
+            setCat({...catTrueObj})
+        }
+        catch(err){
+            console.error(err)
+        }
     }
 
     const deletePhoto = (index) => {
@@ -187,7 +166,7 @@ function FormProduct() {
     // eslint-disable-next-line
     const columns = useMemo(() => columnsTable, [])
     // eslint-disable-next-line
-    const data = useMemo(() => dataTable, [])
+    const data = useMemo(() => dataTable, [allProducts])
 
     const {
         getTableProps,
@@ -216,7 +195,7 @@ function FormProduct() {
 
     const { pageIndex, pageSize } = state
 
-    async function onSubmit(e) {
+    const onSubmit = async (e) => {
         e.preventDefault()
         const category = []
         for (let categ in cat) {
@@ -224,7 +203,6 @@ function FormProduct() {
                 category.push(categ)
             }
         }
-        console.log(category)
         const body = {
             name: input.name,
             price: input.price,
@@ -232,9 +210,30 @@ function FormProduct() {
             photo: input.photo,
             category
         }
-        console.log(body)
-        const response = await axios.post(`${url}/products`, body)
-        console.log(response)
+        if(actionType === 'create') {
+            try {
+                const response = await axios.post(`${backendUrl}/products`, body)
+                console.log(response)
+                window.alert('Se ha creado el producto con exito')
+            }
+            catch(err) {
+                console.error(err)
+                window.alert('Ocurrió un problema y no se pudo crear el producto')
+            }
+        }
+        if(actionType === 'update') {
+            try {
+                body.id = input.id
+                const response = await axios.put(`${backendUrl}/products/update`, body)
+                console.log(response)
+                window.alert('Se ha actualizado el producto con exito')
+            }
+            catch(err) {
+                console.error(err)
+                window.alert('Ocurrió un problema y no se pudo actualizar el producto')
+            }
+        }
+        dispatch(getAllProducts())        
     }
 
     //  Return de React
@@ -242,7 +241,8 @@ function FormProduct() {
         <div>
             <h2>Accion que deseas realizar:</h2>
             <Select options={actionOptions}
-                onChange={(e) => setActionType(e.value)}>
+                onChange={(e) => setActionType(e.value)}
+                value={actionOptions.filter(option => option.value === actionType)}>
             </Select>
             {
                 // form para crear producto nuevo
@@ -305,7 +305,10 @@ function FormProduct() {
                             {categories.map(c => {
                                 return (
                                     <li>
-                                        <input type='checkbox' value={c.id} onChange={handleCheck} />
+                                        <input type='checkbox'
+                                        value={c.id}
+                                        onChange={handleCheck}
+                                        {...(cat[c.id] ? {checked: 'checked'} : {checked: false})} />
                                         <label>{c.name}</label>
                                     </li>
                                 )
