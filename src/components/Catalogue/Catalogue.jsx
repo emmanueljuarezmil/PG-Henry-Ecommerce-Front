@@ -12,8 +12,15 @@ function Catalogue() {
 
     const indexOfLastProduct=productsPerPage*currentPage;
     const indexOfFirstProduct=indexOfLastProduct-productsPerPage;
-    const currentProducts=products.slice(indexOfFirstProduct,indexOfLastProduct);
-    const pagesNumber=Math.ceil(products.length/productsPerPage);
+    let currentProducts=[];
+    let pagesNumber=1;
+    if (filter.length){
+        currentProducts=filter.slice(indexOfFirstProduct,indexOfLastProduct);
+        pagesNumber=Math.ceil(filter.length/productsPerPage);
+    }else{
+        currentProducts=products.slice(indexOfFirstProduct,indexOfLastProduct);
+        pagesNumber=Math.ceil(products.length/productsPerPage);
+    }
 
     const nextPage= ()=>{
         if(currentPage<pagesNumber){
@@ -28,11 +35,14 @@ function Catalogue() {
     
     return (
         <div className='catalogue_container'>
-            {filter.length? filter.map((product, index) => (
+            {
+            // filter.length? filter.map((product, index) => (
+            //     <ProductCard index={index} product={product}/>
+            // )):
+            currentProducts.map((product, index) => (
                 <ProductCard index={index} product={product}/>
-            )):currentProducts?.map((product, index) => (
-                <ProductCard index={index} product={product}/>
-            ))}
+            ))
+            }
             <button className='prev' onClick={nextPage}>{'< prev'}</button>
             <button className='next' onClick={prevPage}>{'next >'}</button>
         </div>
