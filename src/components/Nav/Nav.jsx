@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import SearchBar from '../SearchBar/SearchBar';
 import { resetAllProductsHome } from '../../Redux/Actions/index';
 import ModoVintage from './ModoVintage.png';
 
@@ -25,7 +24,10 @@ function Nav() {
                 <img className='modo_vintage_icon' src={ModoVintage} alt="ModoVintage" />
             </div>
             <div className='nav_item'>
-                <NavLink to='/admin/product' className="NavLink">ADMIN FORM</NavLink>
+                <NavLink to='/admin/product' className="NavLink">Agregar producto</NavLink>
+            </div>
+            <div className='nav_item'>
+                <NavLink to='/admin/category' className="NavLink">Agregar categoria</NavLink>
             </div>
             <div className='nav_item'>
                 <NavLink className="NavLink" to='/cart'>Carrito</NavLink>

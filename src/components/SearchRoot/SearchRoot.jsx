@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import ProductCard from '../ProductCard/ProductCard';
-import Nav from '../Nav/Nav';
 
 import './SearchRoot.css';
 
 function SearchRoot() {
     const searched = useSelector((state) => state.product_search);
 
-    const productsPerPage = 15;
+    const productsPerPage = 16;
     // const [loading,setLoading]=useState(false);
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -26,14 +25,13 @@ function SearchRoot() {
         } else setCurrentPage(1);
     }
     const prevPage = () => {
-        if (currentPage !== 1) {
+        if (currentPage > 1) {
             setCurrentPage(currentPage - 1);
         } else setCurrentPage(pagesNumber);
     };
 
     return (
         <div>
-            {/* ACA IRIA LA NAV*/}
             <div className='catalogue_container'>
                 {
                     currentProducts?.map((product, index) => (
@@ -41,10 +39,18 @@ function SearchRoot() {
                     ))
                 }
             </div>
-            <div className='catalogue_buttons'>
-                <button className='prev' onClick={nextPage}>{'< prev'}</button>
-                <button className='next' onClick={prevPage}>{'next >'}</button>
-            </div>
+                <div className='catalogue_buttons'>
+                    {
+                        currentPage > 1 ?
+                        <button className='prev' onClick={prevPage}>{'< Anterior'}</button> :
+                        null
+                    }
+                    {
+                        currentPage < pagesNumber ?
+                        <button className='next' onClick={nextPage}>{'Siguiente >'}</button> :
+                        null
+                    }
+                </div>
         </div>
     )
 };

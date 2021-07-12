@@ -132,8 +132,12 @@ function FormProduct() {
     // eslint-disable-next-line
     const dataTable = allProducts.map(product => {
         return {
-            col1: (<BsTrash onClick={() => deleteProduct(product.id)} />),
-            col2: (<AiTwotoneEdit onClick={() => editProduct(product.id)} />),
+            col1: (<BsTrash
+                className='trash'
+                onClick={() => deleteProduct(product.id)} />),
+            col2: (<AiTwotoneEdit
+                className='edit'
+                onClick={() => editProduct(product.id)} />),
             col3: product.name.length > 50 ? `${product.name.slice(0, 50)} ...` : product.name,
             col4: product.Categories.map(category => category.name).join(', '),
             col5: `$ ${product.price}`,
@@ -245,14 +249,13 @@ function FormProduct() {
             <h2>Accion que deseas realizar:</h2>
             <Select options={actionOptions}
                 onChange={(e) => setActionType(e.value)}
-                value={actionOptions.filter(option => option.value === actionType)}>
+                value={actionOptions.filter(option => option.value === actionType)} className='form_select'>
             </Select>
             <div className='formproduct-form-container'>
                 {
                     actionType === 'create' || actionType === 'update' ?
                         <form onSubmit={(e) => onSubmit(e)}>
-                            <button type="submit">Enviar</button>
-                            <div>
+                            <div className='formproduct-form-input'>
                                 <input type="text"
                                     name="name"
                                     placeholder="Nombre del producto"
@@ -260,15 +263,7 @@ function FormProduct() {
                                     value={input.name}
                                     onChange={handleChange} />
                             </div>
-                            <div>
-                                <input type="text"
-                                    name="descrip"
-                                    pattern="^[a-zA-Z0-9 ,.-?]+$"
-                                    placeholder="Descripcion del producto"
-                                    value={input.descrip}
-                                    onChange={handleChange} />
-                            </div>
-                            <div>
+                            <div className='formproduct-form-input'>
                                 <input type="number"
                                     min={0}
                                     max={500}
@@ -277,7 +272,7 @@ function FormProduct() {
                                     value={input.stock}
                                     onChange={handleChange} />
                             </div>
-                            <div>
+                            <div className='formproduct-form-input'>
                                 <input type="number"
                                     min={0}
                                     max={500}
@@ -286,7 +281,7 @@ function FormProduct() {
                                     value={input.selled}
                                     onChange={handleChange} />
                             </div>
-                            <div>
+                            <div className='formproduct-form-input'>
                                 <input type="number"
                                     min={0}
                                     max={1000000000}
@@ -295,7 +290,7 @@ function FormProduct() {
                                     value={input.price}
                                     onChange={handleChange} />
                             </div>
-                            <div>
+                            <div className='formproduct-form-input'>
                                 <input type="number"
                                     min={0}
                                     max={100}
@@ -304,10 +299,18 @@ function FormProduct() {
                                     value={input.perc_desc}
                                     onChange={handleChange} />
                             </div>
-                            <div>
+                            <div className='formproduct-form-text-area'>
+                                <textarea type="text"
+                                    name="descrip"
+                                    pattern="^[a-zA-Z0-9 ,.-?]+$"
+                                    placeholder="Descripcion del producto"
+                                    value={input.descrip}
+                                    onChange={handleChange} />
+                            </div>
+                            <div className='container-checkbox'>
                                 {categories.map(c => {
                                     return (
-                                        <li>
+                                        <li className='checkbox-li'>
                                             <input type='checkbox'
                                             value={c.id}
                                             onChange={handleCheck}
@@ -328,12 +331,12 @@ function FormProduct() {
                                                 maxFiles={3}
                                                 accept='image/*'>
                                                 {({ getRootProps, getInputProps }) => (
-                                                    <section>
+                                                    <section className='formproduct-dropzone-section'>
                                                         <div {...getRootProps()} className='formproduct-dropzone-dropzone'>
                                                             <input {...getInputProps()} />
-                                                            <p>Arrastra y suelta tus photos aqui o haz click para cargar desde el explorador(máx {maxImageSize / 1024}kb)</p>
+                                                            <p className='formproduct-dropzone-dropzone-p'>Arrastra y suelta tus photos aqui o haz click para cargar desde el explorador(máx {maxImageSize / 1024}kb)</p>
                                                         </div>
-                                                        <a rel="noopener noreferrer" href={compressImageUrl} target="_blank">Tu imagen excede el tamaño permitido? Pulsa aqui para comprimirla</a>
+                                                        <a className='formproduct-dropzone-dropzone-a' rel="noopener noreferrer" href={compressImageUrl} target="_blank">Tu imagen excede el tamaño permitido? Pulsa aqui para comprimirla</a>
                                                     </section>
                                                 )}
                                             </Dropzone> :
@@ -363,7 +366,7 @@ function FormProduct() {
                                     }
                                 </div>
                             </div>
-
+                            <button type="submit" className='form_button'>Solicitar</button>
                         </form> :
                         null
                 }

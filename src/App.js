@@ -12,6 +12,7 @@ import FormProduct from './components/FormProduct/FormProduct';
 import About from './components/About/About';
 import User from './components/User/User';
 import Nav from './components/Nav/Nav';
+import FormCategories from './components/FormCategories/FormCategories';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route exact path='/about' component={About}/>
         <Route exact path='/cart' component={Cart}/>
         <Route exact path='/user_settings' component={User}/>
+        <Route exact path='/admin/category' component={FormCategories}/>
       </React.Fragment>
   );
 }

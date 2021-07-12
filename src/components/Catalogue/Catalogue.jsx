@@ -8,7 +8,7 @@ function Catalogue() {
     const products = useSelector((state) => state.all_products);
     const filter = useSelector((state) => state.filtered_products);
 
-    const productsPerPage = 15;
+    const productsPerPage = 16;
     // const [loading,setLoading]=useState(false);
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -45,19 +45,18 @@ function Catalogue() {
                     ))
                 }
             </div>
-            {currentPage === 1 ?
-                <div>
-                    <div className='catalogue_buttons'>
-                        <button className='next' onClick={prevPage}>{'siguiente >'}</button>
-                    </div>
+            <div className='catalogue_buttons'>
+                    {
+                        currentPage > 1 ?
+                        <button className='prev' onClick={prevPage}>{'< Anterior'}</button> :
+                        null
+                    }
+                    {
+                        currentPage < pagesNumber ?
+                        <button className='next' onClick={nextPage}>{'Siguiente >'}</button> :
+                        null
+                    }
                 </div>
-                : <div>
-                    <div className='catalogue_buttons'>
-                        <button className='prev' onClick={nextPage}>{'< anterior'}</button>
-                        <button className='next' onClick={prevPage}>{'siguiente >'}</button>
-                    </div>
-                </div>
-            }
         </div>
     )
 };
