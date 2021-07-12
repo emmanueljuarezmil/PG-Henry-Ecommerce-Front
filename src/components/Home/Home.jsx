@@ -20,17 +20,23 @@ function Home() {
     }, [dispatch])
 
     return (
-        <div>
+        <div className='home_container'>
             <div className='search_div'>
                 <SearchBar />
             </div>
-            {searched.length ?
-                <SearchRoot /> :
-                <div>
-                    <Filter />
-                    <Catalogue />
-                </div>
-            }
+            <div className='home_products'>
+                {searched.length ?
+                    <SearchRoot /> :
+                    <div>
+                        <div className='filter_catalogue'>
+                            <Filter />
+                        </div>
+                        <div className='catalogue_div'>
+                            <Catalogue />
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
     )
 }

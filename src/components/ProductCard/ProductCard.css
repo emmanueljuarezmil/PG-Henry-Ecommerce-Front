@@ -1,13 +1,16 @@
 .card_container {
-    width: 27rem;
-    height: 20rem;
-    border: solid blue 5px;
-    display:flex
+    position: relative;
+    margin-bottom: 4rem;
+    margin-right: 2.3rem;
+    height: 19rem;
+    width: 15rem;
+    background: #fff
 }
 .card_container_link {
     width:100%;
     height: 15rem;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     align-content: center;
@@ -17,8 +20,12 @@
     border: 1.6px solid hsla(0,0%,100%,.4);
     color: #464646;
     box-shadow: 1px 1px 5px rgb(20 20 20 / 80%);
-    border: solid yellow 5px;
-    margin: auto 0;
+    margin-right: 100rem;
+    position: relative;
+    margin-bottom: 1.563rem;
+    height: 318px;
+    width: 250px;
+    background: #fff
 }
 
 .card_container_link:hover{
@@ -35,27 +42,34 @@
     max-width: 13rem;
     height: 100%;
     margin: 0.5rem;
-    border: solid green 5px
 }
 
-.card_container_item_img {
-    width: 13rem;
-    margin: 0.5rem;
-    border: solid brown 5px;
-}
 
 .product_img {
-    max-width: 5rem;
+  /*   max-width: 5rem;
     border-radius: 0.2rem;
     box-shadow: 3px 3px 5px rgb(20 20 20 / 80%);
     border: solid magenta 5px;
+    object-fit: cover; */
+ /*    max-width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto; */
+    display: block;
+    border-radius: 0.2rem;
+    margin: 0.6rem;
+    height: 11.5rem;
+    width: 14.05rem;
     object-fit: cover;
+    object-position: center center;
 }
 
 .product_name {
     font-size: 1rem;
     text-overflow: ellipsis;
-    border: 5px solid red;
     max-width: 12rem;
     margin: auto;
 }
@@ -63,6 +77,5 @@
 .product_price {
     font-size: 2rem;
     font-weight: 700;
-    border: solid orange 5px;
     margin: auto
 }

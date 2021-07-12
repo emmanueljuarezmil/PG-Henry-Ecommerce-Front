@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { getProductByName } from '../../Redux/Actions/index';
-import { Link } from 'react-router-dom';
 
 import './SearchBar.css';
 

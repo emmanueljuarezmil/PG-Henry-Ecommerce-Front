@@ -1,10 +1,26 @@
+.categories-form{
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  border: 2px solid rgb(153, 149, 149);
+  background-color: white;
+  box-shadow: 1px 1px 10px rgb(20 20 20 / 70%);
+  border-radius: 0.3rem;
+}
+
+.categories-form button {
+  margin-top: 1rem;
+}
+
 p.danger {
     color: red;
     font-size: 10px;
     margin-left: 1rem;
   }
   
-input.danger {
+input.danger { 
   border: 2px solid red;
   padding: 0.25rem 0.6rem;
   border-radius: 0.2rem;

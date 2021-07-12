@@ -1,9 +1,14 @@
 export function validate(input) {
-    let errors = {};
+    let errors
     if (!input) {
-        errors = 'Username is required';
-    } else if (!/([a-z])\w+/.test(input)) {
-        errors = 'Username is invalid';
+        errors = 'El nombre de la categoria es requerido'
+        return errors
+    } else if (!/^[a-zA-Z\s]*$/.test(input)) {
+        errors = 'La categoria es inválida. Solo debe contener letras';
+        return errors
     }
-    return errors;
+    else {
+        errors = ''
+        return errors
+    }     
 }
