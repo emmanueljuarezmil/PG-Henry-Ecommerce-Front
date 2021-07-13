@@ -217,12 +217,23 @@ function FormProduct() {
             price: input.price,
             stock: input.stock,
             photo: input.photo,
+            description: input.description,
             category
         }
         if(actionType === 'create') {
             try {
                 await axios.post(`${backendUrl}/products`, body)
                 window.alert('Se ha creado el producto con exito')
+                setInput({
+                    photo: [],
+                    name: '',
+                    stock: '',
+                    selled: '',
+                    price: '',
+                    perc_desc: '',
+                    description: '',
+                })
+                setCat(seter(categories))
             }
             catch(err) {
                 console.error(err)
