@@ -6,12 +6,13 @@ import { useSelector } from 'react-redux';
 import SearchRoot from '../SearchRoot/SearchRoot';
 import Catalogue from '../Catalogue/Catalogue';
 import SearchBar from '../SearchBar/SearchBar';
-
+import { useAuth0 } from '@auth0/auth0-react';
 import './Home.css'
 
 function Home() {
     const searched = useSelector((state) => state.product_search);
-
+    const { user } = useAuth0()
+    console.log(user)
     const dispatch = useDispatch()
 
     useEffect(() => {
