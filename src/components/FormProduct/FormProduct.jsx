@@ -241,14 +241,17 @@ function FormProduct() {
             }
         }
         if(actionType === 'update') {
-            try {
-                body.id = input.id
-                await axios.put(`${backendUrl}/products/update`, body)
-                window.alert('Se ha actualizado el producto con exito')
-            }
-            catch(err) {
-                console.error(err)
-                window.alert('Ocurrió un problema y no se pudo actualizar el producto')
+            const result = window.confirm(`Estás seguro de que deseas actualizar el producto con los cambios propuestos?`)
+            if(result) {
+                try {
+                    body.id = input.id
+                    await axios.put(`${backendUrl}/products/update`, body)
+                    window.alert('Se ha actualizado el producto con exito')
+                }
+                catch(err) {
+                    console.error(err)
+                    window.alert('Ocurrió un problema y no se pudo actualizar el producto')
+                }
             }
         }
         dispatch(getAllProducts())        
