@@ -138,15 +138,17 @@ function FormProduct() {
 
     const editProduct = async (id) => {
         try {
-            const response = await axios.get(`${backendUrl}/products/p/${id}`)
+            const { data } = await axios.get(`${backendUrl}/products/p/${id}`)
             setActionType('update') 
-            setInput(response.data)
+            data.category = data.Categories.map(category => category.id)
+            setInput(data)
+            console.log(data)
             const catTrueObj = {}
-
             Object.keys(cat).forEach( key => catTrueObj[key] = false )
-
-            response.data.Categories.map(category => category.id).forEach(category => catTrueObj[category] = true)
+            data.category.forEach(category => catTrueObj[category] = true)
             setCat({...catTrueObj})
+            console.log(data)           
+
         }
         catch(err){
             console.error(err)
