@@ -240,12 +240,7 @@ function FormProduct() {
     const onSubmit = async (e) => {
         e.preventDefault()
         const body = {
-            name: input.name,
-            price: input.price,
-            stock: input.stock,
-            photo: input.photo,
-            description: input.description,
-            category: input.category
+            ...input
         }
         if(actionType === 'create') {
             try {
