@@ -2,6 +2,7 @@ import React, {useEffect} from 'react'
 import { useDispatch } from 'react-redux';
 import { getAllProducts, getAllCategories } from '../../Redux/Actions'
 import CarouselComponent from '../CarouselComponent/CarouselComponent'
+import Log from '../log/log';
 
 const imagesLanding = [
     "https://mx.yamaha.com/es/files/el_guitars_a9b6e526be7c84999af59273aa3bff85.jpg?impolicy=resize&imwid=1200&imhei=480",
