@@ -262,6 +262,7 @@ function FormProduct() {
                     price: '',
                     perc_desc: '',
                     description: '',
+                    category: []
                 })
                 setCat(seter(categories))
             }
