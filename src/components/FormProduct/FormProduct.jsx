@@ -301,10 +301,10 @@ function FormProduct() {
                             </div>
                             <div className='formproduct-form-text-area'>
                                 <textarea type="text"
-                                    name="descrip"
+                                    name="description"
                                     pattern="^[a-zA-Z0-9 ,.-?]+$"
                                     placeholder="Descripcion del producto"
-                                    value={input.descrip}
+                                    value={input.description}
                                     onChange={handleChange} />
                             </div>
                             <div className='container-checkbox'>
