@@ -27,7 +27,7 @@ function ProductDetail({ match }) {
                     <h3>${product.price}</h3>
                 </div>
                 <div className='detail_description'>
-                    <p>{product.descrip ? product.descrip : "There's no description available"}</p>
+                    <p>{product.description ? product.description : "There's no description available"}</p>
                 </div>
                 <div className='detail_stock'>
                     <h3>Stock disponible: {product.stock}</h3>
