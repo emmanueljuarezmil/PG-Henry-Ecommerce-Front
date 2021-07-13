@@ -69,15 +69,12 @@ function FormProduct() {
         const {name, price, stock, category} = input
         let errors = ''
     
-        if(category.length > 2) errors = 'Solo se pueden especificar 2 categorias como máximo'
-        if(!category.length) errors = 'Debes especificar al menos una categoria para tu producto'
-        
+        if (category.length > 2) errors = 'Solo se pueden especificar 2 categorias como máximo'
+        if (!category.length) errors = 'Debes especificar al menos una categoria para tu producto'        
         if (stock < 1) errors = 'El stock debe ser un entero positivo'
-        if(!stock) errors = 'Se debe especificar el stock del producto'
-    
+        if (!stock) errors = 'Se debe especificar el stock del producto'    
         if (price < 1) errors = 'El precio debe ser un entero positivo'
-        if (!price) errors = 'Se debe especificar un precio para el producto'
-    
+        if (!price) errors = 'Se debe especificar un precio para el producto'    
         if (!/^[a-zA-Z0-9 ,.-ñÑ]+$/.test(name)) errors = 'El nombre del producto no puede contener caracteres especiales'
         if (name.length < 5) errors = 'El nombre del producto debe tener al menos 5 caracteres'
         if (name.length === 0) errors = 'El nombre del producto es requerido'
