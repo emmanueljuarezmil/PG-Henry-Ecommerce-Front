@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProductDetail } from '../../Redux/Actions'
+import CarouselComponent from '../CarouselComponent/CarouselComponent'
 import './ProductDetail.css'
 
 function ProductDetail({ match }) {
@@ -15,10 +16,8 @@ function ProductDetail({ match }) {
     return (
         <div className='detail_container'>
             <div className='detail_images'>
-                <img src={product.photo}
-                    alt='Img not found'
-                    className='detail_images_item' />
-            </div>
+                <CarouselComponent images={product.photo}></CarouselComponent>
+            </div>           
             <div className='detail_details'>
                 <div className='detail_name'>
                     <h1>{product.name}</h1>
