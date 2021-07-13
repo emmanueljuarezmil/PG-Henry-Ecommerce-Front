@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { BsTrash } from 'react-icons/bs'
 import { AiTwotoneEdit } from 'react-icons/ai'
 import { useTable, usePagination } from 'react-table'
@@ -31,8 +31,13 @@ function FormProduct() {
     const [cat, setCat] = useState(seter(categories))
     const [actionType, setActionType] = useState('create')
     const [input, setInput] = useState({
-        photo: []
+        photo: [],
+        name: '',
+        price: '',
+        stock: '',
+        category: []
     })
+    const [errors, setErrors] = useState(' ')
     
     const dispatch = useDispatch()
 
@@ -48,6 +53,37 @@ function FormProduct() {
         { value: 'read', label: 'Ver los productos existentes' },
         { value: 'update', label: 'Editar un producto' }
     ]
+    
+    // ver de mejorarlo o cambiar la logica de los checkbox
+    useEffect(() => {
+        const category = []
+        Object.keys(cat).forEach( key => cat[key] ? category.push(key) : null )
+        setInput({
+            ...input,
+            category
+        })
+        // eslint-disable-next-line
+    }, [cat])
+    
+    useEffect(() => {
+        const {name, price, stock, category} = input
+        let errors = ''
+    
+        if(category.length > 2) errors = 'Solo se pueden especificar 2 categorias como máximo'
+        if(!category.length) errors = 'Debes especificar al menos una categoria para tu producto'
+        
+        if (stock < 1) errors = 'El stock debe ser un entero positivo'
+        if(!stock) errors = 'Se debe especificar el stock del producto'
+    
+        if (price < 1) errors = 'El precio debe ser un entero positivo'
+        if (!price) errors = 'Se debe especificar un precio para el producto'
+    
+        if (!/^[a-zA-Z0-9 ,.-ñÑ]+$/.test(name)) errors = 'El nombre del producto no puede contener caracteres especiales'
+        if (name.length < 5) errors = 'El nombre del producto debe tener al menos 5 caracteres'
+        if (name.length === 0) errors = 'El nombre del producto es requerido'
+    
+        setErrors(errors)      
+    }, [input])
 
     const handleChange = (e) => {
         e.preventDefault()
@@ -206,19 +242,13 @@ function FormProduct() {
 
     const onSubmit = async (e) => {
         e.preventDefault()
-        const category = []
-        for (let categ in cat) {
-            if (cat[categ]) {
-                category.push(categ)
-            }
-        }
         const body = {
             name: input.name,
             price: input.price,
             stock: input.stock,
             photo: input.photo,
             description: input.description,
-            category
+            category: input.category
         }
         if(actionType === 'create') {
             try {
@@ -273,7 +303,6 @@ function FormProduct() {
                                 <input type="text"
                                     name="name"
                                     placeholder="Nombre del producto"
-                                    pattern="^[a-zA-Z0-9 ,.-]+$"
                                     value={input.name}
                                     onChange={handleChange} />
                             </div>
@@ -380,7 +409,13 @@ function FormProduct() {
                                     }
                                 </div>
                             </div>
-                            <button type="submit" className='form_button'>Solicitar</button>
+                            <div>
+                                {
+                                    errors !== '' && errors !== ' ' ?
+                                    <p>{errors}</p> :
+                                    <button type="submit" className='form_button'>Solicitar</button>
+                                }
+                            </div>
                         </form> :
                         null
                 }
