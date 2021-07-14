@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { BsTrash } from 'react-icons/bs'
 import { AiTwotoneEdit } from 'react-icons/ai'
 import { useTable, usePagination } from 'react-table'
@@ -31,8 +31,13 @@ function FormProduct() {
     const [cat, setCat] = useState(seter(categories))
     const [actionType, setActionType] = useState('create')
     const [input, setInput] = useState({
-        photo: []
+        photo: [],
+        name: '',
+        price: '',
+        stock: '',
+        category: []
     })
+    const [errors, setErrors] = useState(' ')
     
     const dispatch = useDispatch()
 
@@ -48,6 +53,34 @@ function FormProduct() {
         { value: 'read', label: 'Ver los productos existentes' },
         { value: 'update', label: 'Editar un producto' }
     ]
+    
+    // ver de mejorarlo o cambiar la logica de los checkbox
+    useEffect(() => {
+        const category = []
+        Object.keys(cat).forEach( key => cat[key] ? category.push(key) : null )
+        setInput({
+            ...input,
+            category
+        })
+        // eslint-disable-next-line
+    }, [cat])
+    
+    useEffect(() => {
+        const {name, price, stock, category} = input
+        let errors = ''
+    
+        if (category.length > 2) errors = 'Solo se pueden especificar 2 categorias como máximo'
+        if (!category.length) errors = 'Debes especificar al menos una categoria para tu producto'        
+        if (stock < 1) errors = 'El stock debe ser un entero positivo'
+        if (!stock) errors = 'Se debe especificar el stock del producto'    
+        if (price < 1) errors = 'El precio debe ser un entero positivo'
+        if (!price) errors = 'Se debe especificar un precio para el producto'    
+        if (!/^[a-zA-Z0-9 ,.-ñÑ]+$/.test(name)) errors = 'El nombre del producto no puede contener caracteres especiales'
+        if (name.length < 5) errors = 'El nombre del producto debe tener al menos 5 caracteres'
+        if (name.length === 0) errors = 'El nombre del producto es requerido'
+    
+        setErrors(errors)      
+    }, [input])
 
     const handleChange = (e) => {
         e.preventDefault()
@@ -105,15 +138,17 @@ function FormProduct() {
 
     const editProduct = async (id) => {
         try {
-            const response = await axios.get(`${backendUrl}/products/p/${id}`)
+            const { data } = await axios.get(`${backendUrl}/products/p/${id}`)
             setActionType('update') 
-            setInput(response.data)
+            data.category = data.Categories.map(category => category.id)
+            setInput(data)
+            console.log(data)
             const catTrueObj = {}
-
             Object.keys(cat).forEach( key => catTrueObj[key] = false )
-
-            response.data.Categories.map(category => category.id).forEach(category => catTrueObj[category] = true)
+            data.category.forEach(category => catTrueObj[category] = true)
             setCat({...catTrueObj})
+            console.log(data)           
+
         }
         catch(err){
             console.error(err)
@@ -206,23 +241,24 @@ function FormProduct() {
 
     const onSubmit = async (e) => {
         e.preventDefault()
-        const category = []
-        for (let categ in cat) {
-            if (cat[categ]) {
-                category.push(categ)
-            }
-        }
         const body = {
-            name: input.name,
-            price: input.price,
-            stock: input.stock,
-            photo: input.photo,
-            category
+            ...input
         }
         if(actionType === 'create') {
             try {
                 await axios.post(`${backendUrl}/products`, body)
                 window.alert('Se ha creado el producto con exito')
+                setInput({
+                    photo: [],
+                    name: '',
+                    stock: '',
+                    selled: '',
+                    price: '',
+                    perc_desc: '',
+                    description: '',
+                    category: []
+                })
+                setCat(seter(categories))
             }
             catch(err) {
                 console.error(err)
@@ -230,14 +266,17 @@ function FormProduct() {
             }
         }
         if(actionType === 'update') {
-            try {
-                body.id = input.id
-                await axios.put(`${backendUrl}/products/update`, body)
-                window.alert('Se ha actualizado el producto con exito')
-            }
-            catch(err) {
-                console.error(err)
-                window.alert('Ocurrió un problema y no se pudo actualizar el producto')
+            const result = window.confirm(`Estás seguro de que deseas actualizar el producto con los cambios propuestos?`)
+            if(result) {
+                try {
+                    body.id = input.id
+                    await axios.put(`${backendUrl}/products/update`, body)
+                    window.alert('Se ha actualizado el producto con exito')
+                }
+                catch(err) {
+                    console.error(err)
+                    window.alert('Ocurrió un problema y no se pudo actualizar el producto')
+                }
             }
         }
         dispatch(getAllProducts())        
@@ -259,7 +298,6 @@ function FormProduct() {
                                 <input type="text"
                                     name="name"
                                     placeholder="Nombre del producto"
-                                    pattern="^[a-zA-Z0-9 ,.-]+$"
                                     value={input.name}
                                     onChange={handleChange} />
                             </div>
@@ -301,10 +339,10 @@ function FormProduct() {
                             </div>
                             <div className='formproduct-form-text-area'>
                                 <textarea type="text"
-                                    name="descrip"
+                                    name="description"
                                     pattern="^[a-zA-Z0-9 ,.-?]+$"
                                     placeholder="Descripcion del producto"
-                                    value={input.descrip}
+                                    value={input.description}
                                     onChange={handleChange} />
                             </div>
                             <div className='container-checkbox'>
@@ -366,7 +404,13 @@ function FormProduct() {
                                     }
                                 </div>
                             </div>
-                            <button type="submit" className='form_button'>Solicitar</button>
+                            <div>
+                                {
+                                    errors !== '' && errors !== ' ' ?
+                                    <p>{errors}</p> :
+                                    <button type="submit" className='form_button'>Solicitar</button>
+                                }
+                            </div>
                         </form> :
                         null
                 }
