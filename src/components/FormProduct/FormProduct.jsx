@@ -5,18 +5,21 @@ import { useTable, usePagination } from 'react-table'
 import Dropzone, { useDropzone } from 'react-dropzone'
 import Select from 'react-select'
 import { useSelector, useDispatch } from 'react-redux'
-import { getAllProducts } from '../../Redux/Actions'
+import { getAllProducts } from '../../Redux/Actions/index'
 import {url} from '../../constantURL'
 import './FormProduct.css'
 import axios from 'axios'
 
 const backendUrl = url
 const compressImageUrl = 'https://imagecompressor.com/'
+const cloudImageUrl = 'https://api.cloudinary.com/v1_1/dn6fn4w40/image/upload'
 
 function FormProduct() {
-
-    const categories = useSelector((state) => state.categories);
+    
+    const dispatch = useDispatch()
+    const categories = useSelector(state => state.categories);
     const allProducts = useSelector(state => state.all_products)
+    const totalPages = useSelector(state => state.totalPages)
     
     const seter = (array) => {
         let obj = {}
@@ -38,10 +41,8 @@ function FormProduct() {
         category: []
     })
     const [errors, setErrors] = useState(' ')
-    
-    const dispatch = useDispatch()
-
-    
+    const [pageIndex, setPageIndex] = useState(1)
+      
     const handleCheck = (event, id) => {
         event ?
         setCat({ ...cat, [event.target.value]: event.target.checked }) :
@@ -77,8 +78,7 @@ function FormProduct() {
         if (!price) errors = 'Se debe especificar un precio para el producto'    
         if (!/^[a-zA-Z0-9 ,.-ñÑ]+$/.test(name)) errors = 'El nombre del producto no puede contener caracteres especiales'
         if (name.length < 5) errors = 'El nombre del producto debe tener al menos 5 caracteres'
-        if (name.length === 0) errors = 'El nombre del producto es requerido'
-    
+        if (name.length === 0) errors = 'El nombre del producto es requerido'    
         setErrors(errors)      
     }, [input])
 
@@ -93,7 +93,7 @@ function FormProduct() {
 
     const onDrop = (acceptedFiles) => {
         acceptedFiles.forEach(async (file) => {
-            const url = 'https://api.cloudinary.com/v1_1/dn6fn4w40/image/upload'
+            const url = cloudImageUrl
             const formData = new FormData();
             formData.append("file", file);
             formData.append("upload_preset", "spjvomor");
@@ -142,12 +142,10 @@ function FormProduct() {
             setActionType('update') 
             data.category = data.Categories.map(category => category.id)
             setInput(data)
-            console.log(data)
             const catTrueObj = {}
             Object.keys(cat).forEach( key => catTrueObj[key] = false )
             data.category.forEach(category => catTrueObj[category] = true)
-            setCat({...catTrueObj})
-            console.log(data)           
+            setCat({...catTrueObj})          
 
         }
         catch(err){
@@ -217,27 +215,34 @@ function FormProduct() {
         getTableBodyProps,
         headerGroups,
         page,
-        nextPage,
-        previousPage,
-        canNextPage,
-        canPreviousPage,
-        pageOptions,
-        gotoPage,
-        pageCount,
-        setPageSize,
-        state,
         prepareRow,
     } = useTable({
         columns,
         data,
         initialState: {
-            pageSize: 20
+            pageSize: 40
         }
     },
         usePagination
     )
 
-    const { pageIndex, pageSize } = state
+    const gotoPage = (e, page) => {
+        e.preventDefault()
+        dispatch(getAllProducts(null, page))
+        setPageIndex(page)
+    }
+
+    const nextPage = (e) => {
+        e.preventDefault()
+        dispatch(getAllProducts(null, pageIndex + 1))
+        setPageIndex(pageIndex + 1)
+    }
+
+    const previousPage = (e) => {
+        e.preventDefault()
+        dispatch(getAllProducts(null, pageIndex - 1))
+        setPageIndex(pageIndex - 1)
+    }
 
     const onSubmit = async (e) => {
         e.preventDefault()
@@ -462,48 +467,32 @@ function FormProduct() {
                             </table>
                             <div className='formproduct-table-pagination-container'>
                                 <button
-                                    onClick={() => gotoPage(0)}
-                                    disabled={!canPreviousPage}>
+                                    onClick={(e) => gotoPage(e, 1)}
+                                    disabled={pageIndex === 1 ? true : false}>
                                     {'<<'}
                                 </button>
                                 <button
-                                    onClick={() => previousPage()}
-                                    disabled={!canPreviousPage}>
+                                    onClick={(e) => previousPage(e)}
+                                    disabled={pageIndex === 1 ? true : false}>
                                     Anterior
                                 </button>
                                 <span>
                                     Página
                                     <strong>
-                                        {` ${pageIndex + 1} `}
+                                        {` ${pageIndex} `}
                                     </strong>
-                                    {`de ${pageOptions.length}`}
+                                    {`de ${totalPages}`}
                                 </span>
                                 <button
-                                    onClick={() => nextPage()}
-                                    disabled={!canNextPage}>
+                                    onClick={(e) => nextPage(e)}
+                                    disabled={pageIndex === totalPages ? true : false}>
                                     Siguiente
                                 </button>
                                 <button
-                                    onClick={() => gotoPage(pageCount - 1)}
-                                    disabled={!canNextPage}>
+                                    onClick={(e) => gotoPage(e, totalPages)}
+                                    disabled={pageIndex === totalPages ? true : false}>
                                     {'>>'}
                                 </button>
-                                <select value={pageSize}
-                                    onChange={e => setPageSize(Number(e.target.value))}>
-                                    {
-                                        [10, 50, 100, dataTable.length].map((pageSize, i) => (
-                                            i !== 3 ?
-                                                <option key={pageSize}
-                                                    value={pageSize}>
-                                                    Ver de a {pageSize} items
-                                                </option> :
-                                                <option key={dataTable.length}
-                                                    value={dataTable.length}>
-                                                    Ver todo
-                                                </option>
-                                        ))
-                                    }
-                                </select>
                             </div>
                         </div> :
                         null
