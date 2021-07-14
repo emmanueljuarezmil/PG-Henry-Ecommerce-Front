@@ -12,7 +12,7 @@ function ProductCard({product}) {
                     <div className='card_container_item_img'>
                         {
                             product.photo[0] ?
-                            <img src={props.product.photo[0]} alt='' className='product_img' /> :
+                            <img src={product.photo[0]} alt='' className='product_img' /> :
                             <img src="https://shenandoahcountyva.us/bos/wp-content/uploads/sites/4/2018/01/picture-not-available-clipart-12.jpg" alt='' className='product_img' />   
                         }
 
