@@ -1,22 +1,16 @@
-import { GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_PRODUCT_BY_NAME, GET_FILTRATED_CATEGORIES, RESTART_PRODUCTS } from "../constants";
+import { GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, RESTART_PRODUCTS, SET_FILTER_NAME, SET_CATEGORY_ID, SET_PAGE, SET_ORDER } from "../constants";
 import {url} from '../../constantURL'
 
 
 import axios from 'axios';
 
-
-export const getAllProducts = () => {
-    return (dispatch) => {
-        fetch(`${url}/products`)
-
-        .then((response) => response.json())
-        .then((response) => 
-        dispatch({
-            type: GET_ALL_PRODUCTS,
-            payload: response
-        })) 
-    }
+export function getAllProducts(name, page, orderBy , orderType, category) {
+    return async function(dispatch) {
+        var json = await axios(`${url}/products?page=${page}&name=${name}&orderBy=${orderBy}&orderType=${orderType}&category=${category}`);
+        return dispatch({type: GET_ALL_PRODUCTS,payload: json.data})
+    };
 }
+
 
 export const getProductDetail = (id) => {
     return (dispatch) => {
@@ -42,41 +36,36 @@ export const getAllCategories = () => {
     }
 }
 
-export const getProductByName=(name)=>{
-    return (dispatch)=>{
-        fetch(`${url}/products?name=${name}`)
-        .then((response)=> response.json())
-        .then((response)=>
-        dispatch({
-            type:GET_PRODUCT_BY_NAME,
-            payload:response
-        }))
-    }
-}
-
-
-export const getFiltratedCategories = (cat) => {
-    if (cat ==='All'){
-        return (dispatch) => {
-            dispatch({
-                type: RESTART_PRODUCTS,
-            })
-        }
-    }
-    return (dispatch) => {
-        axios.get(`${url}/category/p_name/${cat}`)
-        .then((response) => 
-        dispatch({
-            type: GET_FILTRATED_CATEGORIES,
-            payload: response.data[0].Products
-        })) 
-    }
-}
-
 export const resetAllProductsHome = () => {
     return (dispatch) => {
         dispatch({
             type: RESTART_PRODUCTS,
         })
+    }
+}
+
+export const setFilterName = (name) => {
+    return (dispatch) =>{
+       dispatch ({type: SET_FILTER_NAME, payload: name })
+
+    }  
+}
+
+export const setCategoryId = (id) => {
+    return (dispatch) =>{
+       dispatch ({type: SET_CATEGORY_ID, payload: id })
+    }  
+}
+
+export const setPage = (page) => {
+    return (dispatch) =>{
+       dispatch ({type: SET_PAGE, payload: page })
+    }  
+}
+
+export const setOrder = (order) => {
+    const or = order.split(" ")
+    return (dispatch) =>{
+        dispatch ({type: SET_ORDER, payload: or})
     }
 }
