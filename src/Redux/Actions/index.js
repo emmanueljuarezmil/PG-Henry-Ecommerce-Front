@@ -69,3 +69,14 @@ export const setOrder = (order) => {
         dispatch ({type: SET_ORDER, payload: or})
     }
 }
+
+export const updateCategory = (body) => {
+    return (dispatch) => {
+        axios.put(`${url}/category/update`,body)
+        .then(()=>
+        dispatch({
+            type:null
+        }))
+        getAllCategories();
+    }
+}
