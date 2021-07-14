@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { resetAllProductsHome } from '../../Redux/Actions/index';
+import {setFilterName, setCategoryId, setOrder } from '../../Redux/Actions/index';
 import Log from '../log/log';
 import ModoVintage from './ModoVintage.png';
 
@@ -13,7 +13,11 @@ function Nav() {
     return (
         <div className='nav_container'>
             <div className='nav_item'>
-                <NavLink className="NavLink" to='/home' onClick={() => dispatch(resetAllProductsHome())}>Inicio</NavLink>
+                <NavLink className="NavLink" to='/home' onClick={() => {
+                    dispatch(setFilterName(''))
+                    dispatch(setCategoryId(''))
+                    dispatch(setOrder(''))
+                }}>Inicio</NavLink>
             </div>
             <div className='nav_item'>
                 <NavLink className="NavLink" to='/about'>Nosotros</NavLink>
@@ -39,9 +43,6 @@ function Nav() {
             <div className='nav_item'>
                 <Log/>
             </div>
-            {/*<div>
-                 <SearchBar /> 
-            </div>*/}
         </div>
     )
 }
