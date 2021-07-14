@@ -80,3 +80,14 @@ export const resetAllProductsHome = () => {
         })
     }
 }
+
+export const updateCategory = (body) => {
+    return (dispatch) => {
+        axios.put(`${url}/category/update`,body)
+        .then(()=>
+        dispatch({
+            type:null
+        }))
+        getAllCategories();
+    }
+}
