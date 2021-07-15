@@ -16,6 +16,7 @@ import { useDispatch,useSelector} from 'react-redux';
 function FormCategories() {
     const [name, setName] = useState('');
     const [errors, setErrors] = useState('El nombre de la categoria es requerido');
+    const [newName,setNewName]=useState({})
 
     const cats= useSelector((state)=>state.categories);
 
@@ -44,6 +45,7 @@ function FormCategories() {
         }
         else alert('Debes especificar un nombre que no exista para la categoria');
     }
+
     const handleDelete = async (id)=>{
         try{
             const body={id};
@@ -54,18 +56,28 @@ function FormCategories() {
         console.error(err)
          alert('Ocurrió un problema y no se pudo eliminar la categoria.')}
     }
-    // const handleUpdate = async (e,id,name)=>{
-    //     e.preventDefault();
-    //     try{
-    //         const body={id,name};
-    //         await axios.put(`${url}/category/update`,body);
-    //         dispatch(getAllCategories())
-    //         alert('Categoria modificada con éxito.')
-    //     }catch(err){
-    //         console.error(err)
-    //         alert('Ocurrio un problema y no se pudo modificar la categoria.')
-    //     }
-    // }
+    const handleChangeMod= (e)=>{
+        e.preventDefault();
+        setNewName({
+            ...newName,
+            [e.target.name]:e.target.value
+        })
+    }
+    const handleUpdate = async (e,id,name)=>{
+        e.preventDefault();
+        try{
+            // const ids=Object.keys(newName);
+            // const names=Object.values(newName);
+            let body={id:id,name:name}
+            await axios.put(`${url}/category/update`,body);
+            setNewName({...newName,[id]:''});
+            dispatch(getAllCategories())
+            alert('Categoria modificada con éxito.')
+        }catch(err){
+            console.error(err)
+            alert('Ocurrio un problema y no se pudo modificar la categoria.')
+        }
+    }
 
 
     function classAsign(errors, classname) {
@@ -77,7 +89,8 @@ function FormCategories() {
             <div className='categories-form'>
                 <form className='form-cont' onSubmit={handleSubmit}>
                     <label className='input-name'>Nombre de la categoria a añadir:</label>
-                    <input className={classAsign(errors, 'Cinput')} type="text" value={name} onChange={handleChange} name='name' placeholder='Nombre de la categoria a añadir'/>
+                    <input className={classAsign(errors, 'Cinput')} type="text" value={name}
+                     onChange={handleChange} name='name' placeholder='Nombre de la categoria a añadir'/>
                     {
                         errors === '' ?
                         <button className='submit-button' type='submit'>Agregar categoria</button> :
@@ -94,12 +107,16 @@ function FormCategories() {
                             <li className='table'>
                             <p className='name'>{name}</p>
                             <button onClick={()=>handleDelete(id)}>delete</button>
-                            <form  className="searchform" >
-                            <label for={c.id} className='special-label'>
-                                <i class="icon-edit"></i>
-                            </label>
-                            <input type="text" value="" placeholder={placeHolder} className="s" id={c.id} />
-                            </form>
+                            <div>
+                                <form  className="searchform" onSubmit={(e)=>handleUpdate(e,c.id,newName[id])} >
+                                <label for={c.id} className='special-label'>
+                                    <i class="icon-edit"></i>
+                                </label>
+                                <input type="text" value={newName[id]} name={id} placeholder={placeHolder}
+                                className="s" id={c.id} onChange={(e)=>handleChangeMod(e)} ></input>
+                                </form>
+                            </div>
+                            
                             </li>
                         )                        
                     })}
