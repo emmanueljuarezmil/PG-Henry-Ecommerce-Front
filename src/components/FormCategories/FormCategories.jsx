@@ -102,18 +102,18 @@ function FormCategories() {
                 <ul className='categories-list'>
                     {cats.map(c=>{
                         const {name,id}=c;
-                        let placeHolder=' Nuevo nombre.'
+                        let placeHolder='Nuevo nombre.'
                         return(
                             <li className='table'>
                             <p className='name'>{name}</p>
                             <button onClick={()=>handleDelete(id)}>delete</button>
-                            <div>
+                            <div className='form-div'>
                                 <form  className="searchform" onSubmit={(e)=>handleUpdate(e,c.id,newName[id])} >
-                                <label for={c.id} className='special-label'>
-                                    <i class="icon-edit"></i>
-                                </label>
-                                <input type="text" value={newName[id]} name={id} placeholder={placeHolder}
-                                className="s" id={c.id} onChange={(e)=>handleChangeMod(e)} ></input>
+                                    <label for={c.id} className='special-label'>
+                                        <i class="icon-edit"></i>
+                                    </label>
+                                    <input type="text" value={newName[id]} name={id} placeholder={placeHolder}
+                                    className="s" id={c.id} onChange={(e)=>handleChangeMod(e)} ></input>
                                 </form>
                             </div>
                             
