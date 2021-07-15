@@ -66,6 +66,9 @@ input.danger {
   box-shadow: 1px 1px 10px rgb(20 20 20 / 70%);
   border-radius: 0.3rem;
 }
+.categories-list{
+  margin: auto;
+}
 .table{
   display: flex;
   justify-content: space-between;
