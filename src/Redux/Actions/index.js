@@ -1,8 +1,9 @@
 import { GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, RESTART_PRODUCTS, SET_FILTER_NAME, SET_CATEGORY_ID, SET_PAGE, SET_ORDER } from "../constants";
 import {url} from '../../constantURL'
 
-
 import axios from 'axios';
+
+
 
 export function getAllProducts(name, page, orderBy , orderType, category) {
     return async function(dispatch) {
