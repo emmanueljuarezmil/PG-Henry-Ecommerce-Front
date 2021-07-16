@@ -1,5 +1,18 @@
-
-import { GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, RESTART_PRODUCTS, SET_FILTER_NAME, SET_CATEGORY_ID, SET_PAGE, SET_ORDER } from "../constants";
+import { 
+GET_ALL_PRODUCTS, 
+GET_PRODUCT_DETAIL, 
+GET_ALL_CATEGORIES, 
+RESTART_PRODUCTS, 
+SET_FILTER_NAME, 
+SET_CATEGORY_ID, 
+SET_PAGE, 
+SET_ORDER,
+GET_ALL_ORDERS,
+GET_CART_PRODUCTS,
+ADD_TO_CART,
+GET_ORDER_DETAIL
+} 
+from "../constants";
 
 
 const initialState = {
@@ -20,6 +33,9 @@ const initialState = {
     reviews: [], // Reviews 
     total_price: 0, // Precio total de la compra
     total_items: 0, // Total para cart
+    orders: [],
+    order_detail: [], 
+    cart: [],
     // logged: false, // 
     // admin: false, 
 }; 
@@ -75,6 +91,26 @@ const initialState = {
                 orderBy: action.payload[0],
                 orderType: action.payload[1],
                 actualPage: 1
+            }
+        case GET_ALL_ORDERS: 
+            return {
+                ...state,
+                orders: action.payload
+            }   
+        case GET_ORDER_DETAIL: 
+            return {
+                ...state,
+                order_detail: action.payload
+            }  
+        case GET_CART_PRODUCTS:
+            return {
+                ...state,
+                cart:action.payload
+            }
+        case ADD_TO_CART:
+            return {
+                ...state,
+                cart: [...state.cart, action.payload]
             }
         default:
             return state

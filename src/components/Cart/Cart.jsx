@@ -1,11 +1,24 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { CarouselComponent } from '../CarouselComponent/CarouselComponent'
 
 import './Cart.css';
 
 function Cart() {
+
+const products = useSelector((state) => state.cart)
+
     return (
+
         <div>
-            <h1>Ruta no disponible en este momento</h1>
+            {products?.map(product => {
+                return (
+                    <div>
+                        
+                    </div>
+
+                )
+            })}
         </div>
     )
 }
