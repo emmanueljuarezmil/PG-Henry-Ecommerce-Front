@@ -15,7 +15,9 @@ ReactDOM.render(
   <Auth0Provider
     domain={domain}
     clientId={clientId}
-    redirectUri={`${window.location.origin}/home`}>    
+    redirectUri={`${window.location.origin}/home`}
+    audience="localhost:3000"
+    scope="openid profile email">    
     <Provider store={store}>
       <BrowserRouter>
         <React.StrictMode>
