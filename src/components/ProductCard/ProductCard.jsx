@@ -5,7 +5,7 @@ import './ProductCard.css';
 function ProductCard({product}) {
     return (
         <div>
-            <div className='card_container'>
+            <div className={product.stock > 0 ? 'card_container' : 'card_container sold_out'}>
                 <Link to={`/product/${product.id}`}
                 className='card_container_link'
                 style={{ textDecoration: 'none' }}>
@@ -19,7 +19,9 @@ function ProductCard({product}) {
                     </div>
                     <div className='card_container_item'>
                         <h5 className='product_price'>${product.price}</h5>
-                        <h4 className='product_name'>{product.name}</h4>
+                        <h4 className='product_name'>{product.name} {
+                            product.stock === 0 ? '(Sin stock)' : null
+                        }</h4>
                     </div>
                 </Link>
             </div>
