@@ -15,16 +15,15 @@ export default function LogoutButton (){
         
     // }
 
-    // async function Token (){
-    //     const {getAccessTokenSilently} = useAuth0()
-    //     const token = await getAccessTokenSilently()
-    //     return token
-    // }
-    // const token = Token()
+    async function Token (){        
+        const token = await getAccessTokenSilently()
+        return console.log(token)
+    }
+   
    
     return (
         isAuthenticated && (
-            <button onClick={() => logout()}>
+            <button onClick={() => Token()}>
                 logout
             </button>
         )
