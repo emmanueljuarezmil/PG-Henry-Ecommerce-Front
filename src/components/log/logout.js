@@ -23,7 +23,7 @@ export default function LogoutButton (){
    
     return (
         isAuthenticated && (
-            <button onClick={() => Token()}>
+            <button onClick={() => logout}>
                 logout
             </button>
         )
