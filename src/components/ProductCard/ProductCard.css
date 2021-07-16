@@ -79,3 +79,7 @@
     font-weight: 700;
     margin: auto
 }
+
+.sold_out {
+    opacity: 0.4
+}
