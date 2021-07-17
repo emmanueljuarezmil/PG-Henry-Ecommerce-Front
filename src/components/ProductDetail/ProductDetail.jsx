@@ -1,59 +1,51 @@
-import React, { useEffect,useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { getProductDetail } from '../../Redux/Actions'
-import CarouselComponent from '../CarouselComponent/CarouselComponent'
-import './ProductDetail.css'
-import {url} from '../../constantURL'
-import axios from 'axios';
-import { useAuth0 } from '@auth0/auth0-react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProductDetail } from '../../Redux/Actions';
+import CarouselComponent from '../CarouselComponent/CarouselComponent';
 import { addToCart } from '../../Redux/Actions/index';
+import Cart from '../Cart/Cart';
+
+import './ProductDetail.css';
 
 function ProductDetail({ match }) {
     const dispatch = useDispatch();
-    const product = useSelector((state) => state.product_detail)
-    const [quantity,setQuantity]=useState(1);
-    const { isAuthenticated } = useAuth0()
+    const product = useSelector((state) => state.product_detail);
+    const cart = useSelector((state) => state.cart);
+    const [quantity, setQuantity] = useState(0);
 
     useEffect(() => {
         dispatch(getProductDetail(match.params.id))
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, []);
 
-
-    // async function add (productID,){
-    //     const body={id:product.id}
-    //     try{
-    //         axios.post(`${url}/cart/${product.id}`,);
-    //     }
-    // }
-
-    function onSubmit (){        
-        axios.post(`${url}/cart/${product.id}`, {
-            id: product.id,
-            quantity: quantity
-        })
-        }
-    
-    // function onSubmitNoRegister (product, quantity, e){
-    //     e.preventdefault()
-    //     dispatch(addToCart({
-    //         id: product.id,
-    //         quantity: quantity
-    //     }))
-    // }
-
-    function onSubmitNoRegister (){
+    const onClick = () => {
+        const prod = cart.find(element => element.id === product.id);
+        const quant = prod ? Number(prod.quantity) : 0
+        if ((Number(quantity) + quant) > product.stock) {
+            return alert('La cantidad deseada debe ser menor al Stock disponible')
+            // return setQuantity(0)
+        };
         dispatch(addToCart({
             id: product.id,
-            quantity: quantity
+            quantity
         }))
-    }
+    };
+
+    const onChange = (e) => {
+        const prod = cart.find(element => element.id === product.id);
+        const quant = prod ? Number(prod.quantity) : 0
+        if ((Number(quantity) + quant) >= product.stock) {
+            alert('La cantidad deseada debe ser menor al Stock disponible')
+            return setQuantity(quantity - 1)
+        };
+        setQuantity(e.target.value);
+    };
 
     return (
         <div className='detail_container'>
             <div className='detail_images'>
                 <CarouselComponent images={product.photo}></CarouselComponent>
-            </div>           
+            </div>
             <div className='detail_details'>
                 <div className='detail_name'>
                     <h1>{product.name}</h1>
@@ -68,24 +60,15 @@ function ProductDetail({ match }) {
                     <h3>Stock disponible: {product.stock}</h3>
                 </div>
                 <div>
-                    {isAuthenticated && (
-                     <div>
-                     <label>Selecciona la cantidad:</label>
-                     <input type="number" value={quantity} />
-                     <button onClick={onSubmitNoRegister}>Add to cart</button>
-                 </div>
-                    )}
-                    {!isAuthenticated && (                        
-                        <div>
-                            <label>Selecciona la cantidad:</label>
-                            <input type="number" value={quantity} />
-                            <button onClick={onSubmitNoRegister}>Add to cart</button>
-                        </div>
-                    )}               
+                    <div>
+                        <label>Selecciona la cantidad:</label>
+                        <input type="number" value={quantity} min={0} max={product.stock} onChange={(e) => onChange(e)} />
+                        <button onClick={onClick}>Add to cart</button>
+                    </div>
                 </div>
             </div>
         </div>
     )
-}
+};
 
-export default ProductDetail
+export default ProductDetail;

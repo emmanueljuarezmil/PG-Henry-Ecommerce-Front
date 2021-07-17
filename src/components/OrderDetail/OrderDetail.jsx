@@ -18,7 +18,7 @@ function OrderDetail() {
                     <div>
                         <h3>{product.name}</h3>
                         <h4>${product.price}</h4>
-                        <img src={product.photo[0]} />
+                        <img src={product.photo[0]} alt={product.name}  />
                     </div>
                 )
             })}

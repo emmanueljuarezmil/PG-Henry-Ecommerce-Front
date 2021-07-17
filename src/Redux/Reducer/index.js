@@ -40,6 +40,20 @@ const initialState = {
     // admin: false, 
 }; 
 
+const checkProductCart = (cart, payload) => {
+    console.log(payload)
+    const prod = cart.find(element => element.id === payload.id)
+    if(prod) {
+        prod.quantity = parseInt(prod.quantity) + parseInt(payload.quantity)
+        cart = cart.filter(element => element.id !== payload.id)
+        cart.push(prod)
+    }
+    else cart.push({
+            id: payload.id,
+            quantity: payload.quantity
+        })
+    return cart
+}
 
  const rootReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -110,7 +124,8 @@ const initialState = {
         case ADD_TO_CART:
             return {
                 ...state,
-                cart: [...state.cart, action.payload]
+                // cart: [...state.cart, action.payload]
+                cart: checkProductCart(state.cart, action.payload)
             }
         default:
             return state
