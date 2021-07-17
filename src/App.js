@@ -12,6 +12,7 @@ import Nav from './components/Nav/Nav';
 import FormCategories from './components/FormCategories/FormCategories';
 import Admin from './components/Admin/Admin';
 import OrderAdmin from './components/OrderAdmin/OrderAdmin';
+import FormNewUser from './components/FormNewUser/FormNewUser';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route exact path='/admin/category' component={FormCategories}/>
         <Route exact path='/admin' component={Admin}/>
         <Route exact path='/admin/orders' component={OrderAdmin}/>
+        <Route exact path='/register' component={FormNewUser}/>
       </React.Fragment>
   );
 }
