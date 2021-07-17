@@ -1,0 +1,42 @@
+.containeer{
+    width: 25em;
+    margin: auto;
+}
+.pair{
+    text-align: center;
+    height: 2.7em;
+    margin: 1em;
+    width: fit-content;
+}
+.inputName{
+    width: 10em;
+    text-align: end;
+}
+.align{
+    display: flex;
+}
+.dangerIcon{
+    height: 2em;
+    width: 2em;
+    color: red;
+    position: relative;
+}
+.critic{
+    width: 14em;
+    text-align: center;
+    margin-top: 0.2em;
+}
+.critic_i{
+    display: flex;
+    width: fit-content;
+    margin: auto;
+    margin-top: 3em;
+}
+.alert-text{
+    margin-top: 0.5em;
+    color: red;
+}
+.button-cont{
+    width: fit-content;
+    margin: auto;
+}
