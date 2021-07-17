@@ -11,4 +11,6 @@ export const SET_ORDER = 'SET_ORDER';
 export const GET_ALL_ORDERS = 'GET_ALL_ORDERS'; 
 export const GET_CART_PRODUCTS= 'GET_CART_PRODUCTS';
 export const ADD_TO_CART= 'ADD_TO_CART'; 
-export const GET_ORDER_DETAIL = 'GET_ORDER_DETAIL'
+export const GET_ORDER_DETAIL = 'GET_ORDER_DETAIL';
+export const REST_TO_CART = 'REST_TO_CART'
+export const DELETE_ITEM_TO_CART = 'DELETE_ITEM_TO_CART'
