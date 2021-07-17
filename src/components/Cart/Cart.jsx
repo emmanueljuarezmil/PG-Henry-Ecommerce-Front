@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { CarouselComponent } from '../CarouselComponent/CarouselComponent'
+// import { CarouselComponent } from '../CarouselComponent/CarouselComponent'
 
 import './Cart.css';
 

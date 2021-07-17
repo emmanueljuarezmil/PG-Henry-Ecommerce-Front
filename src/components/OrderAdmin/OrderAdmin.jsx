@@ -29,6 +29,7 @@ function OrderAdmin() {
     }
   })
 
+  // eslint-disable-next-line
   const columnsTable = [
     {
       Header: 'User ID',
@@ -52,6 +53,7 @@ function OrderAdmin() {
     },
   ]
 
+  // eslint-disable-next-line
   const columns = useMemo(() => columnsTable, [])
   // eslint-disable-next-line
   const data = useMemo(() => dataTable, [orders])

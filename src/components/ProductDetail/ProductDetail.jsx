@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProductDetail } from '../../Redux/Actions';
 import CarouselComponent from '../CarouselComponent/CarouselComponent';
 import { addToCart } from '../../Redux/Actions/index';
-import Cart from '../Cart/Cart';
+// import Select from 'react-select'
+// import Cart from '../Cart/Cart';
 
 import './ProductDetail.css';
 
@@ -15,15 +16,20 @@ function ProductDetail({ match }) {
 
     useEffect(() => {
         dispatch(getProductDetail(match.params.id))
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [dispatch, match.params.id]);
 
+    const prod = cart.find(element => element.id === product.id);
+    const quant = prod ? prod.quantity : 0
+    var prodStock = product.stock;
+    const stockAvailable = product.stock - quant
+    
     const onClick = () => {
-        const prod = cart.find(element => element.id === product.id);
-        const quant = prod ? Number(prod.quantity) : 0
-        if ((Number(quantity) + quant) > product.stock) {
-            return alert('La cantidad deseada debe ser menor al Stock disponible')
-            // return setQuantity(0)
+        // const prod = cart.find(element => element.id === product.id);
+        // const quant = prod ? prod.quantity : 0
+        // var prodStock = product.stock - quant;
+        if ((quantity + quant) > product.stock) {
+            alert('No hay stock disponible para tu pedido')
+            return setQuantity(0)
         };
         dispatch(addToCart({
             id: product.id,
@@ -32,14 +38,14 @@ function ProductDetail({ match }) {
     };
 
     const onChange = (e) => {
-        const prod = cart.find(element => element.id === product.id);
-        const quant = prod ? Number(prod.quantity) : 0
-        if ((Number(quantity) + quant) >= product.stock) {
-            alert('La cantidad deseada debe ser menor al Stock disponible')
-            return setQuantity(quantity - 1)
+        // const prod = cart.find(element => element.id === product.id);
+        // const quant = prod ? prod.quantity : 0
+        if ((quantity + quant) >= product.stock) {
+            return setQuantity(0)       
         };
-        setQuantity(e.target.value);
+        setQuantity(Number(e.target.value));
     };
+    
 
     return (
         <div className='detail_container'>
@@ -57,13 +63,20 @@ function ProductDetail({ match }) {
                     <p>{product.description ? product.description : "There's no description available"}</p>
                 </div>
                 <div className='detail_stock'>
-                    <h3>Stock disponible: {product.stock}</h3>
+                    <h3>Stock disponible: {product.stock - quant}</h3>
                 </div>
                 <div>
                     <div>
                         <label>Selecciona la cantidad:</label>
-                        <input type="number" value={quantity} min={0} max={product.stock} onChange={(e) => onChange(e)} />
-                        <button onClick={onClick}>Add to cart</button>
+                        {
+                            quant < product.stock ?
+                            <div>
+                                {/* <Select></Select> */}
+                                <input type="number" value={quantity} min={0} max={prodStock} onChange={(e) => onChange(e)} />
+                                <button onClick={onClick}>Add to cart</button>
+                            </div> :
+                            <p>No hay mas disponible</p>
+                        }
                     </div>
                 </div>
             </div>
