@@ -10,7 +10,9 @@ SET_ORDER,
 GET_ALL_ORDERS,
 GET_CART_PRODUCTS,
 ADD_TO_CART,
-GET_ORDER_DETAIL
+GET_ORDER_DETAIL,
+REST_TO_CART,
+DELETE_ITEM_TO_CART
 } 
 from "../constants";
 
@@ -40,19 +42,24 @@ const initialState = {
     // admin: false, 
 }; 
 
-const checkProductCart = (cart, payload) => {
+const checkProductCart = (cart, payload, operation) => {
     console.log(payload)
     const prod = cart.find(element => element.id === payload.id)
     if(prod) {
-        prod.quantity = parseInt(prod.quantity) + parseInt(payload.quantity)
-        cart = cart.filter(element => element.id !== payload.id)
-        cart.push(prod)
+        const indexOfProd = cart.findIndex(product => product.id === prod.id)
+        operation === 'sum' ?
+        prod.quantity = parseInt(prod.quantity) + parseInt(payload.quantity) :
+        prod.quantity = parseInt(prod.quantity) - 1
+        cart[indexOfProd] = prod               
     }
     else cart.push({
             id: payload.id,
-            quantity: payload.quantity
+            quantity: payload.quantity,
+            price: payload.price,
+            photo: payload.image,
+            name: payload.name
         })
-    return cart
+    return [...cart]
 }
 
  const rootReducer = (state = initialState, action) => {
@@ -125,8 +132,18 @@ const checkProductCart = (cart, payload) => {
             return {
                 ...state,
                 // cart: [...state.cart, action.payload]
-                cart: checkProductCart(state.cart, action.payload)
+                cart: checkProductCart(state.cart, action.payload, 'sum')
             }
+        case REST_TO_CART:
+            return {
+                ...state,
+                cart: checkProductCart(state.cart, action.payload, 'rest')
+            }
+        case DELETE_ITEM_TO_CART:
+            return {
+                ...state,
+                cart: state.cart.filter(element => element.id !== action.payload.id)
+            }        
         default:
             return state
     }
