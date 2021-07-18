@@ -70,7 +70,7 @@ export function AddToCart(props) {
             {
                 product.description ?
                 <div>               
-                    <span>Tienes {productInCart ? productInCart.quantity : 0} de este producto en tu carrito</span>
+                    <span>Tienes {productInCart ? productInCart.quantity : 0} en tu carrito</span>
                 </div> :
                 null
             }
