@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import {validate} from './validate';
 import {BsFillExclamationTriangleFill} from 'react-icons/bs'
-import {useHistory} from 'react-router-dom'
+// import {useHistory} from 'react-router-dom'
 import './FormNewUser.css'
 import axios from 'axios'
 import { url } from '../../constantURL';
@@ -11,7 +11,7 @@ function FormNewUser() {
     const [errors,setErrors]=useState({});
     const [critic,setCritic]=useState(false);
 
-    let history= useHistory();
+    // let history= useHistory();
 
     const handleChange= (e)=>{
         e.preventDefault();
@@ -25,16 +25,16 @@ function FormNewUser() {
         }))
     }
 
-    const send= async (body)=>{
-        try{
-            await axios.post(`${url}/users/register`,body)
-            alert('Usuario Creado con éxito');
-            history.push('/home')
-        }catch(err) {
-            console.error(err)
-            alert('Ocurrió un problema y no se pudo crear el usuario')
-        }
-    }
+    // const send= async (body)=>{
+    //     try{
+    //         await axios.post(`${url}/users/register`,body)
+    //         alert('Usuario Creado con éxito');
+    //         history.push('/home')
+    //     }catch(err) {
+    //         console.error(err)
+    //         alert('Ocurrió un problema y no se pudo crear el usuario')
+    //     }
+    // }
 
     const onSubmit=async (e)=>{
         e.preventDefault();
@@ -49,7 +49,7 @@ function FormNewUser() {
                 alert('usuario creado con éxito.')
             }catch(err) {
                 console.error(err)
-                alert('Ocurrió un problema y no se pudo crear el usuario.')
+                alert('Ocurrió un error y no se pudo crear el usuario')
             }
         }else setCritic(true);
     }

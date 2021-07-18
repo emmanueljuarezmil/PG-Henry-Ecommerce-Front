@@ -27,3 +27,22 @@
     height: 3.5rem;
     width: 4rem;
 }
+.desplegable{
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    background-color: green;
+}
+div[role='menu'] {
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    margin-top: 2.5rem;
+    background-color: green;
+    padding: .5rem;
+}
+
+div[role='menu'].visible {
+    visibility: visible;
+}
