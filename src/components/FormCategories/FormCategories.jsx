@@ -80,8 +80,8 @@ function FormCategories() {
     }
 
 
-    function classAsign(errors, classname) {
-        return errors !== '' ? 'danger' : classname;
+    function classAsign(errors, className) {
+        return errors !== '' ? 'danger' : className;
     }
 
     return (
