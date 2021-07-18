@@ -9,7 +9,7 @@ function Catalogue({products}) {
             <div className='catalogue_container'>
                 {
                     products && products.map((products, index) => (
-                        <ProductCard index={index} product={products} />
+                        <ProductCard index={index} key={index} product={products} />
                     ))
                 }
             </div>
