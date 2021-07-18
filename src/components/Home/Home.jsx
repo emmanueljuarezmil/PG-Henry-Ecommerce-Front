@@ -10,7 +10,7 @@ import './Home.css'
 
 function Home() {
 
-
+    const {getAccessTokenSilently} = useAuth0
     const products = useSelector((state) => state.all_products);
     const name = useSelector((state) => state.filterName)
     const category = useSelector((state) => state.filterCategory)
@@ -22,12 +22,22 @@ function Home() {
     totalPages = Math.ceil(totalPages);
     const dispatch = useDispatch();
     const { user } = useAuth0()
-    console.log(user)
+   
+
 
     useEffect(() => {
         dispatch(getAllProducts(name, page, orderBy , orderType, category )) 
         dispatch(getAllCategories())
     }, [dispatch, name, page, orderBy , orderType, category ])
+
+    /*
+    useEffect(() => {
+        getAccessTokenSilently().then(token => {
+            dispatch(getAllProducts(name, page, orderBy , orderType, category, token )) 
+            dispatch(getAllCategories())
+        })
+    }, [dispatch, name, page, orderBy , orderType, category ])
+    */
       
       const prevPage = (e) => {
           e.preventDefault();

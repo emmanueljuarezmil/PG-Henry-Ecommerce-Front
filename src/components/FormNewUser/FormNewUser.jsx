@@ -5,9 +5,10 @@ import {BsFillExclamationTriangleFill} from 'react-icons/bs'
 import './FormNewUser.css'
 import axios from 'axios'
 import { url } from '../../constantURL';
+import Log from '../log/log.js'
 
 function FormNewUser() {
-    const [inputs,setInputs]=useState({repeat:''});
+    const [inputs,setInputs]=useState({repeat:''}); 
     const [errors,setErrors]=useState({});
     const [critic,setCritic]=useState(false);
 
@@ -99,7 +100,8 @@ function FormNewUser() {
                     <button type='submit'>Registrarse</button>
                 </div>
                 
-            </form>            
+            </form> 
+            <Log type="register"/>            
         </div>
     )
 }
@@ -110,7 +112,7 @@ const appear=(value)=>{
                 <BsFillExclamationTriangleFill className='dangerIcon'/>
                 <div className='critic'>
                     <p className='alert-text'>Rellene todos los campos.</p>
-                </div>                    
+                </div>                           
             </div>
         )
     }
