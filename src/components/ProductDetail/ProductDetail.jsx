@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductDetail } from '../../Redux/Actions';
 import CarouselComponent from '../CarouselComponent/CarouselComponent';
-import { addToCart } from '../../Redux/Actions/index';
-import Cart from '../Cart/Cart';
+// import { addToCart } from '../../Redux/Actions/index';
+// import Cart from '../Cart/Cart';
 import { AddToCart } from '../AddToCartButton/AddToCart';
 
 import './ProductDetail.css';
@@ -11,8 +11,8 @@ import './ProductDetail.css';
 function ProductDetail({ match }) {
     const dispatch = useDispatch();
     const product = useSelector((state) => state.product_detail);
-    const cart = useSelector((state) => state.cart);
-    const [quantity, setQuantity] = useState(0);
+    // const cart = useSelector((state) => state.cart);
+    // const [quantity, setQuantity] = useState(0);
 
     useEffect(() => {
         dispatch(getProductDetail(match.params.id))

@@ -8,9 +8,6 @@ import './Cart.css';
 function Cart() {
 
 var totalPrice = 0
-const percentage = 13
-var totalPriceWithTaxes = (totalPrice + ((totalPrice*percentage)/100))
-console.log(totalPriceWithTaxes)
 const products = useSelector((state) => state.cart)
 
     return (
@@ -18,7 +15,7 @@ const products = useSelector((state) => state.cart)
             {products.length > 0 ?
                 <div>
                     {products && products.map(product => {                        
-                        totalPrice = totalPrice + product.price                        
+                        totalPrice = totalPrice + (product.price * product.quantity)                        
                         return (
                             <div>
                                 <div>
@@ -26,7 +23,7 @@ const products = useSelector((state) => state.cart)
                                     <img src={product.photo}/>
                                     <div>
                                         <label>Precio: </label>
-                                        <h3>{product.price}</h3>
+                                        <h3>{`$${product.price}`}</h3>
                                     </div>
                                     <div>
                                         <label>Cantidad: </label>
@@ -39,14 +36,10 @@ const products = useSelector((state) => state.cart)
                     })}
                     <div>
                         <h2>Summary</h2>
-                        <label>SUBTOTAL: </label>
+                        <label>TOTAL: </label>
                         <h4>{totalPrice}</h4>
-                        <label>SHIPPING: </label>
-                        <h4>Free</h4>
-                        <label>TAXES: </label>
-                        <h4>{percentage}%</h4>
-                        <h2>TOTAL: </h2>
-                        <span>{(totalPrice + ((totalPrice*percentage)/100))}</span>
+                        <label>ENVIO: </label>
+                        <h4>Gratis</h4>                        
                     </div>
                 </div>
             : <h3>No tienes productos agregados a tu carrito de compras</h3>}
