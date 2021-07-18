@@ -19,13 +19,11 @@ function Login() {
     const handleSubmit= async (e) =>{
         e.preventDefault();
         const body= inputs
-        console.log(body)
         try{
             const {data} = await axios.post(`${backUrl}/users/login`, body);
             const {id} = data
             const cookies = new Cookies();
             cookies.set('id', id, { path: '/' });
-            console.log(data)
         }catch(err){
             alert(err)
         };
