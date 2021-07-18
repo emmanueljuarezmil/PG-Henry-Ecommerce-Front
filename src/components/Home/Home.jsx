@@ -5,12 +5,11 @@ import Filter from '../Filter/Filter';
 import { useSelector } from 'react-redux';
 import Catalogue from '../Catalogue/Catalogue';
 import SearchBar from '../SearchBar/SearchBar';
-import { useAuth0 } from '@auth0/auth0-react';
+// import { useAuth0 } from '@auth0/auth0-react';
 import './Home.css'
 
 function Home() {
 
-    const {getAccessTokenSilently} = useAuth0
     const products = useSelector((state) => state.all_products);
     const name = useSelector((state) => state.filterName)
     const category = useSelector((state) => state.filterCategory)
@@ -21,7 +20,7 @@ function Home() {
 
     totalPages = Math.ceil(totalPages);
     const dispatch = useDispatch();
-    const { user } = useAuth0()
+    // const { user, getAccessTokenSilently } = useAuth0()
    
 
 

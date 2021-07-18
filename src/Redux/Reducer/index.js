@@ -43,7 +43,6 @@ const initialState = {
 }; 
 
 const checkProductCart = (cart, payload, operation) => {
-    console.log(payload)
     const prod = cart.find(element => element.id === payload.id)
     if(prod) {
         const indexOfProd = cart.findIndex(product => product.id === prod.id)
