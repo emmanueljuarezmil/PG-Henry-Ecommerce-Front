@@ -25,6 +25,17 @@ export function getAllProducts(name, page, orderBy , orderType, category) {
         return dispatch({type: GET_ALL_PRODUCTS,payload: json.data})
     };
 }
+/*
+export function getAllProducts(name, page, orderBy , orderType, category, token) {
+    return async function(dispatch) {
+        var json = await axios(`${url}/products?page=${page}&name=${name}&orderBy=${orderBy}&orderType=${orderType}&category=${category}`, {
+            headers: {Authorization:  `Bearer ${token}`}
+        });
+        console.log(token)
+        return dispatch({type: GET_ALL_PRODUCTS,payload: json.data})
+    };
+}
+*/
 
 
 export const getProductDetail = (id) => {
