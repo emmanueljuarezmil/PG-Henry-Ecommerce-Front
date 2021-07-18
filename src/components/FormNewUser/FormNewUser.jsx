@@ -48,11 +48,9 @@ function FormNewUser() {
                 const {email,userName,hashedPassword}=inputs
                 const body={email,userName,hashedPassword};
                 const response = await axios.post(`${url}/users/register`,body)
-                console.log(response.data)
                 const {id} = response.data
                 const cookies = new Cookies();
                 cookies.set('id', id, { path: '/' });
-                console.log(cookies.get('id'))
                 alert('usuario creado con éxito.')
             }catch(err) {
                 console.error(err)
