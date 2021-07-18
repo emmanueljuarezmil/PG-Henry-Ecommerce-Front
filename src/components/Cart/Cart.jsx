@@ -1,7 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { AddToCart } from '../AddToCartButton/AddToCart';
-import { CarouselComponent } from '../CarouselComponent/CarouselComponent'
+import { AddToCart } from '../AddToCartButton/AddToCart'
 
 import './Cart.css';
 
@@ -20,7 +19,7 @@ const products = useSelector((state) => state.cart)
                             <div>
                                 <div>
                                     <h2>{product.name}</h2>
-                                    <img src={product.photo}/>
+                                    <img src={product.photo} alt="Not found"/>
                                     <div>
                                         <label>Precio: </label>
                                         <h3>{`$${product.price}`}</h3>

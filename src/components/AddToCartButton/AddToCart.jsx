@@ -8,12 +8,9 @@ export function AddToCart(props) {
     const cart = useSelector((state) => state.cart);  
     const product = props.product  
     const productInCart = cart.find(el => el.id === product.id)
-    // const product = useSelector((state) => state.product_detail);
     const [quantity, setQuantity] = useState(productInCart?.quantity ? productInCart.quantity : 1);
     
     const onClick = (props) => {
-        const prod = cart.find(element => element.id === product.id);
-        // const quant = prod ? Number(prod.quantity) : 0
         console.log(product)
         if ((Number(quantity) + productInCart?.quantity) > product.stock) {
             return alert('La cantidad deseada debe ser menor al Stock disponible')
@@ -29,8 +26,6 @@ export function AddToCart(props) {
     };
     console.log(props)
     const onChange = (e) => {
-        // const prod = cart.find(element => element.id === product.id);
-        // const quant = prod ? Number(prod.quantity) : 0
         if ((Number(quantity) + productInCart?.quantity) >= product.stock) {
             alert('La cantidad deseada debe ser menor al Stock disponible')
             return setQuantity(quantity - 1)
@@ -39,8 +34,6 @@ export function AddToCart(props) {
     };
 
     const onClickRemove = (props) => {
-        // const prod = cart.find(element => element.id === product.id);
-        // const quant = prod ? Number(prod.quantity) : 0
         const quantity = productInCart.quantity
         if (quantity -1 < 0) {setQuantity(0)};
         if (quantity -1 === 0) {

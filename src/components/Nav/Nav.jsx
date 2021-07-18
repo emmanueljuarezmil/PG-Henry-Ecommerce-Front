@@ -11,8 +11,10 @@ import './Nav.css';
 
 function Nav() {
     const dispatch = useDispatch()
-    const { isAuthenticated, loginWithPopup } = useAuth0()
-    const { buttonProps, itemProps, isOpen, setIsOpen } = useDropdownMenu(2);
+    // const { isAuthenticated, loginWithPopup } = useAuth0()
+    const { isAuthenticated } = useAuth0()
+    // const { buttonProps, itemProps, isOpen, setIsOpen } = useDropdownMenu(2);
+    const { buttonProps, itemProps, isOpen } = useDropdownMenu(2);
     return (
         <div className='nav_container'>
             <div className='nav_item'>
