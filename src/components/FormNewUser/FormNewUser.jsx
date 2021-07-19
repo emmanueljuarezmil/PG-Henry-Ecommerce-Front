@@ -12,8 +12,6 @@ function FormNewUser() {
     const [inputs,setInputs]=useState({repeat:''}); 
     const [errors,setErrors]=useState({});
     const [critic,setCritic]=useState(false);
-    const [alreadyE,setAlreadyE]=useState(false);
-    const [alreadyM,setAlreadyM]= useState('');
 
      const history= useHistory();
 
@@ -36,6 +34,7 @@ function FormNewUser() {
         }))
         if(Object.values(errors).length===0){
             try{
+                setCritic(false);
                 const {email,userName,hashedPassword}=inputs
                 const body={email,userName,hashedPassword};
                 const response = await axios.post(`${url}/users/register`,body)
@@ -46,17 +45,15 @@ function FormNewUser() {
                 history.push('/home')
             }catch(err) {
                 console.error(err.response)
-                setAlreadyM(err.response.data.message);
-                setAlreadyE(true)                
+                alert(err.response.data.message);           
             }
-        }else setCritic(true);setAlreadyE(false);
+        }else setCritic(true);
     }
 
 
     return (
         <div className='div_new_user'>
             <form onSubmit={(e)=>onSubmit(e)} className='form_new_user_container'>
-                {appear(alreadyE,alreadyM)}
                 <div className='pair'>
                     <div className='align'>
                         <div className='inputName'>
