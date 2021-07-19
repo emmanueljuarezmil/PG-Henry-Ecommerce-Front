@@ -5,6 +5,7 @@ import CarouselComponent from '../CarouselComponent/CarouselComponent';
 // import { addToCart } from '../../Redux/Actions/index';
 // import Cart from '../Cart/Cart';
 import { AddToCart } from '../AddToCartButton/AddToCart';
+import { Fade } from 'react-awesome-reveal';
 
 import './ProductDetail.css';
 
@@ -48,6 +49,7 @@ function ProductDetail({ match }) {
     // };
 
     return (
+        <Fade>
         <div className='detail_container'>
             <div className='detail_images'>
                 <CarouselComponent images={product.photo}></CarouselComponent>
@@ -75,6 +77,7 @@ function ProductDetail({ match }) {
                 </div> */}
             </div>
         </div>
+        </Fade>
     )
 };
 

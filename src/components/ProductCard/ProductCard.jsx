@@ -2,12 +2,38 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './ProductCard.css';
 
-function ProductCard({product}) {
+function ProductCard({product, index}) {
+    const cardCss=(index)=>{
+        let cont =index%6;
+        switch(cont){
+            case 0:{
+                return 'card_container_link_red'
+            }
+            case 1:{
+                return 'card_container_link_darkred'
+            }
+            case 2:{
+                return 'card_container_link_blue'
+            }
+            case 3:{
+                return 'card_container_link_lightblue'
+            }
+            case 4:{
+                return 'card_container_link_green'
+            }
+            case 5:{
+                return 'card_container_link_orange'
+            }
+            default:
+                return 'card_container_link_red'
+            
+        }
+    }
     return (
         <div>
             <div className={product.stock > 0 ? 'card_container' : 'card_container sold_out'}>
                 <Link to={`/product/${product.id}`}
-                className='card_container_link'
+                className={cardCss(index)}
                 style={{ textDecoration: 'none' }}>
                     <div className='card_container_item_img'>
                         {

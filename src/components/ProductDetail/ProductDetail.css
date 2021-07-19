@@ -7,36 +7,28 @@
    height: 33rem;
    width: 95%;
    margin: auto;
-   background-color: white;
-   margin-top: 1rem;
+   background-image: url('../../img/PRODDET.png');
+   margin-top: 5rem;
    margin-bottom: 1rem;
    border-radius: 0.3rem;
-   border: 2px solid rgb(153, 149, 149);
    box-shadow: 1px 1px 10px rgb(20 20 20 / 70%);
-
 }
 
 .detail_images {
-   display: flex;
-   justify-content: center;
-   align-content: center;
-   align-items: center;
-   height: 25rem;
-   width: 30rem;
-   margin: auto;
-   object-fit: cover;
-   object-position: center center;
-   box-shadow: 1px 1px 10px rgb(20 20 20 / 70%);
-   border-radius: 0.3rem;
-   border: 2px solid rgb(153, 149, 149);
-   background-color: white;
+   display: block;
+    margin-right: -15rem;
+    border-radius: 0.2rem;
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+    height: 29rem;
+    width: 30rem;
+    object-fit: cover;
+    object-position: center center;
 }
 
 .detail_images_item {
    display: flex;
    flex-direction: column;
-   width: 80%;
-   height: 35%;
 }
 
 .detail_details {
@@ -46,18 +38,33 @@
    flex-direction: column;
    justify-content: space-around;
    margin: auto;
+   color: white;
 }
 
+.detail_name{
+   text-shadow: -1px 1px 0 rgb(71, 70, 70);
+   margin-bottom: -4rem;
+   font-size: 1.1rem;
+   text-align:center;
+}
 
 .detail_price {
-   font-size: 1.5rem;
+   text-shadow: -1px 1px 0 rgb(71, 70, 70);
+   font-size: 2.5rem;
+   max-height: 4rem;
    text-align:center
 }
 
 .detail_description {
-   text-align: justify;
+   text-align: center;
+   font-size: 1.5rem;
 }
 
 .detail_stock {
-   text-align:center
+   text-shadow: -1px 1px 0 rgb(71, 70, 70);
+   text-align:center;
+}
+
+.detail_button{
+   height: 15rem;
 }
