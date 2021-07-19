@@ -1,14 +1,29 @@
 @import "//netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css";
-.categories-form{
-  margin-top: 2rem;
+
+.categories-form-container{
+  width: 90rem;
   display: flex;
   align-items: center;
   justify-content: center;
   align-content: center;
+  flex-direction: column;
+  margin: auto;
+}
+
+.categories-form{
+  margin-top: 2rem;
   border: 2px solid rgb(153, 149, 149);
   background-color: white;
   box-shadow: 1px 1px 10px rgb(20 20 20 / 70%);
   border-radius: 0.3rem;
+  width: 44rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding-top: 2rem;
 }
 
 .categories-form button {

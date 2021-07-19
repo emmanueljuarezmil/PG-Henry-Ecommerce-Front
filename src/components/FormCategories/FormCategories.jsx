@@ -85,7 +85,7 @@ function FormCategories() {
     }
 
     return (
-        <div>
+        <div className='categories-form-container'>
             <div className='categories-form'>
                 <form className='form-cont' onSubmit={handleSubmit}>
                     <label className='input-name'>Nombre de la categoria a añadir:</label>

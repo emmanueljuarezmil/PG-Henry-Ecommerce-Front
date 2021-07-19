@@ -1,10 +1,11 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import './Admin.css';
 
 
 function Admin() {
     return (
-        <div>
+        <div className='admin_container'>
             <div className='admin_item'>
                 <NavLink to='/admin/product' className="NavLink">Agregar producto</NavLink>
             </div>
