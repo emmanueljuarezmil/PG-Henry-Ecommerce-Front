@@ -16,7 +16,6 @@ export function AddToCart(props) {
             return alert('La cantidad deseada debe ser menor al Stock disponible')
             // return setQuantity(0)
         };
-        console.log('stock', product.stock)
         dispatch(addToCart({
             name: product.name,
             id: product.id,

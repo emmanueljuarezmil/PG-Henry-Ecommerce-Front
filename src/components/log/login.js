@@ -12,7 +12,6 @@ export default function LoginButton (props){
     const history = useHistory()
       
     useEffect(() => {
-        console.log('useeffect')
         return (async () => {
             if(user) {                                               
                 const body = {
@@ -22,7 +21,6 @@ export default function LoginButton (props){
                 }
                 try {
                     const response = await axios.post(`${url}/users/login`, body)
-                        console.log(response)
                         const {id, admin} = response.data
                         const cookies = new Cookies();
                         cookies.set('id', id, { path: '/' });

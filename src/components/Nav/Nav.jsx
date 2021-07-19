@@ -59,7 +59,7 @@ function Nav() {
                 )
             }
             {
-                admin ? <div className='nav_item'>
+                admin === 'true' ? <div className='nav_item'>
                 <NavLink className="NavLink" to='/admin'>Admin</NavLink>
                 </div> :
                 null
