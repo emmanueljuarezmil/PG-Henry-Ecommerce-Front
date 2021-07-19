@@ -7,7 +7,7 @@ function Admin() {
     return (
         <div className='admin_container'>
             <div className='admin_item'>
-                <NavLink to='/admin/product' className="NavLink">Agregar producto</NavLink>
+                <NavLink to='/admin/product' className="NavLink" >Agregar producto</NavLink>
             </div>
             <div className='admin_item'>
                 <NavLink to='/admin/category' className="NavLink">Agregar categoria</NavLink>
