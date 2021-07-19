@@ -5,7 +5,7 @@ import './CarouselComponent.css'
 
 function CarouselComponent({images}) {
     return (
-        <div className='carousel'>
+        <div className='carousel_component'>
             <Carousel autoPlay={true} interval={5000} infiniteLoop={true} centerMode={true} showThumbs={false} centerSlidePercentage={100}>
                 {
                     images && images.length ?
