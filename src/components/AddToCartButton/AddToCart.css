@@ -1,0 +1,30 @@
+.add_to_cart{
+    display:flex;
+    flex-direction: row;
+    width: 45rem;
+    margin: auto;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+.add_to_cart button {
+    margin: 0.5rem;
+}
+.add_to_cart input {
+    width: 2rem;
+}
+
+.add_to_cart_quantity{
+    display: flex;
+}
+
+.quantity{
+    margin-right: 1rem;
+    font-size: large;
+    text-shadow: -1px 1px 0 rgb(71, 70, 70);
+}
+
+.add_to_cart span{
+    text-shadow: -1px 1px 0 rgb(71, 70, 70);
+}

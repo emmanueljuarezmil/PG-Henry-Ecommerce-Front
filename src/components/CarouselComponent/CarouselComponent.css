@@ -1,4 +1,10 @@
 .carousel img {
-    width: 59rem;
-    height: 36rem;
+    display: block;
+    margin-right: -15rem;
+    border-radius: 0.2rem;
+    margin: 0.6rem;
+    height: 29rem;
+    width: 30rem;
+    object-fit: cover;
+    object-position: center center;
 }
