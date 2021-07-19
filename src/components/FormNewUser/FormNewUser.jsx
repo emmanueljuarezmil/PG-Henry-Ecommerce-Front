@@ -11,6 +11,8 @@ function FormNewUser() {
     const [inputs,setInputs]=useState({repeat:''}); 
     const [errors,setErrors]=useState({});
     const [critic,setCritic]=useState(false);
+    const [alreadyE,setAlreadyE]=useState(false);
+    const [alreadyM,setAlreadyM]= useState('');
 
     // let history= useHistory();
 
@@ -26,39 +28,32 @@ function FormNewUser() {
         }))
     }
 
-    // const send= async (body)=>{
-    //     try{
-    //         await axios.post(`${url}/users/register`,body)
-    //         alert('Usuario Creado con éxito');
-    //         history.push('/home')
-    //     }catch(err) {
-    //         console.error(err)
-    //         alert('Ocurrió un problema y no se pudo crear el usuario')
-    //     }
-    // }
-
     const onSubmit=async (e)=>{
         e.preventDefault();
         setErrors(validate({
             ...inputs
         }))
         if(Object.values(errors).length===0){
-            try{
-                const {email,userName,hashedPassword}=inputs
-                const body={email,userName,hashedPassword};
+            const {email,userName,hashedPassword}=inputs
+            const body={email,userName,hashedPassword};
+            setCritic(false)
+            try{                
                 await axios.post(`${url}/users/register`,body)
                 alert('usuario creado con éxito.')
+                history.push('/home')
             }catch(err) {
-                console.error(err)
-                alert('Ocurrió un error y no se pudo crear el usuario')
+                console.error(err.response)
+                setAlreadyM(err.response.data.message);
+                setAlreadyE(true)                
             }
-        }else setCritic(true);
+        }else setCritic(true);setAlreadyE(false);
     }
 
 
     return (
         <div>
             <form onSubmit={(e)=>onSubmit(e)} className='containeer'>
+                {appear(alreadyE,alreadyM)}
                 <div className='pair'>
                     <div className='align'>
                         <div className='inputName'>
@@ -95,7 +90,7 @@ function FormNewUser() {
                     </div>                    
                     <p className="danger">{errors.repeat}</p>
                 </div>                
-                {appear(critic)}
+                {appear(critic,'Rellene todos los campos.')}
                 <div className='button-cont'>
                     <button type='submit'>Registrarse</button>
                 </div>
@@ -105,14 +100,16 @@ function FormNewUser() {
         </div>
     )
 }
-const appear=(value)=>{
+const appear=(value,message)=>{
     if(value){
         return(
             <div className='critic_i'>
                 <BsFillExclamationTriangleFill className='dangerIcon'/>
                 <div className='critic'>
-                    <p className='alert-text'>Rellene todos los campos.</p>
-                </div>                           
+
+                    <p className='alert-text'>{message}</p>
+                </div>                    
+
             </div>
         )
     }
