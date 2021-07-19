@@ -20,14 +20,24 @@ export default function LoginButton (props){
                     hashedPassword: user.sub
                 }
                 try {
-                    const response = await axios.post(`${url}/users/login`, body)
+                    let response = await axios.post(`${url}/users/register`, body)
+                    if(!response.data.id){
+                        response = await axios.post(`${url}/users/login`, body)
                         const {id, admin} = response.data
+
                         const cookies = new Cookies();
                         cookies.set('id', id, { path: '/' });
                         cookies.set('admin', admin, { path: '/' })
+                    } else {
+                        const {id, admin} = response.data
+                        const cookies = new Cookies()
+                        console.log(cookies)
+                        cookies.set('id', id, { path:'/'})
+                        cookies.set('admin', admin, { path: '/'})
                         history.push('/home')
+                    }
                 } catch(err) {
-                    console.error(err)
+                    console.error(err)                                          
                 }
                 // axios.post(`${url}/users/register`, body).then(response => {
                 //     console.log(response)
