@@ -4,6 +4,7 @@ import axios from 'axios'
 import {url} from '../../constantURL'
 import Cookies from 'universal-cookie';
 import {useHistory} from 'react-router-dom'
+import {FcGoogle} from 'react-icons/fc'
 
 const backUrl = url
 
@@ -34,7 +35,7 @@ function Login() {
     }
 
     return (
-        <div>
+        <div className='Init-cont'>
             <div>
                 <form onSubmit={handleSubmit}>
                     <div>
