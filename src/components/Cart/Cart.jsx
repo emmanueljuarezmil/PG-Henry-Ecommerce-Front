@@ -36,7 +36,7 @@ function Cart() {
                     {products && products.map((product, i) => {
                         totalPrice = totalPrice + (product.price * product.quantity)
                         return (
-                            <div className={cartCss(i)}>
+                            <div className={cartCss(i)} key={i}>
                                 <div>
                                     <img className='cart_img' src={product.photo} alt="Not found" />
                                 </div>

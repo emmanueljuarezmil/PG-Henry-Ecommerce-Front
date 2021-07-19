@@ -56,7 +56,8 @@ const checkProductCart = (cart, payload, operation) => {
             quantity: payload.quantity,
             price: payload.price,
             photo: payload.image,
-            name: payload.name
+            name: payload.name,
+            stock: payload.stock
         })
     return [...cart]
 }

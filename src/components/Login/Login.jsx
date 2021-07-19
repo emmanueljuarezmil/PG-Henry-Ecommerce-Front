@@ -1,9 +1,16 @@
 import React,{useState} from 'react'
 import Log from '../log/log'
 import axios from 'axios'
+import {url} from '../../constantURL'
+import Cookies from 'universal-cookie';
+import {useHistory} from 'react-router-dom'
+import {FcGoogle} from 'react-icons/fc'
+
+const backUrl = url
 
 function Login() {
     const [inputs,setInputs]=useState({});
+    const history = useHistory()
 
     const handleChange= (e)=>{
         e.preventDefault();
@@ -14,28 +21,33 @@ function Login() {
     }
     const handleSubmit= async (e) =>{
         e.preventDefault();
-        // const body=inputs;
+        const body = inputs
         try{
-            axios.get();
+            const {data} = await axios.post(`${backUrl}/users/login`, body);
+            const {id} = data
+            const cookies = new Cookies();
+            cookies.set('id', id, { path: '/' });
+            history.push('/home')
         }catch(err){
-            alert(err)
+            console.error(err)
+            alert('Datos incorrectos')
         };
     }
 
     return (
-        <div>
+        <div className='Init-cont'>
             <div>
                 <form onSubmit={handleSubmit}>
                     <div>
                         <div>
-                            <label>Nombre de usuario: </label>
-                            <input type='text' name='userName' value={inputs.userName} onChange={handleChange}/>
+                            <label>Email: </label>
+                            <input type='text' name='email' value={inputs.email} onChange={handleChange}/>
                         </div>
                     </div>
                     <div>
                         <div>
                             <label>Contraseña: </label>
-                            <input type='text' name='hashedPassword' value={inputs.hashedPassword} onChange={handleChange}/>
+                            <input type='password' name='hashedPassword' value={inputs.hashedPassword} onChange={handleChange}/>
                         </div>
                     </div>
                     <button type='submit'>Ingresar</button>

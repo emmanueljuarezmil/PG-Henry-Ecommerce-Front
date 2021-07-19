@@ -351,9 +351,9 @@ function FormProduct() {
                                     onChange={handleChange} />
                             </div>
                             <div className='container-checkbox'>
-                                {categories.map(c => {
+                                {categories.map((c, index) => {
                                     return (
-                                        <li className='checkbox-li'>
+                                        <li className='checkbox-li' key={index}>
                                             <input type='checkbox'
                                             value={c.id}
                                             onChange={handleCheck}
