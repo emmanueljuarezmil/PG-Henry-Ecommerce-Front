@@ -1,42 +1,81 @@
-.containeer{
-    width: 25em;
-    margin: auto;
+.div_new_user{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    margin-top: 3rem;
+    font-weight: 800;
 }
+
+.form_new_user_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    background-image: url('../../img/PRODDET2.png');
+    height: 25rem;
+    width: 50rem;
+    padding-top: 2rem;
+    margin: auto;
+    font-size: 1.2rem;
+    font-weight: bolder;
+    border-radius: 1rem;
+}
+
+
 .pair{
     text-align: center;
     height: 2.7em;
-    margin: 1em;
     width: fit-content;
+    margin: auto;
 }
+
 .inputName{
     width: 10em;
     text-align: end;
+    margin-right: 1rem;
 }
+
 .align{
     display: flex;
 }
+
 .dangerIcon{
     height: 2em;
     width: 2em;
     color: red;
     position: relative;
 }
+
 .critic{
     width: 14em;
     text-align: center;
     margin-top: 0.2em;
 }
+
 .critic_i{
     display: flex;
     width: fit-content;
     margin: auto;
     margin-top: 3em;
 }
+
 .alert-text{
     margin-top: 0.5em;
     color: red;
 }
+
 .button-cont{
     width: fit-content;
     margin: auto;
+    margin-bottom: 1rem;
+}
+
+.google_button{
+    display: flex;
+    align-items: center;
+    align-content: center;
+    margin-bottom: 2rem;
 }

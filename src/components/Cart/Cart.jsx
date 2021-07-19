@@ -32,7 +32,8 @@ function Cart() {
         <Fade>
         <div className='cart_container'>
             {products.length > 0 ?
-                <div>
+                <div className='cart_container_column'>
+                    <div>
                     {products && products.map((product, i) => {
                         totalPrice = totalPrice + (product.price * product.quantity)
                         return (
@@ -50,15 +51,18 @@ function Cart() {
                             </div>
                         )
                     })}
-                    <div>
-                        <h2>Summary</h2>
-                        <label>TOTAL: </label>
-                        <h4>${Math.ceil(totalPrice)}</h4>
+                    </div>
+                    <div className='summary'>
+                    <div className='summary_text'>
                         <label>ENVIO: </label>
                         <h4>Gratis</h4>
+                        <label>TOTAL: </label>
+                        <h2>${Math.ceil(totalPrice)}</h2>
+                        </div>
                     </div>
                 </div>
-                : <h3>No tienes productos agregados a tu carrito de compras</h3>}
+                : <h3 className='no_items'>No tienes productos agregados a tu carrito de compras</h3>
+            }
         </div>
         </Fade>
     )
