@@ -1,19 +1,20 @@
 import React,{useState} from 'react';
 import {validate} from './validate';
 import {BsFillExclamationTriangleFill} from 'react-icons/bs'
-import {useHistory} from 'react-router-dom'
+// import {useHistory} from 'react-router-dom'
 import './FormNewUser.css'
 import axios from 'axios'
 import { url } from '../../constantURL';
+import Log from '../log/log.js'
 
 function FormNewUser() {
-    const [inputs,setInputs]=useState({repeat:''});
+    const [inputs,setInputs]=useState({repeat:''}); 
     const [errors,setErrors]=useState({});
     const [critic,setCritic]=useState(false);
     const [alreadyE,setAlreadyE]=useState(false);
     const [alreadyM,setAlreadyM]= useState('');
 
-    let history= useHistory();
+    // let history= useHistory();
 
     const handleChange= (e)=>{
         e.preventDefault();
@@ -94,7 +95,8 @@ function FormNewUser() {
                     <button type='submit'>Registrarse</button>
                 </div>
                 
-            </form>            
+            </form> 
+            <Log type="register"/>            
         </div>
     )
 }
@@ -104,8 +106,10 @@ const appear=(value,message)=>{
             <div className='critic_i'>
                 <BsFillExclamationTriangleFill className='dangerIcon'/>
                 <div className='critic'>
+
                     <p className='alert-text'>{message}</p>
                 </div>                    
+
             </div>
         )
     }

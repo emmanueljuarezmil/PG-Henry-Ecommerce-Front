@@ -5,11 +5,10 @@ import Filter from '../Filter/Filter';
 import { useSelector } from 'react-redux';
 import Catalogue from '../Catalogue/Catalogue';
 import SearchBar from '../SearchBar/SearchBar';
-import { useAuth0 } from '@auth0/auth0-react';
+// import { useAuth0 } from '@auth0/auth0-react';
 import './Home.css'
 
 function Home() {
-
 
     const products = useSelector((state) => state.all_products);
     const name = useSelector((state) => state.filterName)
@@ -21,13 +20,23 @@ function Home() {
 
     totalPages = Math.ceil(totalPages);
     const dispatch = useDispatch();
-    const { user } = useAuth0()
-    console.log(user)
+    // const { user, getAccessTokenSilently } = useAuth0()
+   
+
 
     useEffect(() => {
         dispatch(getAllProducts(name, page, orderBy , orderType, category )) 
         dispatch(getAllCategories())
     }, [dispatch, name, page, orderBy , orderType, category ])
+
+    /*
+    useEffect(() => {
+        getAccessTokenSilently().then(token => {
+            dispatch(getAllProducts(name, page, orderBy , orderType, category, token )) 
+            dispatch(getAllCategories())
+        })
+    }, [dispatch, name, page, orderBy , orderType, category ])
+    */
       
       const prevPage = (e) => {
           e.preventDefault();

@@ -10,7 +10,9 @@ SET_ORDER,
 GET_ALL_ORDERS,
 GET_CART_PRODUCTS,
 ADD_TO_CART,
-GET_ORDER_DETAIL
+GET_ORDER_DETAIL,
+REST_TO_CART,
+DELETE_ITEM_TO_CART
 } from "../constants";
 import {url} from '../../constantURL'
 
@@ -23,6 +25,17 @@ export function getAllProducts(name, page, orderBy , orderType, category) {
         return dispatch({type: GET_ALL_PRODUCTS,payload: json.data})
     };
 }
+/*
+export function getAllProducts(name, page, orderBy , orderType, category, token) {
+    return async function(dispatch) {
+        var json = await axios(`${url}/products?page=${page}&name=${name}&orderBy=${orderBy}&orderType=${orderType}&category=${category}`, {
+            headers: {Authorization:  `Bearer ${token}`}
+        });
+        console.log(token)
+        return dispatch({type: GET_ALL_PRODUCTS,payload: json.data})
+    };
+}
+*/
 
 
 export const getProductDetail = (id) => {
@@ -85,7 +98,7 @@ export const setOrder = (order) => {
 
 export const updateCategory = (body) => {
     return (dispatch) => {
-        axios.put(`${url}/category/update`,body)
+        axios.put(`${url}/category/update`,body) 
         .then(()=>
         dispatch({
             type:null
@@ -133,5 +146,17 @@ export const getOrderDetail = (id) => {
 export const addToCart = (product) => {
     return (dispatch) =>{
         dispatch ({type: ADD_TO_CART, payload: product})
+    }
+}
+
+export const removeUnityToCart = (product) => {
+    return (dispatch) =>{
+        dispatch ({type: REST_TO_CART, payload: product})
+    }
+}
+
+export const deleteToCart = (product) => {
+    return (dispatch) =>{
+        dispatch ({type: DELETE_ITEM_TO_CART, payload: product})
     }
 }
