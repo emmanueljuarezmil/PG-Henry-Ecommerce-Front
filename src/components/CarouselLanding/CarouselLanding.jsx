@@ -5,7 +5,7 @@ import './CarouselLanding.css'
 
 function CarouselLanding({images}) {
     return (
-        <div className='carousel'>
+        <div>
             <Carousel autoPlay={true} interval={5000} infiniteLoop={true} centerMode={true} showThumbs={false} centerSlidePercentage={100}>
                 {
                     images && images.length ?

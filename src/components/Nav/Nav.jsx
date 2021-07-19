@@ -52,8 +52,8 @@ function Nav() {
                     <div className='desplegable'>
                         <button {...buttonProps}>Iniciar sesión/registrarme</button>
                         <div className={isOpen ? 'visible' : ''} role='menu'>
-                            <NavLink {...itemProps[0]} to='/register'>Registrarse</NavLink>
-                            <NavLink {...itemProps[1]} to='/login'>Iniciar sesión</NavLink>
+                            <NavLink style={{ textDecoration: 'none' }} {...itemProps[0]} to='/register'>Registrarse</NavLink>
+                            <NavLink style={{ textDecoration: 'none' }} {...itemProps[1]} to='/login'>Iniciar sesión</NavLink>
                         </div>
                 </div>
                 )
