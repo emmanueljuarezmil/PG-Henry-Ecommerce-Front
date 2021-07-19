@@ -15,7 +15,7 @@ ReactDOM.render(
   <Auth0Provider
     domain={domain}
     clientId={clientId}
-    redirectUri={`${window.location.origin}/home`}
+    redirectUri={`${window.location.origin}/`}
     audience="localhost:3000"
     scope="openid profile email">    
     <Provider store={store}>
