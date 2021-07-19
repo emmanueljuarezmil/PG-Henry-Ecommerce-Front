@@ -16,4 +16,10 @@
 .admin_item{
     margin: 2rem;
     font-size: 2rem;
+    outline: none;
+    text-decoration: none;
+}
+
+.admin_item:link{
+    color: white
 }

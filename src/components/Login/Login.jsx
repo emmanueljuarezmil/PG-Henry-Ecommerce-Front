@@ -54,9 +54,11 @@ function Login() {
                     <button className='login_button' type='submit'>Ingresar</button>
                 </form>
             </div>
-            <div>
+            <div className='google_login_btn'>
                 <p>Iniciar sesión con tu cuenta de google</p>
-                <Log/>
+                <div className='google_button_two'>
+                    <Log/>
+                </div> 
             </div> 
         </div>        
     )
