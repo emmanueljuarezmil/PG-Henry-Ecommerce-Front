@@ -11,7 +11,7 @@ export function AddToCart(props) {
     const [quantity, setQuantity] = useState(productInCart?.quantity ? productInCart.quantity : 1);
     
     const onClick = (props) => {
-        if(!product.stock) return alert('No hay stock de este producto')
+        if(product.stock === 0) return alert('No hay stock de este producto')
         if ((Number(quantity) + productInCart?.quantity) > product.stock) {
             return alert('La cantidad deseada debe ser menor al Stock disponible')
             // return setQuantity(0)
@@ -21,7 +21,8 @@ export function AddToCart(props) {
             id: product.id,
             quantity: Number(quantity),
             image: product.photo[0],
-            price: product.price
+            price: product.price,
+            stock: product.stock
         }))
     };
     const onChange = (e) => {

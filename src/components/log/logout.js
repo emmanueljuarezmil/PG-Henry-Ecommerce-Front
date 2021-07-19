@@ -28,6 +28,7 @@ export default function LogoutButton (){
     const clearsession = () => {
         const cookies = new Cookies()
         cookies.remove('id')
+        cookies.remove('admin')
         if(isAuthenticated) logout()
         history.push('/')
     }

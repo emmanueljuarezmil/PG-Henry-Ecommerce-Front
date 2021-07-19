@@ -18,6 +18,7 @@ function Nav() {
     const { buttonProps, itemProps, isOpen } = useDropdownMenu(2);
     const cookies = new Cookies()
     const id = cookies.get('id')
+    const admin = cookies.get('admin')
     return (
         <div className='nav_container'>
             <div className='nav_item'>
@@ -39,9 +40,13 @@ function Nav() {
             <div className='nav_item'>
                 <NavLink className="NavLink" to='/cart'>Carrito</NavLink>
             </div>
-            <div className='nav_item'>
-                <NavLink className="NavLink" to='/user_settings'>Cuenta</NavLink>
-            </div>
+            {
+                id && (
+                    <div className='nav_item'>
+                        <NavLink className="NavLink" to='/user_settings'>Cuenta</NavLink>
+                    </div>
+                )
+            }
             {
                 !id && !isAuthenticated && (
                     <div className='desplegable'>
@@ -54,15 +59,18 @@ function Nav() {
                 )
             }
             {
+                admin ? <div className='nav_item'>
+                <NavLink className="NavLink" to='/admin'>Admin</NavLink>
+                </div> :
+                null
+            }
+            {
                 (isAuthenticated || id) && (
                     <div className='nav_item'>
                         <Log/>
                     </div> 
                 )   
             }
-            <div className='nav_item'>
-                <NavLink className="NavLink" to='/admin'>Admin</NavLink>
-            </div>
         </div>
     )
 }

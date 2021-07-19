@@ -26,7 +26,7 @@ export default function LoginButton (props){
                         const {id, admin} = response.data
                         const cookies = new Cookies();
                         cookies.set('id', id, { path: '/' });
-                        if(admin) cookies.set('admin', admin, { path: '/' })
+                        cookies.set('admin', admin, { path: '/' })
                         history.push('/home')
                 } catch(err) {
                     console.error(err)
