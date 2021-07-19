@@ -1,0 +1,19 @@
+.admin_container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    background-image: url('../../img/PRODDET.png');
+    height: 20rem;
+    width: 25rem;
+    margin: auto;
+    margin-top: 3rem;
+    border-radius: 1rem;
+    color: white;
+}
+
+.admin_item{
+    margin: 2rem;
+    font-size: 2rem;
+}
