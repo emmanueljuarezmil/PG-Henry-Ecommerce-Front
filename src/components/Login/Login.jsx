@@ -4,7 +4,8 @@ import axios from 'axios'
 import {url} from '../../constantURL'
 import Cookies from 'universal-cookie';
 import {useHistory} from 'react-router-dom'
-import {FcGoogle} from 'react-icons/fc'
+
+import './Login.css';
 
 const backUrl = url
 
@@ -35,26 +36,26 @@ function Login() {
     }
 
     return (
-        <div className='Init-cont'>
-            <div>
+        <div className='init_cont'>
+            <div className='form_login_container'>
                 <form onSubmit={handleSubmit}>
                     <div>
                         <div>
-                            <label>Email: </label>
-                            <input type='text' name='email' value={inputs.email} onChange={handleChange}/>
+                            <label>E-mail: </label>
+                            <input className='inputName' type='text' name='email' value={inputs.email} onChange={handleChange}/>
                         </div>
                     </div>
                     <div>
                         <div>
                             <label>Contraseña: </label>
-                            <input type='password' name='hashedPassword' value={inputs.hashedPassword} onChange={handleChange}/>
+                            <input className='inputName' type='password' name='hashedPassword' value={inputs.hashedPassword} onChange={handleChange}/>
                         </div>
                     </div>
-                    <button type='submit'>Ingresar</button>
+                    <button className='login_button' type='submit'>Ingresar</button>
                 </form>
             </div>
             <div>
-                <p>Iniciar sesión con cuenta de google entra dale</p>
+                <p>Iniciar sesión con tu cuenta de google</p>
                 <Log/>
             </div> 
         </div>        

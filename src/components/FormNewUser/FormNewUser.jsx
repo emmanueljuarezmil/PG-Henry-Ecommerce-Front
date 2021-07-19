@@ -54,8 +54,8 @@ function FormNewUser() {
 
 
     return (
-        <div>
-            <form onSubmit={(e)=>onSubmit(e)} className='containeer'>
+        <div className='div_new_user'>
+            <form onSubmit={(e)=>onSubmit(e)} className='form_new_user_container'>
                 {appear(alreadyE,alreadyM)}
                 <div className='pair'>
                     <div className='align'>
@@ -69,7 +69,7 @@ function FormNewUser() {
                 <div className='pair'>
                     <div className='align'>
                         <div className='inputName'>
-                        <label>Username: </label>
+                        <label>Nombre de usuario: </label>
                         </div>    
                         <input type='text' name='userName' value={inputs.userName} onChange={(e)=>handleChange(e)}></input>
                     </div>                    
@@ -78,7 +78,7 @@ function FormNewUser() {
                 <div className='pair'>
                     <div className='align'>
                         <div className='inputName'>
-                        <label>Password: </label>
+                        <label>Contraseña: </label>
                         </div>    
                         <input type='password' name='hashedPassword' value={inputs.hashedPassword} onChange={(e)=>handleChange(e)}></input>
                     </div>                    
@@ -87,7 +87,7 @@ function FormNewUser() {
                 <div className='pair'>
                     <div className='align'>
                         <div className='inputName'>
-                        <label>Repeat the password: </label>
+                        <label>Repetir contraseña: </label>
                         </div>    
                         <input type='password' name='repeat' value={inputs.repeat} onChange={(e)=>handleChange(e)}></input>
                     </div>                    
@@ -98,8 +98,10 @@ function FormNewUser() {
                     <button type='submit'>Registrarse</button>
                 </div>
                 
+            <div className='google_button'>
+            <Log type="register"/> 
+            </div>           
             </form> 
-            <Log type="register"/>            
         </div>
     )
 }

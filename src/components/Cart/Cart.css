@@ -75,3 +75,29 @@ h1 {
     text-shadow: -1px 1px 0 rgb(71, 70, 70);
     margin: 0.4rem;
 }
+
+.cart_container_column{
+    display: flex;
+    flex-direction: row;
+}
+
+.summary{
+    margin-top: 1rem;
+    margin-left: 2rem;
+    height: 20rem;
+    width: 10rem;
+    text-align: center;
+    background-image: url('../../img/PRODSUM.png');
+    background-size: auto;
+    border-radius: 0.5rem;
+}
+
+.summary_text{
+    margin-top: 5rem;
+}
+
+.no_items{
+    color:black;
+    margin-top: 3rem;
+    font-size: xx-large;
+}

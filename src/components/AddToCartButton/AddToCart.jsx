@@ -3,20 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, removeUnityToCart, deleteToCart } from '../../Redux/Actions/index';
 import './AddToCart.css';
 
-
+ 
 export function AddToCart(props) {
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart);
     const product = props.product
     const productInCart = cart.find(el => el.id === product.id)
-    const [quantity, setQuantity] = useState(productInCart?.quantity ? productInCart.quantity : 1);
+    const [quantity, setQuantity] = useState(1);
 
     const onClick = (props) => {
         if(product.stock === 0) return alert('No hay stock de este producto') 
 
         if ((Number(quantity) + productInCart?.quantity) > product.stock) {
             return alert('La cantidad deseada debe ser menor al Stock disponible')
-            // return setQuantity(0)
         };
         dispatch(addToCart({
             name: product.name,
@@ -63,7 +62,7 @@ export function AddToCart(props) {
             <div className='add_to_cart'>
                 <div className='add_to_cart_quantity'>
                 <label className='quantity'>Cantidad: </label>
-                <input type="number" value={quantity} min={1} max={product.stock} onChange={(e) => onChange(e)} />
+                <input type="number" value={productInCart?.quantity} min={1} max={product.stock} onChange={(e) => onChange(e)} />
                 </div>
                 <button className='agregar_button' onClick={onClick}>+</button>
                 {
