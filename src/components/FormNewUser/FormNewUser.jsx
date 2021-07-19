@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import {validate} from './validate';
 import {BsFillExclamationTriangleFill} from 'react-icons/bs'
-// import {useHistory} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 import './FormNewUser.css'
 import axios from 'axios'
 import { url } from '../../constantURL';
@@ -14,7 +14,7 @@ function FormNewUser() {
     const [alreadyE,setAlreadyE]=useState(false);
     const [alreadyM,setAlreadyM]= useState('');
 
-    // let history= useHistory();
+     const history= useHistory();
 
     const handleChange= (e)=>{
         e.preventDefault();
