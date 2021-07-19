@@ -13,24 +13,22 @@ const products = useSelector((state) => state.cart)
         <div>
             {products.length > 0 ?
                 <div>
-                    {products && products.map(product => {                        
+                    {products && products.map((product, index) => {                        
                         totalPrice = totalPrice + (product.price * product.quantity)                        
                         return (
-                            <div>
+                            <div key={index}>
+                                <h2>{product.name}</h2>
+                                <img src={product.photo} alt="Not found"/>
                                 <div>
-                                    <h2>{product.name}</h2>
-                                    <img src={product.photo} alt="Not found"/>
-                                    <div>
-                                        <label>Precio: </label>
-                                        <h3>{`$${product.price}`}</h3>
-                                    </div>
-                                    <div>
-                                        <label>Cantidad: </label>
-                                        <h3>{product.quantity}</h3>
-                                        <AddToCart product={product}/>
-                                    </div>
-                                </div>                        
-                            </div>
+                                    <label>Precio: </label>
+                                    <h3>{`$${product.price}`}</h3>
+                                </div>
+                                <div>
+                                    <label>Cantidad: </label>
+                                    <h3>{product.quantity}</h3>
+                                    <AddToCart product={product}/>
+                                </div>
+                            </div>                        
                         )
                     })}
                     <div>
