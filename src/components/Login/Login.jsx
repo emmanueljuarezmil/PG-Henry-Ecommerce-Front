@@ -3,11 +3,13 @@ import Log from '../log/log'
 import axios from 'axios'
 import {url} from '../../constantURL'
 import Cookies from 'universal-cookie';
+import {useHistory} from 'react-router-dom'
 
 const backUrl = url
 
 function Login() {
     const [inputs,setInputs]=useState({});
+    const history = useHistory()
 
     const handleChange= (e)=>{
         e.preventDefault();
@@ -18,14 +20,16 @@ function Login() {
     }
     const handleSubmit= async (e) =>{
         e.preventDefault();
-        const body= inputs
+        const body = inputs
         try{
             const {data} = await axios.post(`${backUrl}/users/login`, body);
             const {id} = data
             const cookies = new Cookies();
             cookies.set('id', id, { path: '/' });
+            history.push('/home')
         }catch(err){
-            alert(err)
+            console.error(err)
+            alert('Datos incorrectos')
         };
     }
 

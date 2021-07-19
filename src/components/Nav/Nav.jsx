@@ -6,6 +6,7 @@ import Log from '../log/log';
 import ModoVintage from './ModoVintage.png';
 import { useAuth0 } from '@auth0/auth0-react'
 import useDropdownMenu from 'react-accessible-dropdown-menu-hook';
+import Cookies from 'universal-cookie';
 
 import './Nav.css';
 
@@ -15,6 +16,8 @@ function Nav() {
     const { isAuthenticated } = useAuth0()
     // const { buttonProps, itemProps, isOpen, setIsOpen } = useDropdownMenu(2);
     const { buttonProps, itemProps, isOpen } = useDropdownMenu(2);
+    const cookies = new Cookies()
+    const id = cookies.get('id')
     return (
         <div className='nav_container'>
             <div className='nav_item'>
@@ -39,26 +42,23 @@ function Nav() {
             <div className='nav_item'>
                 <NavLink className="NavLink" to='/user_settings'>Cuenta</NavLink>
             </div>
-            <div className='desplegable'>
-                <button {...buttonProps}>Iniciar sesión/registrarme</button>
-                <div className={isOpen ? 'visible' : ''} role='menu'>
-                    <NavLink {...itemProps[0]} to='/register'>Registrarse</NavLink>
-                    <NavLink {...itemProps[1]} to='/login'>Iniciar sesión</NavLink>
-                </div>
-            </div>
             {
-                !isAuthenticated && (
-                    <div className='nav_item'>
-                        <NavLink className="NavLink" to='/login'>Login/register</NavLink>
-                    </div>
+                !id && !isAuthenticated && (
+                    <div className='desplegable'>
+                        <button {...buttonProps}>Iniciar sesión/registrarme</button>
+                        <div className={isOpen ? 'visible' : ''} role='menu'>
+                            <NavLink {...itemProps[0]} to='/register'>Registrarse</NavLink>
+                            <NavLink {...itemProps[1]} to='/login'>Iniciar sesión</NavLink>
+                        </div>
+                </div>
                 )
             }
             {
-                isAuthenticated && (
+                (isAuthenticated || id) && (
                     <div className='nav_item'>
                         <Log/>
                     </div> 
-                )
+                )   
             }
             <div className='nav_item'>
                 <NavLink className="NavLink" to='/admin'>Admin</NavLink>
