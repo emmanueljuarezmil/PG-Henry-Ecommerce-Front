@@ -20,23 +20,11 @@ function Home() {
 
     totalPages = Math.ceil(totalPages);
     const dispatch = useDispatch();
-    // const { user, getAccessTokenSilently } = useAuth0()
-   
-
 
     useEffect(() => {
         dispatch(getAllProducts(name, page, orderBy , orderType, category )) 
         dispatch(getAllCategories())
     }, [dispatch, name, page, orderBy , orderType, category ])
-
-    /*
-    useEffect(() => {
-        getAccessTokenSilently().then(token => {
-            dispatch(getAllProducts(name, page, orderBy , orderType, category, token )) 
-            dispatch(getAllCategories())
-        })
-    }, [dispatch, name, page, orderBy , orderType, category ])
-    */
       
       const prevPage = (e) => {
           e.preventDefault();

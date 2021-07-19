@@ -11,7 +11,7 @@ function SearchBar() {
     };
 
     return (
-        <div classname='cont'>
+        <div className='cont'>
             <form>
                 <input className='input-icon' value={name} type="text" onChange={(e) => handleChange(e)} placeholder=" Search" />
             </form>

@@ -6,6 +6,7 @@ import './FormNewUser.css'
 import axios from 'axios'
 import { url } from '../../constantURL';
 import Log from '../log/log.js'
+import Cookies from 'universal-cookie';
 
 function FormNewUser() {
     const [inputs,setInputs]=useState({repeat:''}); 
@@ -34,11 +35,13 @@ function FormNewUser() {
             ...inputs
         }))
         if(Object.values(errors).length===0){
-            const {email,userName,hashedPassword}=inputs
-            const body={email,userName,hashedPassword};
-            setCritic(false)
-            try{                
-                await axios.post(`${url}/users/register`,body)
+            try{
+                const {email,userName,hashedPassword}=inputs
+                const body={email,userName,hashedPassword};
+                const response = await axios.post(`${url}/users/register`,body)
+                const {id} = response.data
+                const cookies = new Cookies();
+                cookies.set('id', id, { path: '/' });
                 alert('usuario creado con éxito.')
                 history.push('/home')
             }catch(err) {
