@@ -1,0 +1,45 @@
+.cart_info_buttons{
+    display: flex;
+    flex-direction: row
+}
+
+.cart_img{
+    display: block;
+    border-radius: 0.2rem;
+    margin: 0.6rem;
+    height: 7rem;
+    width: 7rem;
+    object-fit: cover;
+    object-position: center center;
+}
+
+.cart_info{
+    max-height: 45rem;
+}
+
+.card_container_one{
+    display: flex;
+    flex-direction: row;
+    background-image: url('../../img/PRODDET.png');
+    background-size: cover;
+    margin: 1rem;
+    border-radius: 0.2rem;
+}
+
+.card_container_two{
+    display: flex;
+    flex-direction: row;
+    background-image: url('../../img/PRODDET2.png');
+    background-size: cover;
+    margin: 1rem;
+    border-radius: 0.2rem;
+}
+
+.card_container_three{
+    display: flex;
+    flex-direction: row;
+    background-image: url('../../img/PRODDET3.png');
+    background-size: cover;
+    margin: 1rem;
+    border-radius: 0.2rem;
+}

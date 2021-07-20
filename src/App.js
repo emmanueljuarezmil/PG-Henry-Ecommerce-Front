@@ -4,7 +4,7 @@ import React from 'react';
 import LandingPage from './components/Landing/Landing';
 import ProductDetail from './components/ProductDetail/ProductDetail';
 import Home from './components/Home/Home';
-import Cart from './components/Cart/Cart';
+import Cart from './components/AllCart/Cart.jsx';
 import FormProduct from './components/FormProduct/FormProduct';
 import About from './components/About/About';
 import User from './components/User/User';

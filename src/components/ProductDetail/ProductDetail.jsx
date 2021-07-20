@@ -1,52 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProductDetail } from '../../Redux/Actions';
+import { getProductDetail, addToCart } from '../../Redux/Actions';
 import CarouselComponent from '../CarouselComponent/CarouselComponent';
-// import { addToCart } from '../../Redux/Actions/index';
-// import Cart from '../Cart/Cart';
-import { AddToCart } from '../AddToCartButton/AddToCart';
 import { Fade } from 'react-awesome-reveal';
 
 import './ProductDetail.css';
-
+ 
 function ProductDetail({ match }) {
     const dispatch = useDispatch();
+    const { params: { id } } = match;
     const product = useSelector((state) => state.product_detail);
-    // const cart = useSelector((state) => state.cart);
-    // const [quantity, setQuantity] = useState(0);
+    const prod = JSON.parse(localStorage.getItem('cart') || "[]").find(element => element.id === id);
+    const [quantity, setQuantity] = useState(prod?.quantity || 1);
 
     useEffect(() => {
-        dispatch(getProductDetail(match.params.id))
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+        dispatch(getProductDetail(id))
+    }, [dispatch, id]);
 
-    // const onClick = () => {
-    //     const prod = cart.find(element => element.id === product.id);
-    //     const quant = prod ? Number(prod.quantity) : 0
-    //     if ((Number(quantity) + quant) > product.stock) {
-    //         return alert('La cantidad deseada debe ser menor al Stock disponible')
-    //         // return setQuantity(0)
-    //     };
-    //     dispatch(addToCart({
-    //         name: product.name,
-    //         id: product.id,
-    //         quantity,
-    //         image: product.photo[0],
-    //         price: product.price
-
-
-    //     }))
-    // };
-
-    // const onChange = (e) => {
-    //     const prod = cart.find(element => element.id === product.id);
-    //     const quant = prod ? Number(prod.quantity) : 0
-    //     if ((Number(quantity) + quant) >= product.stock) {
-    //         alert('La cantidad deseada debe ser menor al Stock disponible')
-    //         return setQuantity(quantity - 1)
-    //     };
-    //     setQuantity(e.target.value);
-    // };
+    const addToCartBtn = () => {
+        if ((Number(quantity)) < product.stock) {
+            setQuantity(Number(quantity) + 1);
+            dispatch(addToCart({ ...product, quantity}, '4497b636-7cb5-4f96-8341-57c4ad7de88a')); // userId hardcoded for now.
+        };
+    };
 
     return (
         <Fade>
@@ -67,14 +43,15 @@ function ProductDetail({ match }) {
                 <div className='detail_stock'>
                     <h3>Stock disponible: {product.stock}</h3>
                 </div>
-                <AddToCart product={product}/>
-                {/* <div>
                     <div>
-                        <label>Selecciona la cantidad:</label>
-                        <input type="number" value={quantity} min={1} max={product.stock} onChange={(e) => onChange(e)} />
-                        <button onClick={onClick}>Add to cart</button>
+                        { product.stock > 0 ? (
+                            <button onClick={addToCartBtn}>+ Agregar al carrito</button>
+                        )
+                          : 
+                          null
+                            }
                     </div>
-                </div> */}
+                
             </div>
         </div>
         </Fade>
