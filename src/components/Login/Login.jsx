@@ -1,43 +1,43 @@
-import React,{useState} from 'react'
+import React from 'react'
 import Log from '../log/log'
-import axios from 'axios'
-import {url} from '../../constantURL'
-import Cookies from 'universal-cookie';
-import {useHistory} from 'react-router-dom'
+// import axios from 'axios'
+// import {url} from '../../constantURL'
+// import Cookies from 'universal-cookie';
+// import {useHistory} from 'react-router-dom'
 
 import './Login.css';
 
-const backUrl = url
+// const backUrl = url
 
 function Login() {
-    const [inputs,setInputs]=useState({});
-    const history = useHistory()
+    // const [inputs,setInputs]=useState({});
+    // const history = useHistory()
 
-    const handleChange= (e)=>{
-        e.preventDefault();
-        setInputs({
-            ...inputs,
-            [e.target.name]:e.target.value
-        })
-    }
-    const handleSubmit= async (e) =>{
-        e.preventDefault();
-        const body = inputs
-        try{
-            const {data} = await axios.post(`${backUrl}/users/login`, body);
-            const {id} = data
-            const cookies = new Cookies();
-            cookies.set('id', id, { path: '/' });
-            history.push('/home')
-        }catch(err){
-            console.error(err)
-            alert('Datos incorrectos')
-        };
-    }
+    // const handleChange= (e)=>{
+    //     e.preventDefault();
+    //     setInputs({
+    //         ...inputs,
+    //         [e.target.name]:e.target.value
+    //     })
+    // }
+    // const handleSubmit= async (e) =>{
+    //     e.preventDefault();
+    //     const body = inputs
+    //     try{
+    //         const {data} = await axios.post(`${backUrl}/users/login`, body);
+    //         const {id} = data
+    //         const cookies = new Cookies();
+    //         cookies.set('id', id, { path: '/' });
+    //         history.push('/home')
+    //     }catch(err){
+    //         console.error(err)
+    //         alert('Datos incorrectos')
+    //     };
+    // }
 
     return (
         <div className='init_cont'>
-            <div className='form_login_container'>
+            {/* <div className='form_login_container'>
                 <form onSubmit={handleSubmit}>
                     <div>
                         <div>
@@ -53,7 +53,7 @@ function Login() {
                     </div>
                     <button className='login_button' type='submit'>Ingresar</button>
                 </form>
-            </div>
+            </div> */}
             <div className='google_login_btn'>
                 <p>Iniciar sesión con tu cuenta de google</p>
                 <div className='google_button_two'>

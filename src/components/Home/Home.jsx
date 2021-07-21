@@ -7,6 +7,7 @@ import Catalogue from '../Catalogue/Catalogue';
 import SearchBar from '../SearchBar/SearchBar';
 // import { useAuth0 } from '@auth0/auth0-react';
 import './Home.css'
+// import {token} from '../log/login'
 
 function Home() {
 
@@ -17,12 +18,11 @@ function Home() {
     const orderBy = useSelector(state => state.orderBy);
     const orderType = useSelector(state => state.orderType);
     let totalPages = useSelector((state) => state.totalPages);
-
     totalPages = Math.ceil(totalPages);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getAllProducts(name, page, orderBy , orderType, category )) 
+        dispatch(getAllProducts(name, page, orderBy , orderType, category)) 
         dispatch(getAllCategories())
     }, [dispatch, name, page, orderBy , orderType, category ])
       

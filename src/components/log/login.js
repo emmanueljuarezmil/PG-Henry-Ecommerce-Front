@@ -5,55 +5,42 @@ import {url} from '../../constantURL'
 import Cookies from 'universal-cookie';
 import {useHistory} from 'react-router-dom'
 
-export default function LoginButton (props){
-    const { isAuthenticated, loginWithPopup, user } = useAuth0()
-    const cookies = new Cookies()
-    const id = cookies.get('id')
+export let token;
+
+export default function LoginButton (){
+    const { isAuthenticated, loginWithPopup, user, getAccessTokenSilently } = useAuth0()
     const history = useHistory()
       
     useEffect(() => {
         return (async () => {
-            if(user) {                                               
-                const body = {
-                    email: user.email,
-                    userName: user.name,
-                    hashedPassword: user.sub
-                }
+            if(user) {
                 try {
-                    let response = await axios.post(`${url}/users/register`, body)
-                    if(!response.data.id){
-                        response = await axios.post(`${url}/users/login`, body)
-                        const {id, admin} = response.data
-
-                        const cookies = new Cookies();
-                        cookies.set('id', id, { path: '/' });
-                        cookies.set('admin', admin, { path: '/' })
-                    } else {
-                        const {id, admin} = response.data
-                        const cookies = new Cookies()
-                        console.log(cookies)
-                        cookies.set('id', id, { path:'/'})
-                        cookies.set('admin', admin, { path: '/'})
-                        history.push('/home')
+                    token = await getAccessTokenSilently()
+                    const headers = {
+                        Authentication: `Bearer ${token}`,
+                        email: user.email,
+                        userName: user.name,
+                        hashedPassword: user.sub
                     }
+                    const response = await axios(`${url}/users/login`, {headers})
+                    const {id, admin} = response.data                        
+                    const cookies = new Cookies();
+                    cookies.set('id', id, { path: '/' });
+                    cookies.set('admin', admin, { path: '/' })
                 } catch(err) {
                     console.error(err)                                          
                 }
-                // axios.post(`${url}/users/register`, body).then(response => {
-                //     console.log(response)
-                //     const {id} = response.data
-                //     const cookies = new Cookies();
-                //     cookies.set('id', id, { path: '/' });
-                //     history.push('/home')
-                // }).catch(err => console.error(err))
             }   
         })()
-    }, [user, isAuthenticated, history  ])
+    }, [user, isAuthenticated, history, getAccessTokenSilently])
+    
     return (            
-        !isAuthenticated && !id && (
+        !isAuthenticated && (
             <button onClick={() => loginWithPopup()}>
-            {props.type ? "Registrarse con Google" : "Iniciar sesión"}
+            Iniciar sesión
             </button>
         )        
     )
 }
+
+

@@ -4,8 +4,8 @@ import { NavLink } from 'react-router-dom';
 import { setFilterName, setCategoryId, setOrder } from '../../Redux/Actions/index';
 import Log from '../log/log';
 import ModoVintage from './ModoVintage.png';
-import { useAuth0 } from '@auth0/auth0-react'
-import useDropdownMenu from 'react-accessible-dropdown-menu-hook';
+// import { useAuth0 } from '@auth0/auth0-react'
+// import useDropdownMenu from 'react-accessible-dropdown-menu-hook';
 import Cookies from 'universal-cookie';
 
 import './Nav.css';
@@ -13,9 +13,9 @@ import './Nav.css';
 function Nav() {
     const dispatch = useDispatch()
     // const { isAuthenticated, loginWithPopup } = useAuth0()
-    const { isAuthenticated } = useAuth0()
+    // const { isAuthenticated } = useAuth0()
     // const { buttonProps, itemProps, isOpen, setIsOpen } = useDropdownMenu(2);
-    const { buttonProps, itemProps, isOpen } = useDropdownMenu(2);
+    // const { buttonProps, itemProps, isOpen } = useDropdownMenu(2);
     const cookies = new Cookies()
     const id = cookies.get('id')
     const admin = cookies.get('admin')
@@ -47,7 +47,7 @@ function Nav() {
                     </div>
                 )
             }
-            {
+            {/* {
                 !id && !isAuthenticated && (
                     <div className='desplegable'>
                         <button {...buttonProps}>Iniciar sesión/registrarme</button>
@@ -57,20 +57,20 @@ function Nav() {
                         </div>
                 </div>
                 )
-            }
+            } */}
             {
                 admin === 'true' ? <div className='nav_item'>
                 <NavLink className="NavLink" to='/admin'>Admin</NavLink>
                 </div> :
                 null
             }
-            {
-                (isAuthenticated || id) && (
+            
+
                     <div className='nav_item'>
                         <Log/>
                     </div> 
-                )   
-            }
+                 
+            
         </div>
     )
 }
