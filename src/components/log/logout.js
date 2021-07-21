@@ -7,8 +7,8 @@ import {useHistory} from 'react-router-dom'
 export default function LogoutButton (){
     // const { logout, isAuthenticated, getAccessTokenSilently } = useAuth0()
     const { logout, isAuthenticated } = useAuth0()
-    const cookies = new Cookies()
-    const id = cookies.get('id')
+    // const cookies = new Cookies()
+    // const id = cookies.get('id')
     const history = useHistory()
 
     // async function testAuth0 () {
@@ -44,9 +44,9 @@ export default function LogoutButton (){
                 )
             } */}
             {
-                (isAuthenticated || id) && (
+                isAuthenticated  && (
                     <button onClick={() => clearsession()}>
-                        Logout
+                        Cerrar sesión
                     </button>
                 )
             } 

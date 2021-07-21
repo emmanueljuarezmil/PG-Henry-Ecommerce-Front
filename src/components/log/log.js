@@ -4,11 +4,11 @@ import LoginButton from './login'
 import LogoutButton from './logout'
 
 
-export default function Log (props) { 
+export default function Log () { 
 
     return (
             <>                
-                <LoginButton type={props.type}/>         
+                <LoginButton/>         
                 <LogoutButton/>
             </>            
     )

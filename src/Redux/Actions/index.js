@@ -26,13 +26,13 @@ export function getAllProducts(name, page, orderBy , orderType, category) {
     };
 }
 
-// export function getAllProducts(name, page, orderBy , orderType, category, token) {
+// export function getAllProducts(name, page, orderBy , orderType, category, headers) {
 //     return async function(dispatch) {
-//         console.log(token)
+//         // console.log(token)
 //         var json = await axios(`${url}/products?page=${page}&name=${name}&orderBy=${orderBy}&orderType=${orderType}&category=${category}`, {
-//             headers: {Authorization:  `Bearer ${token}`}
+//             headers: headers
 //         });
-//         console.log(token)
+//         // console.log(token)
 //         return dispatch({type: GET_ALL_PRODUCTS,payload: json.data})
 //     };
 // } 
