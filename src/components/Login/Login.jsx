@@ -20,6 +20,7 @@ function Login() {
             [e.target.name]:e.target.value
         })
     }
+
     const handleSubmit= async (e) =>{
         e.preventDefault();
         const body = inputs
@@ -29,7 +30,7 @@ function Login() {
             const cookies = new Cookies();
             cookies.set('id', id, { path: '/' });
             history.push('/home')
-        }catch(err){
+        } catch(err){
             console.error(err)
             alert('Datos incorrectos')
         };

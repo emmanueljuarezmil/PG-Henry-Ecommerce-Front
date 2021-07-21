@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProductDetail, addToCart } from '../../Redux/Actions';
 import CarouselComponent from '../CarouselComponent/CarouselComponent';
 import { Fade } from 'react-awesome-reveal';
+import Cookies from 'js-cookie';
 
 import './ProductDetail.css';
  
@@ -13,6 +14,8 @@ function ProductDetail({ match }) {
     const prod = JSON.parse(localStorage.getItem('cart') || "[]").find(element => element.id === id);
     const [quantity, setQuantity] = useState(prod?.quantity || 1);
 
+    const userId = Cookies.get('id');
+
     useEffect(() => {
         dispatch(getProductDetail(id))
     }, [dispatch, id]);
@@ -20,7 +23,7 @@ function ProductDetail({ match }) {
     const addToCartBtn = () => {
         if ((Number(quantity)) < product.stock) {
             setQuantity(Number(quantity) + 1);
-            dispatch(addToCart({ ...product, quantity}, '4497b636-7cb5-4f96-8341-57c4ad7de88a')); // userId hardcoded for now.
+            dispatch(addToCart({ ...product, quantity}, userId)); 
         };
     };
 

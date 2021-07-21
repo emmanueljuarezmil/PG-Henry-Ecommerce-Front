@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from 'react-redux';
-
+import Cookies from 'js-cookie';
 import { deleteFromCart, changeQuantity } from "../../Redux/Actions";
 import "./CartItem.css";
 
@@ -26,11 +26,13 @@ const CartItem = ({ product, index }) => {
 
     const handleDeleteItem = () => dispatch(deleteFromCart(product.id));
     
+    const userId = Cookies.get('id');
+
     const handleChangeQuantity = e => {
         const { value } = e.target;
         if (value <= product.stock && value >= 1) {
             setQuantity(value);
-            dispatch(changeQuantity(product, e.target.value, '4497b636-7cb5-4f96-8341-57c4ad7de88a')); // userId hardcoded for now.
+            dispatch(changeQuantity(product, e.target.value, userId)); 
         };
     };
 
