@@ -1,0 +1,14 @@
+.summary{
+    margin-top: 1rem;
+    margin-left: 2rem;
+    height: 20rem;
+    width: 10rem;
+    text-align: center;
+    background-image: url('../../img/PRODSUM.png');
+    background-size: auto;
+    border-radius: 0.5rem;
+}
+
+.summary_text{
+    margin-top: 5rem;
+}
