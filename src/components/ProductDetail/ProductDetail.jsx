@@ -5,6 +5,7 @@ import CarouselComponent from '../CarouselComponent/CarouselComponent';
 import { Fade } from 'react-awesome-reveal';
 
 import './ProductDetail.css';
+import Review from '../Review/Review';
  
 function ProductDetail({ match }) {
     const dispatch = useDispatch();
@@ -54,6 +55,7 @@ function ProductDetail({ match }) {
                 
             </div>
         </div>
+        <Review idProd={product.id}/>
         </Fade>
     )
 };
