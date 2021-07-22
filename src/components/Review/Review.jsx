@@ -38,7 +38,6 @@ export default function Review(props) {
         <div className='stars'>
             <h2 className='number'>{rating}</h2>
             <Rating
-            precision={0.5}
             name="simple-controlled"
             value={rating}
             onChange={(event, newValue) => {
