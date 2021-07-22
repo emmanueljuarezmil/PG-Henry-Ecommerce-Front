@@ -14,6 +14,7 @@ import Admin from './components/Admin/Admin';
 import OrderAdmin from './components/OrderAdmin/OrderAdmin';
 import FormNewUser from './components/FormNewUser/FormNewUser';
 import Login from './components/Login/Login';
+import Review from './components/Review/Review';
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
         <Route exact path='/admin/orders' component={OrderAdmin}/>
         <Route exact path='/register' component={FormNewUser}/>
         <Route exact path='/login' component={Login}/>
+        <Route exact path='/prueba' component={Review}/>
       </React.Fragment>
   );
 }

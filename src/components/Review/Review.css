@@ -1,0 +1,32 @@
+.general-cont{
+    width: fit-content;
+    margin: auto;
+    text-align: center;
+}
+.stars{
+    width: fit-content;
+    margin: auto;
+    display: flex;
+    margin-bottom: 0.3em;
+}
+textarea{
+    resize: none;
+    border-radius: 1em;
+    height: 2em;
+    width: 35em;
+    margin: auto;
+}
+.little-form{
+    display: flex;
+    flex-direction: column;
+    width: 35em;
+}
+button{    
+    width: 6em;
+    margin: auto;
+    margin-top: 0.5em;
+}
+.number{
+    margin :0;
+    margin-right: 0.5em;
+}
