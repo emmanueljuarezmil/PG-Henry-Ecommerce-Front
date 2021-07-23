@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { setFilterName, setCategoryId, setOrder } from '../../Redux/Actions/index';
+import { setFilterName, setCategoryId, setOrder, localStorageToDB, getCartProducts } from '../../Redux/Actions/index';
 import Log from '../log/log';
 import ModoVintage from './ModoVintage.png';
 // import { useAuth0 } from '@auth0/auth0-react'
@@ -19,6 +19,14 @@ function Nav() {
     const cookies = new Cookies()
     const id = cookies.get('id')
     const admin = cookies.get('admin')
+
+    useEffect(() => {
+        if (id) {
+            dispatch(localStorageToDB(id))
+            dispatch(getCartProducts(id))
+        }
+    }, [id])
+
     return (
         <div className='nav_container'>
             <div className='nav_item'>

@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from 'react-redux';
+import Cookies from 'js-cookie';
+import { Link } from 'react-router-dom';
+
 
 import { deleteFromCart, changeQuantity } from "../../Redux/Actions";
 import "./CartItem.css";
@@ -8,7 +11,7 @@ const CartItem = ({ product, index }) => {
     const dispatch = useDispatch();
     const cartCss = (index) => {
         let cont = index % 3;
-            switch (cont) {
+        switch (cont) {
             case 0: {
                 return "card_container_one";
             }
@@ -20,33 +23,35 @@ const CartItem = ({ product, index }) => {
             }
             default:
                 return "card_container_one";
-            }
+        }
     };
-    const [ quantity, setQuantity] = useState(product.quantity);
+    const [quantity, setQuantity] = useState(product.quantity);
 
-    const handleDeleteItem = () => dispatch(deleteFromCart(product.id));
-    
+    const userId = Cookies.get('id');
+
+    const handleDeleteItem = () => dispatch(deleteFromCart(userId, product.productID ? product.productID : product.id));
+
     const handleChangeQuantity = e => {
         const { value } = e.target;
         if (value <= product.stock && value >= 1) {
             setQuantity(value);
-            dispatch(changeQuantity(product, e.target.value, '4497b636-7cb5-4f96-8341-57c4ad7de88a')); // userId hardcoded for now.
+            dispatch(changeQuantity(product, e.target.value, userId));
         };
     };
 
     return (
         <div className={cartCss(index)} key={index}>
-        <div>
-            <img className="cart_img" src={product.photo} alt="Not found" />
-        </div>
-        <div className="cart_info">
-            <h2>{product.name}</h2>
-            <div className="cart_info_buttons">
-                <h3>Precio: {`$${product.price}`}</h3>
-                <input type="number" onChange={handleChangeQuantity} value={quantity} />
+            <div>
+                <img className="cart_img" src={product.photo} alt="Not found" />
             </div>
-        </div>
-        <button onClick={handleDeleteItem} >Icono borrar item</button>
+            <div className="cart_info">
+                <h2>{product.name}</h2>
+                <div className="cart_info_buttons">
+                    <h3>Precio: {`$${product.price}`}</h3>
+                    <input type="number" onChange={handleChangeQuantity} value={quantity} />
+                </div>
+            </div>
+                <button onClick={handleDeleteItem} > X</button>
         </div>
     );
 };

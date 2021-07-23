@@ -1,9 +1,11 @@
 import React from "react";
+import Cookies from 'js-cookie';
+import Log from '../log/log';
 
 import "./CartTotal.css";
 
 const CartTotal = ({ total, handleGoToCheckout }) => {
-
+  const userId = Cookies.get('id');
   return (
     <div>
       <div className="summary">
@@ -13,8 +15,9 @@ const CartTotal = ({ total, handleGoToCheckout }) => {
           <label>TOTAL: </label>
           <h2>${total}</h2>
         </div>
-        {/* Agregar renderizado condicional */}
-        <button onClick={handleGoToCheckout}>Ir al checkout</button>
+        {/* Agregar renderizado condicional */
+        userId?<button onClick={handleGoToCheckout}>Ir al checkout</button>
+        : <Log/>}
       </div>
     </div>
   );

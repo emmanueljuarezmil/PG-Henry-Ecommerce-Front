@@ -15,6 +15,7 @@ import {
   DELETE_ALL_CART,
   GO_TO_CHECKOUT,
   CHANGE_QUANTITY,
+  LOCALSTORAGE_TO_DB,
 } from "../constants";
 import { url } from "../../constantURL";
 
@@ -28,47 +29,6 @@ export function getAllProducts(name, page, orderBy, orderType, category) {
     return dispatch({ type: GET_ALL_PRODUCTS, payload: json.data });
   };
 }
-
-// export function getAllProducts(name, page, orderBy , orderType, category, headers) {
-//     return async function(dispatch) {
-//         // console.log(token)
-//         var json = await axios(`${url}/products?page=${page}&name=${name}&orderBy=${orderBy}&orderType=${orderType}&category=${category}`, {
-//             headers: headers
-//         });
-//         // console.log(token)
-//         return dispatch({type: GET_ALL_PRODUCTS,payload: json.data})
-//     };
-// }
-
-// export function getAllProducts(name, page, orderBy , orderType, category, user) {
-//     return async function(dispatch) {
-//         console.log(user)
-//         var json = await axios(`${url}/products?page=${page}&name=${name}&orderBy=${orderBy}&orderType=${orderType}&category=${category}`, {
-//             headers: {
-//                 email: user?.email,
-//                 userName: user?.name,
-//                 hashedPassword: user?.sub
-//             }
-//         });
-//         console.log(json)
-//         return dispatch({type: GET_ALL_PRODUCTS,payload: json.data})
-//     };
-// }
-
-/*
-export function getAllProducts(name, page, orderBy , orderType, category, token) {
-    return async function(dispatch) {
-        var json = await axios(`${url}/products?page=${page}&name=${name}&orderBy=${orderBy}&orderType=${orderType}&category=${category}`, {
-            headers: {
-                Authorization:  `Bearer ${token}`,
-                id: cookies.get('id')
-            }
-        });
-        console.log(token)
-        return dispatch({type: GET_ALL_PRODUCTS,payload: json.data})
-    };
-}
-*/
 
 export const getProductDetail = (id) => {
   return (dispatch) => {
@@ -153,18 +113,20 @@ export const getAllOrders = () => {
   };
 };
 
-export const getCartProducts = (userId) => {
-  return (dispatch) => {
-    if(userId) {
-        return fetch(`${url}/cart/${userId}`)
-        .then((response) => response.json())
-        .then((response) =>
-            dispatch({
-            type: GET_CART_PRODUCTS,
-            payload: response,
-            })
-        ); 
-    }
+export const getCartProducts = (userId) => (dispatch) => {
+  if (!userId) {
+    let products = JSON.parse(localStorage.getItem('cart') || "[]");
+    return dispatch({ type: GET_CART_PRODUCTS, payload: products })
+  }
+  if (userId) {
+    return fetch(`${url}/cart/${userId}`)
+      .then((response) => response.json())
+      .then((response) =>
+        dispatch({
+          type: GET_CART_PRODUCTS,
+          payload: response,
+        })
+      );
   };
 };
 
@@ -182,73 +144,103 @@ export const getOrderDetail = (id) => {
 };
 
 export const addToCart = (product, userId) => dispatch => {
-  if (!userId) {  
-      let products = JSON.parse(localStorage.getItem('cart') || "[]");
-      let productFind = false;
-      products = products.map((p) => {
-            if(p.id === product.id) {
-              productFind = true
-              return {
-                    ...p,
-                    quantity: Number(p.quantity) + 1,
-              };
-            };
-          return p;
-      });
-      if (!productFind) products.push(product);
-      localStorage.setItem('cart', JSON.stringify(products))
-    return (dispatch) => {
-      dispatch({ type: ADD_TO_CART, payload: products });
-    };
+  if (!userId) {
+    let products = JSON.parse(localStorage.getItem('cart') || "[]");
+    let productFind = false;
+    products = products.map((p) => {
+      if (p.id === product.id) {
+        productFind = true
+        return {
+          ...p,
+          quantity: Number(p.quantity) + 1,
+        };
+      };
+      return p;
+    });
+    if (!productFind) products.push(product);
+    localStorage.setItem('cart', JSON.stringify(products))
+    return dispatch({ type: ADD_TO_CART, payload: products })
   }
-  return axios.post(`${url}/cart/${userId}`, { id: product.id, quantity: 1 })
-    .then((response) => {
-      dispatch({ type: ADD_TO_CART, payload: response.data });
-    })
-    .catch((error) => console.error(error));
+  if (userId) {
+    return axios.post(`${url}/cart/${userId}`, { id: product.id, quantity: 1 })
+      .then((response) => {
+        dispatch({ type: ADD_TO_CART, payload: response.data });
+      })
+      .catch((error) => console.error(error));
+  }
 };
 
-export const deleteFromCart = (id) => {
-  const products = JSON.parse(localStorage.getItem('cart') || "[]").filter(prod => prod.id !== id);
-  localStorage.setItem('cart', JSON.stringify(products));
-  return (dispatch) => {
-    dispatch({ type: DELETE_ITEM_FROM_CART, payload: id });
+export const localStorageToDB = (userId) => async (dispatch) => {
+  if (userId) {
+    let products = JSON.parse(localStorage.getItem('cart') || "[]");
+    if (products.length) {
+      products.map(product =>
+        axios.post(`${url}/cart/${userId}`, { id: product.id, quantity: product.quantity })
+          .then((response) => {
+            dispatch({ type: LOCALSTORAGE_TO_DB, payload: response.data });
+          })
+          .catch((error) => console.error(error))
+      )
+    }
+    try {
+      localStorage.removeItem('cart');
+    } catch (e) {
+      console.log('removeStorage: Error removing key cart from localStorage: ' + JSON.stringify(e));
+    };
+  };
+};
+
+export const deleteFromCart = (userId, idProduct) => async (dispatch) => {
+  if (!userId) {
+    let products = JSON.parse(localStorage.getItem('cart') || "[]")
+    products = products.filter(prod => prod.id !== idProduct);
+    localStorage.setItem('cart', JSON.stringify(products));
+    dispatch({ type: DELETE_ITEM_FROM_CART, payload: products });
+  }
+  if (userId) {
+    axios.delete(`${url}/cart/${userId}/${idProduct}`)
+      .then(res => {
+        dispatch({ type: CHANGE_QUANTITY, payload: res.data });
+      })
+      .catch(err => console.error(err));
   };
 };
 
 export const deleteAllCart = (userId) => async (dispatch) => {
-    localStorage.removeItem('cart');
-    if (userId) {
-        await axios.delete(`${url}/cart/${userId}`)
-            .catch(err => console.error(err));
-    };
-    dispatch({ type: DELETE_ALL_CART });
+  localStorage.removeItem('cart');
+  if (userId) {
+    await axios.delete(`${url}/cart/${userId}`)
+      .catch(err => console.error(err));
+  };
+  dispatch({ type: DELETE_ALL_CART });
 };
 
 export const goToCheckout = (products, userId) => async (dispatch) => {
-    return axios.post(`${url}/checkout`, { products })
-        .then(res => {
-            window.location = res.data.init_point;
-            dispatch({ type: GO_TO_CHECKOUT, payload: res.data.init_point });
-        })
-        .catch(err => console.error(err));
+  return axios.post(`${url}/checkout`, { products })
+    .then(res => {
+      window.location = res.data.init_point;
+      dispatch({ type: GO_TO_CHECKOUT, payload: res.data.init_point });
+    })
+    .catch(err => console.error(err));
 };
 
 export const changeQuantity = (product, quantity, userId) => async dispatch => {
   if (userId) {
     axios.put(`${url}/cart/${userId}`, { ...product, quantity, idUser: userId })
-        .then(res => {
-            dispatch({ type: CHANGE_QUANTITY, payload: res.data });
-        })
-        .catch(err => console.error(err));
+      .then(res => {
+        dispatch({ type: CHANGE_QUANTITY, payload: res.data });
+      })
+      .catch(err => console.error(err));
   }
-  let products = JSON.parse(localStorage.getItem('cart'));
-  products = products.map((p) => {
-    if (p.id === product.id) {
-      p.quantity = quantity;
-    }
-    return p;
-  });
-  localStorage.setItem('cart', JSON.stringify(products));
-  dispatch({ type: CHANGE_QUANTITY, payload: products });
-};
+  if (!userId) {
+    let products = JSON.parse(localStorage.getItem('cart'));
+    products = products.map((p) => {
+      if (p.id === product.id) {
+        p.quantity = quantity;
+      }
+      return p;
+    });
+    localStorage.setItem('cart', JSON.stringify(products));
+    dispatch({ type: CHANGE_QUANTITY, payload: products });
+  }
+}
