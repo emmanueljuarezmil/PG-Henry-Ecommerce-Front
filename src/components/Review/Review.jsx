@@ -8,6 +8,7 @@ import { url } from '../../constantURL';
 import axios from 'axios';
 import './Review.css'
 import {getProductDetail} from '../../Redux/Actions/index'
+import { headers } from '../../controllers/GetHeaders'
 
 export default function Review(props) {
     const {idProd}=props
@@ -24,7 +25,7 @@ export default function Review(props) {
         const cookie=new Cookies();
         const userId=cookie.get('id');
         try{
-            const {data} = await axios.post(`${url}/review/${userId}`,body);
+            const {data} = await axios.post(`${url}/review/${userId}`,body, { headers });
             alert(data.message);
             dispatch(getProductDetail(idProd))
             setRating(0);

@@ -8,7 +8,6 @@ import { deleteAllCart, getCartProducts, goToCheckout } from '../../Redux/Action
 const Cart = () => {
     const dispatch = useDispatch();
     const products = useSelector(state => state.cart);
-
     const userId = Cookies.get('id');
     useEffect(() => {
         dispatch(getCartProducts(userId)); //  ID user + merge cart from DB

@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { setFilterName, setCategoryId, setOrder, getCartProducts } from '../../Redux/Actions/index';
+import { setFilterName, setCategoryId, setOrder } from '../../Redux/Actions/index';
 import Log from '../log/log';
 import ModoVintage from './ModoVintage.png';
 // import { useAuth0 } from '@auth0/auth0-react'

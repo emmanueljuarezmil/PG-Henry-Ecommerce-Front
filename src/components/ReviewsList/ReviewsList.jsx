@@ -8,9 +8,9 @@ const ReviewList=(props)=>{
     return (
         <div className='comments-list-cont'>
             <ul className='comments-list'>
-                {reviews && reviews.map(Rev=>{
+                {reviews && reviews.map((Rev, index)=>{
                     return(
-                        <li className='item'>
+                        <li className='item' key={index}>
                             <p className='userName'>{Rev.User.userName}</p>
                             <p className='comment'>{Rev.comment}</p>
                             <Box component="fieldset" mb={3} borderColor="transparent">        

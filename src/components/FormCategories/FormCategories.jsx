@@ -4,14 +4,8 @@ import { url } from '../../constantURL';
 import axios from 'axios'
 import { getAllCategories} from '../../Redux/Actions'
 import './FormCategories.css'
-
-
-import './FormCategories.css';
 import { useDispatch,useSelector} from 'react-redux';
-
-
-
-
+import { headers } from '../../controllers/GetHeaders'
 
 function FormCategories() {
     const [name, setName] = useState('');
@@ -33,7 +27,10 @@ function FormCategories() {
         if (errors === '') {
             try {
                 const body = {name}
-                await axios.post(`${url}/category`, body)
+                await axios.post(`${url}/category`,
+                    body,
+                    {headers}
+                )
                 dispatch(getAllCategories())
                 setName('');
                 alert('Categoria creada');
@@ -49,7 +46,7 @@ function FormCategories() {
     const handleDelete = async (id)=>{
         try{
             const body={id};
-            await axios.delete(`${url}/category/${body.id}`,{data:body});
+            await axios.delete(`${url}/category/${body.id}`,{data:body, headers});
             dispatch(getAllCategories())
             alert('Categoria eliminada con éxito.')
         }catch(err){
@@ -69,7 +66,7 @@ function FormCategories() {
             // const ids=Object.keys(newName);
             // const names=Object.values(newName);
             let body={id:id,name:name}
-            await axios.put(`${url}/category/update`,body);
+            await axios.put(`${url}/category/update`,body, {headers});
             setNewName({...newName,[id]:''});
             dispatch(getAllCategories())
             alert('Categoria modificada con éxito.')
@@ -100,20 +97,21 @@ function FormCategories() {
             </div>
             <div className='categories-table'>
                 <ul className='categories-list'>
-                    {cats.map(c=>{
+                    {cats.map((c, index)=>{
                         const {name,id}=c;
                         let placeHolder='Nuevo nombre.'
                         return(
-                            <li className='table'>
+                            <li className='table' key={index}>
                             <p className='name'>{name}</p>
-                            <button onClick={()=>handleDelete(id)}>delete</button>
+                            <button onClick={()=>handleDelete(id)}>Borrar</button>
                             <div className='form-div'>
-                                <form  className="searchform" onSubmit={(e)=>handleUpdate(e,c.id,newName[id])} >
+                                <form className="searchform" onSubmit={(e)=>handleUpdate(e,c.id,newName[id])} >
                                     <label for={c.id} className='special-label'>
                                         <i class="icon-edit"></i>
                                     </label>
                                     <input type="text" value={newName[id]} name={id} placeholder={placeHolder}
                                     className="s" id={c.id} onChange={(e)=>handleChangeMod(e)} ></input>
+                                    <button type="submit">Editar</button>
                                 </form>
                             </div>
                             

@@ -9,6 +9,7 @@ import { getAllProducts } from '../../Redux/Actions/index'
 import {url} from '../../constantURL'
 import './FormProduct.css'
 import axios from 'axios'
+import { headers } from '../../controllers/GetHeaders'
 
 const backendUrl = url
 const compressImageUrl = 'https://imagecompressor.com/'
@@ -124,9 +125,9 @@ function FormProduct() {
         const result = window.confirm(`Estás seguro de que deseas eliminar ${name}`)
         if(result) {
             try {
-                await axios.delete(`${backendUrl}/products`, {
-                    data: {id}
-                })
+                await axios.delete(`${backendUrl}/products`,
+                { data: {id}, headers},
+                 )
                 dispatch(getAllProducts())
                 window.alert('Se ha eliminado el producto con exito')
             } catch(err) {
@@ -138,7 +139,7 @@ function FormProduct() {
 
     const editProduct = async (id) => {
         try {
-            const { data } = await axios.get(`${backendUrl}/products/p/${id}`)
+            const { data } = await axios.get(`${backendUrl}/products/p/${id}`, { headers })
             setActionType('update') 
             data.category = data.Categories.map(category => category.id)
             setInput(data)
@@ -251,7 +252,7 @@ function FormProduct() {
         }
         if(actionType === 'create') {
             try {
-                await axios.post(`${backendUrl}/products`, body)
+                await axios.post(`${backendUrl}/products`, body, { headers })
                 window.alert('Se ha creado el producto con exito')
                 setInput({
                     photo: [],
@@ -275,7 +276,7 @@ function FormProduct() {
             if(result) {
                 try {
                     body.id = input.id
-                    await axios.put(`${backendUrl}/products/update`, body)
+                    await axios.put(`${backendUrl}/products/update`, body, { headers })
                     window.alert('Se ha actualizado el producto con exito')
                 }
                 catch(err) {
