@@ -131,7 +131,8 @@ export const getCartProducts = (userId) => (dispatch) => {
           type: GET_CART_PRODUCTS,
           payload: response,
         })
-      );
+      )
+      .catch(err => console.error(err));
   };
 };
 
@@ -200,12 +201,12 @@ export const deleteFromCart = (userId, idProduct) => async (dispatch) => {
     let products = JSON.parse(localStorage.getItem('cart') || "[]")
     products = products.filter(prod => prod.id !== idProduct);
     localStorage.setItem('cart', JSON.stringify(products));
-    dispatch({ type: DELETE_ITEM_FROM_CART, payload: products });
+    dispatch({ type: DELETE_ITEM_FROM_CART, payload: idProduct });
   }
   if (userId) {
     axios.delete(`${url}/cart/${userId}/${idProduct}`)
       .then(res => {
-        dispatch({ type: CHANGE_QUANTITY, payload: res.data });
+        dispatch({ type: DELETE_ITEM_FROM_CART, payload: idProduct });
       })
       .catch(err => console.error(err));
   };
