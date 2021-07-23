@@ -14,7 +14,7 @@ const ReviewList=(props)=>{
                             <p className='userName'>{Rev.User.userName}</p>
                             <p className='comment'>{Rev.comment}</p>
                             <Box component="fieldset" mb={3} borderColor="transparent">        
-                                <Rating name="read-only" value={Rev.rating} readOnly />
+                                <Rating name="read-only" value={parseInt(Rev.rating)} readOnly />
                             </Box>
                         </li>
                     )
