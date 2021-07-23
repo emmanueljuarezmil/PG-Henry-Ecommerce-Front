@@ -24,8 +24,8 @@ export default function Review(props) {
         const cookie=new Cookies();
         const userId=cookie.get('id');
         try{
-            await axios.post(`${url}/review/${userId}`,body);
-            alert('Gracias por tu reseña!');
+            const {data} = await axios.post(`${url}/review/${userId}`,body);
+            alert(data.message);
             dispatch(getProductDetail(idProd))
             setRating(0);
             setComment('')

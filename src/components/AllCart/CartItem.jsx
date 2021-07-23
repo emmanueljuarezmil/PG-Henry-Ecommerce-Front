@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
-import { Link } from 'react-router-dom';
 
 
 import { deleteFromCart, changeQuantity } from "../../Redux/Actions";

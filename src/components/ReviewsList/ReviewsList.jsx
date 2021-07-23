@@ -8,7 +8,7 @@ const ReviewList=(props)=>{
     return (
         <div className='comments-list-cont'>
             <ul className='comments-list'>
-                {reviews.map(Rev=>{
+                {reviews && reviews.map(Rev=>{
                     return(
                         <li className='item'>
                             <p className='comment'>{Rev.comment}</p>
