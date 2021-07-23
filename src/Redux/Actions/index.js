@@ -233,10 +233,10 @@ export const deleteAllCart = (userId) => async (dispatch) => {
 };
 
 export const goToCheckout = (products, userId) => async (dispatch) => {
-  return axios.post(`${url}/checkout`,{
-    data: products,
-    headers
-  })
+  return axios.post(`${url}/checkout`,
+    {products},
+    {headers}
+  )
     .then(res => {
       window.location = res.data.init_point;
       dispatch({ type: GO_TO_CHECKOUT, payload: res.data.init_point });
