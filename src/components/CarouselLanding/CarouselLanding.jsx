@@ -9,8 +9,8 @@ function CarouselLanding({images}) {
             <Carousel autoPlay={true} interval={5000} infiniteLoop={true} centerMode={true} showThumbs={false} centerSlidePercentage={100}>
                 {
                     images && images.length ?
-                    images.map(image => (
-                        <div>
+                    images.map((image, index) => (
+                        <div key={index}>
                             <img src={image} alt="Not found" />
                         </div>
                         )
