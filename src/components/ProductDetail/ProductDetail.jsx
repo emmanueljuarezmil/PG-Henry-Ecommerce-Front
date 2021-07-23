@@ -6,6 +6,8 @@ import { Fade } from 'react-awesome-reveal';
 
 import './ProductDetail.css';
 import Review from '../Review/Review';
+import RatingPromedio from '../RatingPromedio/RatingPromedio';
+import ReviewsList from '../ReviewsList/ReviewsList';
  
 function ProductDetail({ match }) {
     const dispatch = useDispatch();
@@ -35,6 +37,7 @@ function ProductDetail({ match }) {
                 <div className='detail_name'>
                     <h1>{product.name}</h1>
                 </div>
+                <RatingPromedio reviews={product.Reviews} />
                 <div className='detail_price'>
                     <h3>${product.price}</h3>
                 </div>
@@ -56,6 +59,7 @@ function ProductDetail({ match }) {
             </div>
         </div>
         <Review idProd={product.id}/>
+        <ReviewsList reviews={product.Reviews}/>
         </Fade>
     )
 };
