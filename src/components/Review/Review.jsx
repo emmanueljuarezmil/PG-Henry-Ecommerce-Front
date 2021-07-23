@@ -21,12 +21,10 @@ export default function Review(props) {
         const body={comment,rating,idProd:idProd};
         const cookie=new Cookies();
         const userId=cookie.get('id');
-        console.log(userId);
         try{
-            await axios.post(`${url}/review/${userId}`,body);
-            alert('Gracias por tu reseña!');
+            const {data} = await axios.post(`${url}/review/${userId}`,body);
+            alert(data.message);
         }catch (err){
-            console.log(err);
             alert(err);
         }
     }
