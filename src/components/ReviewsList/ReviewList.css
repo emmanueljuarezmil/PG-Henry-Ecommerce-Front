@@ -13,3 +13,8 @@
     border-radius: 1em;
     background-color: white;
 }
+.userName{
+    text-align: center;
+    justify-content: center;
+    margin: 1em;
+}
