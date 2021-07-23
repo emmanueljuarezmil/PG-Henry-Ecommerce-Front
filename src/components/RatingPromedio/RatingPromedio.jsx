@@ -6,14 +6,14 @@ import './RatingPromedio.css'
 
 export default function RatingPromedio(props) {
     const {reviews}=props
-    let quantity=reviews.length;
+    let quantity=reviews?.length;
     function promedio(array){
         let suma=0;
         let cont=0;
         if(!array.length) return 0;
         for(let i=0;i<array.length;i++){
             suma=suma+array[i].rating;
-            cont ++;
+            cont++;
         }
         return suma/cont;
     }

@@ -15,7 +15,6 @@ export default function LoginButton (){
         return (async () => {
             if(user) {
                 try {
-                    console.log(user)
                     token = await getAccessTokenSilently()
                     const headers = {
                         authorization: `Bearer ${token}`,

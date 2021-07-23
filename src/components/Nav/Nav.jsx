@@ -25,7 +25,7 @@ function Nav() {
             dispatch(localStorageToDB(id))
             dispatch(getCartProducts(id))
         }
-    }, [id])
+    }, [id, dispatch])
 
     return (
         <div className='nav_container'>

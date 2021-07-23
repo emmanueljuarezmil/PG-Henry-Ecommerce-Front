@@ -12,7 +12,7 @@ const Cart = () => {
     const userId = Cookies.get('id');
     useEffect(() => {
         dispatch(getCartProducts(userId)); //  ID user + merge cart from DB
-    }, [userId]); // add userId to dependencies.
+    }, [userId, dispatch]); // add userId to dependencies.
 
     const handleDeleteAll = () => dispatch(deleteAllCart(userId)); // userId hardcoded for now.
     const total = products.length && products.reduce((total, { price, quantity }) => total + price * quantity, 0);
