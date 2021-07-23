@@ -1,17 +1,21 @@
 import React, {useEffect} from 'react';
+import { useDispatch } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react'
 import axios from 'axios';
 import {url} from '../../constantURL'
 import Cookies from 'universal-cookie';
 import {useHistory} from 'react-router-dom'
+import { localStorageToDB } from '../../Redux/Actions';
 
 export let token;
 
 export default function LoginButton (){
     const { isAuthenticated, loginWithPopup, user, getAccessTokenSilently } = useAuth0()
-    const history = useHistory()
+    const history = useHistory();
+    const dispatch = useDispatch();
       
     useEffect(() => {
+        dispatch(localStorageToDB());
         return (async () => {
             if(user) {
                 try {
@@ -32,7 +36,7 @@ export default function LoginButton (){
                 }
             }   
         })()
-    }, [user, isAuthenticated, history, getAccessTokenSilently])
+    }, [user, isAuthenticated, history, getAccessTokenSilently, dispatch]);
     
     return (            
         !isAuthenticated && (
