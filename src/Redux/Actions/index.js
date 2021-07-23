@@ -16,6 +16,8 @@ import {
   GO_TO_CHECKOUT,
   CHANGE_QUANTITY,
   LOCALSTORAGE_TO_DB,
+  GET_REVIEWS
+
 } from "../constants";
 import { url } from "../../constantURL";
 
@@ -232,6 +234,7 @@ export const changeQuantity = (product, quantity, userId) => async dispatch => {
       })
       .catch(err => console.error(err));
   }
+
   if (!userId) {
     let products = JSON.parse(localStorage.getItem('cart'));
     products = products.map((p) => {
@@ -244,3 +247,15 @@ export const changeQuantity = (product, quantity, userId) => async dispatch => {
     dispatch({ type: CHANGE_QUANTITY, payload: products });
   }
 }
+
+export const getReviews=(idProd)=>{
+  return (dispatch)=>{
+    fetch('')
+    .then(response=>response.json())
+    .then(response=> dispatch({
+      payload:response,
+      type:GET_REVIEWS
+    }))
+  }
+}
+
