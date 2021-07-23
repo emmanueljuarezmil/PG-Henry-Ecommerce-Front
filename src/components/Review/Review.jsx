@@ -29,8 +29,8 @@ export default function Review(props) {
             dispatch(getProductDetail(idProd))
             setRating(0);
             setComment('')
+
         }catch (err){
-            console.log(err);
             alert(err);
         }
     }
