@@ -1,4 +1,5 @@
 import React,{useState} from 'react';
+import { useDispatch } from 'react-redux';
 import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
@@ -6,12 +7,13 @@ import Cookies from 'universal-cookie';
 import { url } from '../../constantURL';
 import axios from 'axios';
 import './Review.css'
+import {getProductDetail} from '../../Redux/Actions/index'
 
 export default function Review(props) {
     const {idProd}=props
   const [rating, setRating] = useState(0);
   const [comment,setComment]= useState('');
-
+  const dispatch=useDispatch();
 
     const handleChange=(e)=>{
         e.preventDefault();
@@ -22,8 +24,12 @@ export default function Review(props) {
         const cookie=new Cookies();
         const userId=cookie.get('id');
         try{
-            const {data} = await axios.post(`${url}/review/${userId}`,body);
-            alert(data.message);
+            await axios.post(`${url}/review/${userId}`,body);
+            alert('Gracias por tu reseña!');
+            dispatch(getProductDetail(idProd))
+            setRating(0);
+            setComment('')
+
         }catch (err){
             alert(err);
         }
