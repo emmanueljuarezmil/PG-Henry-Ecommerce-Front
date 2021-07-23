@@ -6,6 +6,7 @@ import Cookies from 'universal-cookie';
 import {useHistory} from 'react-router-dom'
 
 export let token;
+export let idUser
 
 export default function LoginButton (){
     const { isAuthenticated, loginWithPopup, user, getAccessTokenSilently } = useAuth0()
@@ -27,6 +28,7 @@ export default function LoginButton (){
                     const cookies = new Cookies();
                     cookies.set('id', id, { path: '/' });
                     cookies.set('admin', admin, { path: '/' })
+                    idUser = await cookies.get('id')
                 } catch(err) {
                     console.error(err)                                          
                 }

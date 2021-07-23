@@ -19,14 +19,17 @@ import {
   GET_REVIEWS
 
 } from "../constants";
-import { url } from "../../constantURL";
-
+import { url } from "../../constantURL"
+import { headers } from "../../controllers/GetHeaders"
 import axios from "axios";
 
 export function getAllProducts(name, page, orderBy, orderType, category) {
+  console.log(headers)
   return async function (dispatch) {
     var json = await axios(
-      `${url}/products?page=${page}&name=${name}&orderBy=${orderBy}&orderType=${orderType}&category=${category}`
+      `${url}/products?page=${page}&name=${name}&orderBy=${orderBy}&orderType=${orderType}&category=${category}`, {
+        headers
+      }
     );
     return dispatch({ type: GET_ALL_PRODUCTS, payload: json.data });
   };

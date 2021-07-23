@@ -15,11 +15,13 @@ import OrderAdmin from './components/OrderAdmin/OrderAdmin';
 import FormNewUser from './components/FormNewUser/FormNewUser';
 import Login from './components/Login/Login';
 import Review from './components/Review/Review';
+import GetHeaders from './controllers/GetHeaders';
 
 
 function App() {
   return (
       <React.Fragment>
+        <Route path='/' component={GetHeaders}/>
         <Route path='/' component={Nav}/>
         <Route exact path='/' component={LandingPage}/>
         <Route exact path='/home' component={Home}/>
