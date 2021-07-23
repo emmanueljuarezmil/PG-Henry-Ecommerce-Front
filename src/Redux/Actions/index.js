@@ -24,13 +24,10 @@ import { headers } from "../../controllers/GetHeaders"
 import axios from "axios";
 
 export function getAllProducts(name, page, orderBy, orderType, category) {
-  console.log(headers)
   return async function (dispatch) {
     var json = await axios(
-      `${url}/products?page=${page}&name=${name}&orderBy=${orderBy}&orderType=${orderType}&category=${category}`, {
-        headers
-      }
-    );
+      `${url}/products?page=${page}&name=${name}&orderBy=${orderBy}&orderType=${orderType}&category=${category}`
+      );
     return dispatch({ type: GET_ALL_PRODUCTS, payload: json.data });
   };
 }
@@ -96,7 +93,9 @@ export const setOrder = (order) => {
 
 export const updateCategory = (body) => {
   return (dispatch) => {
-    axios.put(`${url}/category/update`, body).then(() =>
+    axios.put(`${url}/category/update`,
+    body,
+    { headers }).then(() =>
       dispatch({
         type: null,
       })
@@ -107,7 +106,9 @@ export const updateCategory = (body) => {
 
 export const getAllOrders = () => {
   return (dispatch) => {
-    fetch(`${url}/orders/`)
+    fetch(`${url}/orders/`, {
+      headers
+    })
       .then((response) => response.json())
       .then((response) =>
         dispatch({
@@ -124,7 +125,9 @@ export const getCartProducts = (userId) => (dispatch) => {
     return dispatch({ type: GET_CART_PRODUCTS, payload: products })
   }
   if (userId) {
-    return fetch(`${url}/cart/${userId}`)
+    return fetch(`${url}/cart/${userId}`, {
+      headers
+    })
       .then((response) => response.json())
       .then((response) =>
         dispatch({
@@ -138,7 +141,9 @@ export const getCartProducts = (userId) => (dispatch) => {
 
 export const getOrderDetail = (id) => {
   return (dispatch) => {
-    fetch(`${url}/orders/${id}`)
+    fetch(`${url}/orders/${id}`, {
+      headers
+    })
       .then((response) => response.json())
       .then((response) =>
         dispatch({
@@ -168,7 +173,10 @@ export const addToCart = (product, userId) => dispatch => {
     return dispatch({ type: ADD_TO_CART, payload: products })
   }
   if (userId) {
-    return axios.post(`${url}/cart/${userId}`, { id: product.id, quantity: 1 })
+    const body = { id: product.id, quantity: 1 }
+    return axios.post(`${url}/cart/${userId}`,body,
+      {headers}
+    )
       .then((response) => {
         dispatch({ type: ADD_TO_CART, payload: response.data });
       })
@@ -181,7 +189,9 @@ export const localStorageToDB = (userId) => async (dispatch) => {
     let products = JSON.parse(localStorage.getItem('cart') || "[]");
     if (products.length) {
       products.map(product =>
-        axios.post(`${url}/cart/${userId}`, { id: product.id, quantity: product.quantity })
+        axios.post(`${url}/cart/${userId}`,
+        { id: product.id, quantity: product.quantity },
+        { headers })
           .then((response) => {
             dispatch({ type: LOCALSTORAGE_TO_DB, payload: response.data });
           })
@@ -204,7 +214,7 @@ export const deleteFromCart = (userId, idProduct) => async (dispatch) => {
     dispatch({ type: DELETE_ITEM_FROM_CART, payload: idProduct });
   }
   if (userId) {
-    axios.delete(`${url}/cart/${userId}/${idProduct}`)
+    axios.delete(`${url}/cart/${userId}/${idProduct}`, {headers})
       .then(res => {
         dispatch({ type: DELETE_ITEM_FROM_CART, payload: idProduct });
       })
@@ -215,14 +225,18 @@ export const deleteFromCart = (userId, idProduct) => async (dispatch) => {
 export const deleteAllCart = (userId) => async (dispatch) => {
   localStorage.removeItem('cart');
   if (userId) {
-    await axios.delete(`${url}/cart/${userId}`)
+    await axios.delete(`${url}/cart/${userId}`,
+    { headers })
       .catch(err => console.error(err));
   };
   dispatch({ type: DELETE_ALL_CART });
 };
 
 export const goToCheckout = (products, userId) => async (dispatch) => {
-  return axios.post(`${url}/checkout`, { products })
+  return axios.post(`${url}/checkout`,{
+    data: products,
+    headers
+  })
     .then(res => {
       window.location = res.data.init_point;
       dispatch({ type: GO_TO_CHECKOUT, payload: res.data.init_point });
@@ -232,7 +246,9 @@ export const goToCheckout = (products, userId) => async (dispatch) => {
 
 export const changeQuantity = (product, quantity, userId) => async dispatch => {
   if (userId) {
-    axios.put(`${url}/cart/${userId}`, { ...product, quantity, idUser: userId })
+    axios.put(`${url}/cart/${userId}`, 
+    { ...product, quantity, idUser: userId },
+    { headers })
       .then(res => {
         dispatch({ type: CHANGE_QUANTITY, payload: res.data });
       })
@@ -254,7 +270,9 @@ export const changeQuantity = (product, quantity, userId) => async dispatch => {
 
 export const getReviews=(idProd)=>{
   return (dispatch)=>{
-    fetch('')
+    fetch('', { 
+      headers 
+    })
     .then(response=>response.json())
     .then(response=> dispatch({
       payload:response,

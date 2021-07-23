@@ -6,9 +6,9 @@ import Cookies from 'universal-cookie';
 export let headers
 
 function GetHeaders() {
-    const { getAccessTokenSilently } = useAuth0()
+    const { getAccessTokenSilently, isAuthenticated } = useAuth0()
     const setHeaders = async () => {
-        const token = await getAccessTokenSilently()
+        const token = isAuthenticated && await getAccessTokenSilently()
         const cookies = new Cookies()
         const idUser = await cookies.get('id')
         return headers = {

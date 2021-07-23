@@ -92,6 +92,7 @@ input.danger {
   padding: 0.5em;
 }
 .searchform{
+  min-width: 4rem;
   display:flex;
   font-size:1em;
   border-radius: 8em;
