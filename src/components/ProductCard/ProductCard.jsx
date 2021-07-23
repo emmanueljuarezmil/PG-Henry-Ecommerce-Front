@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './ProductCard.css';
+import Rating from '@material-ui/lab/Rating';
 
 function ProductCard({product, index}) {
     const cardCss=(index)=>{
@@ -29,6 +30,21 @@ function ProductCard({product, index}) {
             
         }
     }
+
+    const reviews=product.Reviews
+    let quantity=reviews?.length;
+    function promedio(array){
+        let suma=0;
+        let cont=0;
+        if(!array.length) return 0;
+        for(let i=0;i<array.length;i++){
+            suma=suma+parseInt(array[i].rating);
+            cont++;
+        }
+        return suma/cont;
+    }
+    let prom=0;
+    if(quantity) prom=promedio(reviews);
     return (
         <div>
             <div className={product.stock > 0 ? 'card_container' : 'card_container sold_out'}>
@@ -48,6 +64,13 @@ function ProductCard({product, index}) {
                         <h4 className='product_name'>{product.name} {
                             product.stock === 0 ? '(Sin stock)' : null
                         }</h4>
+                    </div>
+                    <div>
+                        {
+                            product.Reviews.length ?
+                            <Rating name="read-only" precision={0.5} value={prom} readOnly /> :
+                            null
+                        }
                     </div>
                 </Link>
             </div>

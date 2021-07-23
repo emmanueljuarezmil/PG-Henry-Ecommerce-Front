@@ -12,7 +12,7 @@ export default function RatingPromedio(props) {
         let cont=0;
         if(!array.length) return 0;
         for(let i=0;i<array.length;i++){
-            suma=suma+array[i].rating;
+            suma=suma+parseInt(array[i].rating);
             cont++;
         }
         return suma/cont;
@@ -23,7 +23,7 @@ export default function RatingPromedio(props) {
   return (
     <div className='prom'>
       <Box component="fieldset" mb={3} borderColor="transparent">        
-        <Rating name="read-only" value={prom} readOnly />
+        <Rating name="read-only" value={prom} precision={0.5} readOnly />
         <Typography component="legend">De {quantity} reseñas.</Typography>
       </Box>
     </div>

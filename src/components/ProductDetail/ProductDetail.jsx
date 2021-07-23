@@ -48,7 +48,7 @@ function ProductDetail({ match }) {
                 <div className='detail_name'>
                     <h1>{product.name}</h1>
                 </div>
-                <RatingPromedio reviews={product.Reviews} />
+                    <RatingPromedio reviews={product.Reviews} />
                 <div className='detail_price'>
                     <h3>${product.price}</h3>
                 </div>
