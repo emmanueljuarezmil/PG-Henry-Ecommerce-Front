@@ -1,16 +1,15 @@
-import React from 'react'
-import { useAuth0 } from '@auth0/auth0-react'
-import Cookies from 'universal-cookie';
+import React from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
+import Cookies from 'js-cookie';
 
 
-export let headers
+export let headers;
 
 function GetHeaders() {
-    const { getAccessTokenSilently, isAuthenticated } = useAuth0()
+    const { getAccessTokenSilently, isAuthenticated } = useAuth0();
     const setHeaders = async () => {
-        const token = isAuthenticated && await getAccessTokenSilently()
-        const cookies = new Cookies()
-        const idUser = await cookies.get('id')
+        const token = isAuthenticated && await getAccessTokenSilently();
+        const idUser = Cookies.get('id');
         return headers = {
             authorization: `Bearer ${token}`,
             idUser
@@ -21,7 +20,6 @@ function GetHeaders() {
         <div>
         </div>
     )
-}
+};
 
-export default GetHeaders
-
+export default GetHeaders;
