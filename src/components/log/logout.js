@@ -2,37 +2,24 @@ import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react'
 import Cookies from 'universal-cookie';
 import {useHistory} from 'react-router-dom'
+import {DBcartToLocalStorage} from '../../Redux/Actions'
+import { useDispatch, useSelector } from "react-redux";
 
 
 export default function LogoutButton (){
-    // const { logout, isAuthenticated, getAccessTokenSilently } = useAuth0()
     const { logout, isAuthenticated } = useAuth0()
-    // const cookies = new Cookies()
-    // const id = cookies.get('id')
     const history = useHistory()
+    const dispatch = useDispatch()
+    const orderId = useSelector(state => state.orderId)
 
-    // async function testAuth0 () {
-    //     const token = await getAccessTokenSilently()
-    //     await axios.get('http://localhost:3000/', {
-    //         headers: {
-    //             authorization: `Bearer ${token}`
-    //         }
-    //     })
-        
-    // }
-
-    // async function Token (){        
-    //     const token = await getAccessTokenSilently()
-    //     return console.log(token)
-    // }
     const clearsession = () => {
         const cookies = new Cookies()
         cookies.remove('id')
         cookies.remove('admin')
         if(isAuthenticated) logout()
+        dispatch(DBcartToLocalStorage(orderId))
         history.push('/')
-    }
-   
+    } 
    
     return (
         <div>

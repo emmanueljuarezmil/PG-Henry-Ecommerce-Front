@@ -14,7 +14,10 @@ import {
   DELETE_ITEM_FROM_CART,
   DELETE_ALL_CART,
   CHANGE_QUANTITY,
-  LOCALSTORAGE_TO_DB,
+  CART_FROM_LOCALSTORAGE_TO_DB,
+  DELETE_ITEM_FROM_CART_LOCAL_STORAGE,
+  CART_FROM_DB_TO_LOCALSTORAGE,
+  ADD_TO_CART_FROM_DB
 } from "../constants";
 
 const initialState = {
@@ -111,10 +114,26 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         cart: action.payload,
       };
+    case ADD_TO_CART_FROM_DB:
+      return {
+        ...state,
+        cart: [...state.cart, action.payload],
+      };
     case DELETE_ITEM_FROM_CART:
       return {
         ...state,
         cart: state.cart.filter(el => el.id !== action.payload),
+      };
+    case DELETE_ITEM_FROM_CART_LOCAL_STORAGE:
+      return {
+        ...state,
+        cart: [...state.cart.map(el => {
+          if(el.id === action.payload) {
+            el.quantity = 0
+            return el
+          }
+          else return el
+        })]
       };
     case DELETE_ALL_CART:
       return {
@@ -126,10 +145,17 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         cart: action.payload,
       };
-    case LOCALSTORAGE_TO_DB:
+    case CART_FROM_LOCALSTORAGE_TO_DB:
       return {
         ...state,
-        cart: action.payload,
+        cart: action.payload.products,
+        orderId: action.payload.orderId
+      }
+    case CART_FROM_DB_TO_LOCALSTORAGE:
+      return {
+        ...state,
+        cart: [...action.payload.products],
+        orderId: action.payload.orderId
       }
     default:
       return state;
