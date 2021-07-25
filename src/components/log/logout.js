@@ -14,10 +14,11 @@ export default function LogoutButton (){
 
     const clearsession = () => {
         const cookies = new Cookies()
+        const idUser = cookies.get('id')
+        if(isAuthenticated) logout()
+        dispatch(DBcartToLocalStorage(idUser))
         cookies.remove('id')
         cookies.remove('admin')
-        if(isAuthenticated) logout()
-        dispatch(DBcartToLocalStorage(orderId))
         history.push('/')
     } 
    
