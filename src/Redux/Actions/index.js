@@ -190,30 +190,31 @@ export const addToCart = (product, userId) => dispatch => {
 
 export const localStorageCartToDB = (userId) => async (dispatch) => {
   if (userId) {
-    console.log('Entro al if de localstoragecarttodb')
     try {
       let body = JSON.parse(localStorage.getItem('cart') || "[]");
-      console.log('body de local storage cart', body)
-      axios.put(`${url}/orders/${userId}`, body, { headers })
-        .then((response) => {
+      axios.put(`${url}/orders/${userId}`, body, {
+        headers: {
+          ...headers, idUser: userId
+        }
+       })
+        .then((response) => {     
           dispatch({ type: CART_FROM_LOCALSTORAGE_TO_DB, payload: response.data });
         })
         .catch((error) => console.error(error))
       localStorage.removeItem('cart');
     } catch (e) {
-      console.log('removeStorage: Error removing key cart from localStorage: ' + JSON.stringify(e));
+      console.error('removeStorage: Error removing key cart from localStorage: ' + JSON.stringify(e));
     };
   };
 };
 
 export const DBcartToLocalStorage = (orderId) => async (dispatch) => {
   try {
-    console.log('Entro al DBcartToLocalStorage')
     const {data} = await axios(`${url}/orders/${orderId}`, { headers })
     localStorage.setItem('cart', JSON.stringify(data.products))
     dispatch({ type: CART_FROM_DB_TO_LOCALSTORAGE, payload: data })
   } catch (e) {
-    console.log(e);
+    console.error(e);
   };
 };
 

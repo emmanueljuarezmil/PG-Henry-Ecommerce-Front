@@ -17,7 +17,6 @@ const Cart = () => {
     const total = products.length && products.reduce((total, { price, quantity }) => total + price * quantity, 0);
     const handleGoToCheckout = () => dispatch(goToCheckout(products, userId)); // userId hardcoded for now. If user is not logged in, ask for redirect to login route.
     const productsToShow = products.filter(product => product.quantity > 0)
-    console.log(productsToShow)
     return (
         <div>
             {productsToShow && productsToShow.length > 0 ?
