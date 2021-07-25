@@ -133,7 +133,6 @@ export const getCartProducts = (userId) => (dispatch) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log(response)
         localStorage.setItem('orderId', response.orderId)
         dispatch({
           type: GET_CART_PRODUCTS,
@@ -152,7 +151,6 @@ export const getOrderDetail = (id) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log(response)
         dispatch({
           type: GET_ORDER_DETAIL,
           payload: response,
@@ -274,7 +272,7 @@ export const changeQuantity = (product, quantity, userId) => async dispatch => {
     { ...product, quantity, idUser: userId },
     { headers })
       .then(res => {
-        dispatch({ type: CHANGE_QUANTITY, payload: res.data });
+        dispatch({ type: CHANGE_QUANTITY, payload: res.data.products });
       })
       .catch(err => console.error(err));
   }

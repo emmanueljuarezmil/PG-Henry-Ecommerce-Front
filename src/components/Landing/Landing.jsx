@@ -26,15 +26,16 @@ function Landing(props) {
         const params = props.location.search;
         const objectParams = new URLSearchParams(params);
         const status = objectParams.get("status");
-        await axios(
-          `${url}/user/sendmail?type=${status}&idUser=${headers.idUser}&orderId=${orderId}`
-        );
+        if(status) {
+          await axios(
+            `${url}/user/sendmail?type=${status}&idUser=${headers.idUser}&orderId=${orderId}`
+          );
+        }        
       } catch (error) {
         console.error(error);
       }
     })();
   }, [props.location.search, orderId]);
-  console.log('entro a la landing')
 
   return (
     <div>
