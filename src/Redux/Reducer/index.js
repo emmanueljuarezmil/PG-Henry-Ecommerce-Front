@@ -41,6 +41,7 @@ const initialState = {
   orders: [],
   order_detail: [],
   cart: JSON.parse(localStorage.getItem("cart") || "[]"),
+  orderId: null
   // logged: false, //
   // admin: false,
 };
@@ -102,7 +103,7 @@ const rootReducer = (state = initialState, action) => {
     case GET_ORDER_DETAIL:
       return {
         ...state,
-        order_detail: action.payload,
+        order_detail: action.payload.products,
       };
     case GET_CART_PRODUCTS:
       return {
