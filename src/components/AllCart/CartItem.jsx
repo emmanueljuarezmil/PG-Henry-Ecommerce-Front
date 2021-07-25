@@ -41,7 +41,7 @@ const CartItem = ({ product, index }) => {
     return (
         <div className={cartCss(index)} key={index}>
             <div>
-                <img className="cart_img" src={product.photo} alt="Not found" />
+                <img className="cart_img" src={product.photo[0]} alt="Not found" />
             </div>
             <div className="cart_info">
                 <h2>{product.name}</h2>

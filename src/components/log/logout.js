@@ -10,7 +10,6 @@ export default function LogoutButton (){
     const { logout, isAuthenticated } = useAuth0()
     const history = useHistory()
     const dispatch = useDispatch()
-    const orderId = useSelector(state => state.orderId)
 
     const clearsession = () => {
         const cookies = new Cookies()
