@@ -3,7 +3,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 import Cookies from 'universal-cookie';
 import {useHistory} from 'react-router-dom'
 import {DBcartToLocalStorage} from '../../Redux/Actions'
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 
 export default function LogoutButton (){

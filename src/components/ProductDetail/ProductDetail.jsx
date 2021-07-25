@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 import swal from 'sweetalert';
 
 import './ProductDetail.css';
-import Review from '../Review/Review';
+// import Review from '../Review/Review';
 import RatingPromedio from '../RatingPromedio/RatingPromedio';
 import ReviewsList from '../ReviewsList/ReviewsList';
  
@@ -69,7 +69,6 @@ function ProductDetail({ match }) {
                 
             </div>
         </div>
-        <Review idProd={product.id}/>
         <ReviewsList reviews={product.Reviews}/>
         </Fade>
     )
