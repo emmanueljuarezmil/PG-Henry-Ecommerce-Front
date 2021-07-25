@@ -1,15 +1,14 @@
-import React, {useEffect} from 'react'
+import React, {useEffect} from 'react';
 import { useDispatch } from 'react-redux';
-import { getAllProducts, getAllCategories } from '../../Redux/Actions'
-import CarouselLanding from '../CarouselLanding/CarouselLanding'
-import guitarras from '../../img/GUITARRAS.png'
-import baterias from '../../img/PERCUSION.png'
-import otro from '../../img/OTRO.png'
-import otro2 from '../../img/OTRO2.png'
+import { getAllProducts, getAllCategories } from '../../Redux/Actions';
+import CarouselLanding from '../CarouselLanding/CarouselLanding';
+import guitarras from '../../img/GUITARRAS.png';
+import baterias from '../../img/PERCUSION.png';
+import otro from '../../img/OTRO.png';
+import otro2 from '../../img/OTRO2.png';
 import axios from 'axios';
-import {url} from '../../constantURL'
-import Cookies from 'universal-cookie';
-import { headers } from "../../controllers/GetHeaders" 
+import {url} from '../../constantURL';
+import { headers } from "../../controllers/GetHeaders"; 
 
 
 const imagesLanding = [
@@ -21,11 +20,11 @@ const imagesLanding = [
 
 function Landing(props) {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getAllProducts())
-        dispatch(getAllCategories())
-    }, [dispatch])
+        dispatch(getAllProducts());
+        dispatch(getAllCategories());
+    }, [dispatch]);
     
     
     useEffect(() => {
@@ -35,11 +34,8 @@ function Landing(props) {
                 const objectParams = new URLSearchParams(params)
                 const status = objectParams.get('status')
                 console.log(status)
-                const cookies = new Cookies()
-                console.log('2')
-                const idUser = await cookies.get('id')
-                console.log(idUser)
-                await axios((`${url}/user/sendmail?type=status&status=${status}`,{headers}))
+                console.log('Headers...', headers)
+                await axios(`${url}/user/sendmail?type=${status}&idUser=${headers.idUser}`)
                 console.log('4')
             }catch(error){
                 console.log(error)
@@ -47,11 +43,12 @@ function Landing(props) {
         })()
     },[])
 
+
     return (
         <div>
             <CarouselLanding images={imagesLanding}/>
         </div>
     )
-}
+};
 
-export default Landing
+export default Landing;
