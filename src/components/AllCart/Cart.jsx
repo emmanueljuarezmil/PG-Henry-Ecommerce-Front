@@ -16,15 +16,15 @@ const Cart = () => {
     const handleDeleteAll = () => dispatch(deleteAllCart(userId)); // userId hardcoded for now.
     const total = products.length && products.reduce((total, { price, quantity }) => total + price * quantity, 0);
     const handleGoToCheckout = () => dispatch(goToCheckout(products, userId)); // userId hardcoded for now. If user is not logged in, ask for redirect to login route.
-
+    const productsToShow = products.filter(product => product.quantity > 0)
     return (
         <div>
-            {products && products.length > 0 ?
+            {productsToShow && productsToShow.length > 0 ?
                 <div>
                     <div>
                         <div>
                             {
-                                products.map((product, index) => (
+                                productsToShow.map((product, index) => (
                                     <CartItem product={product} key={product.id} index={index} userId={userId} />
                                 ))
                             }

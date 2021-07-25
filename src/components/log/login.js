@@ -5,7 +5,7 @@ import axios from 'axios';
 import {url} from '../../constantURL'
 import Cookies from 'universal-cookie';
 import {useHistory} from 'react-router-dom'
-import { localStorageToDB } from '../../Redux/Actions';
+import { localStorageCartToDB } from '../../Redux/Actions';
 
 export let token;
 export let idUser
@@ -16,7 +16,6 @@ export default function LoginButton (){
     const dispatch = useDispatch();
       
     useEffect(() => {
-        dispatch(localStorageToDB());
         return (async () => {
             if(user) {
                 try {
@@ -33,6 +32,8 @@ export default function LoginButton (){
                     cookies.set('id', id, { path: '/' });
                     cookies.set('admin', admin, { path: '/' })
                     idUser = await cookies.get('id')
+                    dispatch(localStorageCartToDB(idUser));
+                    history.push('/home')
                 } catch(err) {
                     console.error(err)                                          
                 }
