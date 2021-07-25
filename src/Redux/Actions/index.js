@@ -132,11 +132,14 @@ export const getCartProducts = (userId) => (dispatch) => {
       headers
     })
       .then((response) => response.json())
-      .then((response) =>
+      .then((response) => {
+        console.log(response)
+        localStorage.setItem('orderId', response.orderId)
         dispatch({
           type: GET_CART_PRODUCTS,
-          payload: response,
+          payload: response.products,
         })
+      }
       )
       .catch(err => console.error(err));
   };
@@ -148,12 +151,13 @@ export const getOrderDetail = (id) => {
       headers
     })
       .then((response) => response.json())
-      .then((response) =>
+      .then((response) => {
+        console.log(response)
         dispatch({
           type: GET_ORDER_DETAIL,
           payload: response,
         })
-      )
+      })
       .catch(err => console.error(err))
   };
 };
@@ -198,6 +202,7 @@ export const localStorageCartToDB = (userId) => async (dispatch) => {
         }
        })
         .then((response) => {     
+          localStorage.setItem('orderId', response.data.orderId)
           dispatch({ type: CART_FROM_LOCALSTORAGE_TO_DB, payload: response.data });
         })
         .catch((error) => console.error(error))
@@ -212,6 +217,7 @@ export const DBcartToLocalStorage = (orderId) => async (dispatch) => {
   try {
     const {data} = await axios(`${url}/orders/${orderId}`, { headers })
     localStorage.setItem('cart', JSON.stringify(data.products))
+    localStorage.setItem('orderId', data.orderId)
     dispatch({ type: CART_FROM_DB_TO_LOCALSTORAGE, payload: data })
   } catch (e) {
     console.error(e);
