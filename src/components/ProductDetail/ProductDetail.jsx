@@ -38,6 +38,11 @@ function ProductDetail({ match }) {
         };
     };
 
+    function description () {
+        return  {__html: product.description};
+     }
+ 
+
     return (
         <Fade>
         <div className='detail_container'>
@@ -53,7 +58,7 @@ function ProductDetail({ match }) {
                     <h3>${product.price}</h3>
                 </div>
                 <div className='detail_description'>
-                    <p>{product.description ? product.description : "There's no description available"}</p>
+                <div dangerouslySetInnerHTML={description()} className="description" />
                 </div>
                 <div className='detail_stock'>
                     <h3>Stock disponible: {product.stock}</h3>
