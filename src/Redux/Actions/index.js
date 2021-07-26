@@ -19,7 +19,8 @@ import {
   CART_FROM_DB_TO_LOCALSTORAGE,
   GET_REVIEWS,
   DELETE_ITEM_FROM_CART_LOCAL_STORAGE,
-  ADD_TO_CART_FROM_DB
+  ADD_TO_CART_FROM_DB,
+  USER
 } from "../constants";
 import { url } from "../../constantURL"
 import { headers } from "../../controllers/GetHeaders"
@@ -296,6 +297,14 @@ export const getReviews=(idProd)=>{
       payload:response,
       type:GET_REVIEWS
     }))
+  }
+}
+export const saveUser=(obj)=>{
+  return (dispatch)=>{
+    dispatch({
+      type:USER,
+      payload:obj
+    })
   }
 }
 

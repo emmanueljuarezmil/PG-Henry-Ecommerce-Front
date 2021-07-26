@@ -41,7 +41,7 @@ function Landing(props) {
                 console.log(error)
             }
         })()
-    },[])
+    },[props.location.search])
 
 
     return (
