@@ -2,8 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './ProductCard.css';
 import Rating from '@material-ui/lab/Rating';
+import {  addToCart } from '../../Redux/Actions';
+import { useDispatch,  } from 'react-redux';
+import {  useState } from 'react';
+import Cookies from 'js-cookie';
+import swal from 'sweetalert';
+
 
 function ProductCard({product, index}) {
+    const dispatch = useDispatch(); 
+    const userId = Cookies.get('id');
+    const [quantity, setQuantity] = useState(product?.quantity || 1);
     const cardCss=(index)=>{
         let cont =index%6;
         switch(cont){
@@ -32,7 +41,7 @@ function ProductCard({product, index}) {
     }
 
     const reviews=product.Reviews
-    let quantity=reviews?.length;
+    let quantityRev=reviews?.length;
     function promedio(array){
         let suma=0;
         let cont=0;
@@ -44,10 +53,31 @@ function ProductCard({product, index}) {
         return suma/cont;
     }
     let prom=0;
-    if(quantity) prom=promedio(reviews);
+    if(quantityRev) prom=promedio(reviews); 
+
+    const addToCartBtn = () => {
+        if ((Number(quantity)) < product.stock) {
+            console.log('quantity-stock',quantity, product.stock )
+            setQuantity(Number(quantity) + 1);
+            dispatch(addToCart({ ...product, quantity}, userId)); 
+            console.log('cart', product, quantity )
+            swal({
+                icon: "success",
+                title: "Producto agregado exitosamente!",
+                text: "  ",
+                button: null,
+                timer: 2000
+            });
+        };
+    };
+
     return (
         <div>
             <div className={product.stock > 0 ? 'card_container' : 'card_container sold_out'}>
+                <div>
+                    { product.stock > 0 ? (
+                    <button onClick={addToCartBtn}>Agregar al carrito</button>): null}
+                </div>
                 <Link to={`/product/${product.id}`}
                 className={cardCss(index)}
                 style={{ textDecoration: 'none' }}>
