@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { setFilterName, setCategoryId, setOrder } from '../../Redux/Actions/index';
 import Log from '../log/log';
-import ModoVintage from './ModoVintage.png';
+import LogoNav from '../../img/LOGOnav.png';
 // import { useAuth0 } from '@auth0/auth0-react'
 // import useDropdownMenu from 'react-accessible-dropdown-menu-hook';
 import Cookies from 'universal-cookie';
@@ -33,16 +33,16 @@ function Nav() {
                     dispatch(setFilterName(''))
                     dispatch(setCategoryId(''))
                     dispatch(setOrder(''))
-                }}>Inicio</NavLink>
+                }}>Catalogo</NavLink>
             </div>
             <div className='nav_item'>
                 <NavLink className="NavLink" to='/about'>Nosotros</NavLink>
             </div>
             <div className='nav_item'>
-                <h4>LOGO</h4>
+                <NavLink  to='/'><img className='nav_logo_icon' src={LogoNav} alt="ModoVintage" /></NavLink> 
             </div>
             <div className='nav_item'>
-                <img className='modo_vintage_icon' src={ModoVintage} alt="ModoVintage" />
+                <h4>ModoVintage</h4>
             </div>
             <div className='nav_item'>
                 <NavLink className="NavLink" to='/cart'>Carrito</NavLink>
