@@ -10,6 +10,7 @@ import { NavLink } from 'react-router-dom';
 import './profilePic.css'
 
 
+
 export default function LogoutButton (){
     const { logout, isAuthenticated } = useAuth0()
     const history = useHistory()
@@ -31,10 +32,11 @@ export default function LogoutButton (){
 
     const clearsession = () => {
         dispatch(saveUser({}))
+        const idUser = cookies.get('id')
+        if(isAuthenticated) logout()
+        dispatch(DBcartToLocalStorage(idUser))
         cookies.remove('id')
         cookies.remove('admin')
-        if(isAuthenticated) logout()
-        dispatch(DBcartToLocalStorage(orderId))
         history.push('/')
     } 
    

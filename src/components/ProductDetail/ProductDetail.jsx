@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 import swal from 'sweetalert';
 
 import './ProductDetail.css';
-import Review from '../Review/Review';
+// import Review from '../Review/Review';
 import RatingPromedio from '../RatingPromedio/RatingPromedio';
 import ReviewsList from '../ReviewsList/ReviewsList';
  
@@ -38,38 +38,39 @@ function ProductDetail({ match }) {
         };
     };
 
+    function description () {
+        return  {__html: product.description};
+     }
+ 
+
     return (
         <Fade>
         <div className='detail_container'>
+            <div className='image_container'> 
             <div className='detail_images'>
                 <CarouselComponent images={product.photo}></CarouselComponent>
+            </div>
             </div>
             <div className='detail_details'>
                 <div className='detail_name'>
                     <h1>{product.name}</h1>
                 </div>
+                <div className='review_details'>
                     <RatingPromedio reviews={product.Reviews} />
+                    </div>
                 <div className='detail_price'>
                     <h3>${product.price}</h3>
                 </div>
-                <div className='detail_description'>
-                    <p>{product.description ? product.description : "There's no description available"}</p>
+                <div className='add_cart_btn_div'>
+                    { product.stock > 0 ? (
+                        <button onClick={addToCartBtn}>Agregar al carrito</button>): null}
                 </div>
                 <div className='detail_stock'>
                     <h3>Stock disponible: {product.stock}</h3>
                 </div>
-                    <div>
-                        { product.stock > 0 ? (
-                            <button onClick={addToCartBtn}>+ Agregar al carrito</button>
-                        )
-                          : 
-                          null
-                            }
-                    </div>
-                
             </div>
+            <div className='detail_description' dangerouslySetInnerHTML={description()}/>
         </div>
-        <Review idProd={product.id}/>
         <ReviewsList reviews={product.Reviews}/>
         </Fade>
     )
