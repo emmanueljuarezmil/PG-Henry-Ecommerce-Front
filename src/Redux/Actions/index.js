@@ -19,7 +19,8 @@ import {
   CART_FROM_DB_TO_LOCALSTORAGE,
   GET_REVIEWS,
   DELETE_ITEM_FROM_CART_LOCAL_STORAGE,
-  ADD_TO_CART_FROM_DB
+  ADD_TO_CART_FROM_DB,
+  USER
 } from "../constants";
 import { url } from "../../constantURL"
 import { headers } from "../../controllers/GetHeaders"
@@ -132,13 +133,11 @@ export const getCartProducts = (userId) => (dispatch) => {
       headers
     })
       .then((response) => response.json())
-      .then((response) => {
-        localStorage.setItem('orderId', response.orderId)
+      .then((response) =>
         dispatch({
           type: GET_CART_PRODUCTS,
-          payload: response.products,
+          payload: response,
         })
-      }
       )
       .catch(err => console.error(err));
   };
@@ -150,12 +149,12 @@ export const getOrderDetail = (id) => {
       headers
     })
       .then((response) => response.json())
-      .then((response) => {
+      .then((response) =>
         dispatch({
           type: GET_ORDER_DETAIL,
           payload: response,
         })
-      })
+      )
       .catch(err => console.error(err))
   };
 };
@@ -200,7 +199,6 @@ export const localStorageCartToDB = (userId) => async (dispatch) => {
         }
        })
         .then((response) => {     
-          localStorage.setItem('orderId', response.data.orderId)
           dispatch({ type: CART_FROM_LOCALSTORAGE_TO_DB, payload: response.data });
         })
         .catch((error) => console.error(error))
@@ -211,11 +209,10 @@ export const localStorageCartToDB = (userId) => async (dispatch) => {
   };
 };
 
-export const DBcartToLocalStorage = (idUser) => async (dispatch) => {
+export const DBcartToLocalStorage = (orderId) => async (dispatch) => {
   try {
-    const {data} = await axios(`${url}/cart/${idUser}`, { headers })
+    const {data} = await axios(`${url}/orders/${orderId}`, { headers })
     localStorage.setItem('cart', JSON.stringify(data.products))
-    localStorage.setItem('orderId', data.orderId)
     dispatch({ type: CART_FROM_DB_TO_LOCALSTORAGE, payload: data })
   } catch (e) {
     console.error(e);
@@ -272,7 +269,7 @@ export const changeQuantity = (product, quantity, userId) => async dispatch => {
     { ...product, quantity, idUser: userId },
     { headers })
       .then(res => {
-        dispatch({ type: CHANGE_QUANTITY, payload: res.data.products });
+        dispatch({ type: CHANGE_QUANTITY, payload: res.data });
       })
       .catch(err => console.error(err));
   }
@@ -300,6 +297,14 @@ export const getReviews=(idProd)=>{
       payload:response,
       type:GET_REVIEWS
     }))
+  }
+}
+export const saveUser=(obj)=>{
+  return (dispatch)=>{
+    dispatch({
+      type:USER,
+      payload:obj
+    })
   }
 }
 
