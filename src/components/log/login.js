@@ -5,7 +5,7 @@ import axios from 'axios';
 import {url} from '../../constantURL'
 import Cookies from 'universal-cookie';
 import {useHistory} from 'react-router-dom'
-import { localStorageCartToDB } from '../../Redux/Actions';
+import { localStorageCartToDB, saveUser} from '../../Redux/Actions';
 
 export let token;
 export let idUser
@@ -18,6 +18,7 @@ export default function LoginButton (){
     useEffect(() => {
         return (async () => {
             if(user) {
+                dispatch(saveUser(user));
                 try {
                     token = await getAccessTokenSilently()
                     const headers = {
