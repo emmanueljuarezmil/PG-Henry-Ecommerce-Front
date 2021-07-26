@@ -3,21 +3,21 @@ import { useAuth0 } from '@auth0/auth0-react'
 import Cookies from 'universal-cookie';
 import {useHistory} from 'react-router-dom'
 import {DBcartToLocalStorage} from '../../Redux/Actions'
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 
 export default function LogoutButton (){
     const { logout, isAuthenticated } = useAuth0()
     const history = useHistory()
     const dispatch = useDispatch()
-    const orderId = useSelector(state => state.orderId)
 
     const clearsession = () => {
         const cookies = new Cookies()
+        const idUser = cookies.get('id')
+        if(isAuthenticated) logout()
+        dispatch(DBcartToLocalStorage(idUser))
         cookies.remove('id')
         cookies.remove('admin')
-        if(isAuthenticated) logout()
-        dispatch(DBcartToLocalStorage(orderId))
         history.push('/')
     } 
    

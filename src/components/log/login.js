@@ -32,8 +32,9 @@ export default function LoginButton (){
                     cookies.set('id', id, { path: '/' });
                     cookies.set('admin', admin, { path: '/' })
                     idUser = await cookies.get('id')
+                    console.log('idcookie; ', idUser)
                     dispatch(localStorageCartToDB(idUser));
-                    history.push('/home')
+                    // history.push('/home')
                 } catch(err) {
                     console.error(err)                                          
                 }

@@ -211,9 +211,9 @@ export const localStorageCartToDB = (userId) => async (dispatch) => {
   };
 };
 
-export const DBcartToLocalStorage = (orderId) => async (dispatch) => {
+export const DBcartToLocalStorage = (idUser) => async (dispatch) => {
   try {
-    const {data} = await axios(`${url}/orders/${orderId}`, { headers })
+    const {data} = await axios(`${url}/cart/${idUser}`, { headers })
     localStorage.setItem('cart', JSON.stringify(data.products))
     localStorage.setItem('orderId', data.orderId)
     dispatch({ type: CART_FROM_DB_TO_LOCALSTORAGE, payload: data })
