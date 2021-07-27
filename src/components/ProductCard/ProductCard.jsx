@@ -56,7 +56,7 @@ function ProductCard({product, index}) {
     if(quantityRev) prom=promedio(reviews); 
 
     const addToCartBtn = () => {
-        if ((Number(quantity)) < product.stock) {
+        if ((Number(quantity)) <= product.stock) {
             setQuantity(Number(quantity) + 1);
             dispatch(addToCart({ ...product, quantity}, userId)); 
             swal({
