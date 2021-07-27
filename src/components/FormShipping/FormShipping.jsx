@@ -13,6 +13,7 @@ const FormShipping = () => {
         codigo: ''
     })
 
+    // eslint-disable-next-line
     const [errors, setErrors] = useState({});
 
     const handleInputChange = (e) => {

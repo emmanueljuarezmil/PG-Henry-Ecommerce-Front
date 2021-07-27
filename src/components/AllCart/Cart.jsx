@@ -17,8 +17,9 @@ const Cart = () => {
 
     useEffect(() => {
         dispatch(getShippingAddress(userId));
-    }, [userId]);
+    }, [userId, dispatch]);
 
+    // eslint-disable-next-line
     const onClick = () => {
         setFlag('No hay direccion')
     }
@@ -44,7 +45,7 @@ const Cart = () => {
                             }
                         </div>
                         <button onClick={handleDeleteAll} >Eliminar carrito</button>
-                        {flag == 'Hay direccion' ? <div>
+                        {flag === 'Hay direccion' ? <div>
                             <InfoShipping/>
                             </div> : <FormShipping/>}
                         <div>
