@@ -22,7 +22,8 @@ import {
   ADD_TO_CART_FROM_DB,
   USER,
   CHANGE_ADDRESS,
-  GET_ADDRESS
+  GET_ADDRESS,
+  GET_ALL_USERS,
 } from "../constants";
 import { url } from "../../constantURL"
 import { headers } from "../../controllers/GetHeaders"
@@ -108,6 +109,22 @@ export const updateCategory = (body) => {
     getAllCategories();
   };
 };
+
+
+export const getAllUsers = (users, name, admin) => {
+  if(users) {
+    return (dispatch) => {
+      dispatch({type: GET_ALL_USERS, payload: users})
+    }
+  }
+  else {
+    return async function(dispatch){
+      const users = await axios.get(`${url}/users?name=${name}&admin=${admin}`, {headers});
+      return dispatch({type: GET_ALL_USERS, payload: users.data})
+    }
+  }
+}
+
 
 export const getAllOrders = (orders) => {
   if(!orders) {
@@ -345,3 +362,4 @@ export const getShippingAddress = (idUser) => async dispatch => {
       .catch(err => console.error(err));
   }
 }
+

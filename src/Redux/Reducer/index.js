@@ -20,7 +20,8 @@ import {
   ADD_TO_CART_FROM_DB,
   USER,
   CHANGE_ADDRESS,
-  GET_ADDRESS
+  GET_ADDRESS,
+  GET_ALL_USERS
 } from "../constants";
 
 const initialState = {
@@ -178,6 +179,11 @@ const rootReducer = (state = initialState, action) => {
           ...state,
           user_address: action.payload
         }
+      case GET_ALL_USERS:
+        return{
+          ...state,
+          users: [...action.payload]
+        }  
     default:
       return state;
   }

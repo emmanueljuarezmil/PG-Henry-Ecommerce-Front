@@ -16,6 +16,7 @@ import FormNewUser from './components/FormNewUser/FormNewUser';
 import Login from './components/Login/Login';
 import Review from './components/Review/Review';
 import GetHeaders from './controllers/GetHeaders';
+import EditUsers from './components/EditUsers/EditUsers'
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
         <Route exact path='/admin/category' component={FormCategories}/>
         <Route exact path='/admin' component={Admin}/>
         <Route exact path='/admin/orders' component={OrderAdmin}/>
+        <Route exact path='/admin/editUsers' component={EditUsers}/>
         <Route exact path='/register' component={FormNewUser}/>
         <Route exact path='/login' component={Login}/>
         <Route exact path='/prueba' component={Review}/>
