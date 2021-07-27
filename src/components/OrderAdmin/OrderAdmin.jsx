@@ -14,19 +14,10 @@ function OrderAdmin() {
   const dispatch = useDispatch()
   const orders = useSelector((state) => state.orders)
   const [stateAux, setStateAux] = useState('tabla')
-  const [input,setInput] = useState({})
 
   useEffect(() => {
     dispatch(getAllOrders())
   }, [dispatch])
-
-  useEffect(() => {
-    const statuses = {}
-    orders.forEach(order => {
-      statuses[order.id] = order.shippingStatus
-    })
-    setInput(statuses)
-  }, [orders])
 
   async function handleChange(e){ 
     e.preventDefault()
@@ -35,34 +26,52 @@ function OrderAdmin() {
       id: e.target.id
     }   
     const {data} = await axios.put(`${url}/orders`, body, {headers})
-    const newItem = data[(data.findIndex(el => el.id === parseInt(e.target.id)))]
-    setInput({
-      ...input,
-      [newItem.id]: newItem.shippingStatus
-    })
     dispatch(getAllOrders(data))
 }
   
+  const statusTranslates = {
+    approved: 'Aprobada',
+    rejected: 'Rechazada',
+    cart: 'Carrito'
+  }
 
+  const shippingStatusTranslates = {
+    uninitiated: 'No iniciado', 
+    processing: 'En proceso', 
+    approved: 'Aprobado', 
+    cancelled: 'Cancelado'
+
+  }
 
   const dataTable = orders.map(order => {
     return {
       col1: order.id,
-      col2: order.status,
-      col3: order.shippingStatus,
-      col4: order.createdAt.split('T')[0],
-      col5: (<button onClick={() => {
+      col2: statusTranslates[order.status],
+      col3: order.createdAt.split('T')[0],
+      col4: (<button onClick={() => {
         dispatch(getOrderDetail(order.id));
         setStateAux('orden');
       }}> <BiDetail
         /> </button>),
+      col5: shippingStatusTranslates[order.shippingStatus],
       col6: (
-          <select id={order.id} value={input[order.id]} onChange={handleChange}>
-          {/* <option value={order.shippingStatus}>Modifica el status</option> */}
-          <option value="uninitiated" >Uninitiated</option>
-          <option value="processing">Processing</option>
-          <option value="approved">Approved</option>
-          <option value="cancelled">Cancelled</option>
+          <select id={order.id} onChange={handleChange}>
+            <option>Cambiar estado</option>
+            {
+              order.shippingStatus === 'uninitiated' ?
+              <option value="processing">En proceso</option> :
+              null
+            }
+            {
+              order.shippingStatus === 'uninitiated' || order.shippingStatus === 'processing' ?
+              <option value="approved">Aprobado</option> :
+              null
+            }
+            {
+              order.shippingStatus === 'uninitiated' || order.shippingStatus === 'processing' ?
+              <option value="cancelled">Cancelado</option> :
+              null
+            }
           </select>
       )
     }
@@ -70,7 +79,7 @@ function OrderAdmin() {
 
   const columnsTable = [
     {
-      Header: 'User ID',
+      Header: 'ID de la orden',
       accessor: 'col1', // accessor is the "key" in the data
     },
     {
@@ -78,19 +87,19 @@ function OrderAdmin() {
       accessor: 'col2',
     },
     {
-      Header: 'Estado de la compra',
+      Header: 'Fecha de creacion',
       accessor: 'col3',
     },
     {
-      Header: 'Fecha de creacion',
+      Header: 'Ver detalle',
       accessor: 'col4',
     },
     {
-      Header: 'Ver detalle',
+      Header: 'Estado del envio',
       accessor: 'col5',
     },
     {
-      Header: "Modificar shipping status",
+      Header: "Cambiar estado del envio",
       accessor: 'col6'
     }
   ]

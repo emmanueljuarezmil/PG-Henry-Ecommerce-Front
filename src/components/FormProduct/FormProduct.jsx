@@ -301,6 +301,7 @@ function FormProduct() {
                     actionType === 'create' || actionType === 'update' ?
                         <form onSubmit={(e) => onSubmit(e)}>
                             <div className='formproduct-form-input'>
+                                <span>Nombre </span>
                                 <input type="text"
                                     name="name"
                                     placeholder="Nombre del producto"
@@ -308,6 +309,7 @@ function FormProduct() {
                                     onChange={handleChange} />
                             </div>
                             <div className='formproduct-form-input'>
+                                <span>Stock </span>
                                 <input type="number"
                                     min={0}
                                     max={500}
@@ -317,6 +319,7 @@ function FormProduct() {
                                     onChange={handleChange} />
                             </div>
                             <div className='formproduct-form-input'>
+                                <span>Cantidades vendidas </span>
                                 <input type="number"
                                     min={0}
                                     max={500}
@@ -326,6 +329,7 @@ function FormProduct() {
                                     onChange={handleChange} />
                             </div>
                             <div className='formproduct-form-input'>
+                                <span>Precio: </span>
                                 <input type="number"
                                     min={0}
                                     max={1000000000}
@@ -335,6 +339,7 @@ function FormProduct() {
                                     onChange={handleChange} />
                             </div>
                             <div className='formproduct-form-input'>
+                                <span>Porcentaje de descuento: </span>
                                 <input type="number"
                                     min={0}
                                     max={100}
@@ -344,6 +349,7 @@ function FormProduct() {
                                     onChange={handleChange} />
                             </div>
                             <div className='formproduct-form-text-area'>
+                                <span>Descripcion: </span>
                                 <textarea type="text"
                                     name="description"
                                     pattern="^[a-zA-Z0-9 ,.-?]+$"
