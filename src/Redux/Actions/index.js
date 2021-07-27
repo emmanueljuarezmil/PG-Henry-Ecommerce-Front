@@ -107,20 +107,30 @@ export const updateCategory = (body) => {
   };
 };
 
-export const getAllOrders = () => {
-  return (dispatch) => {
-    fetch(`${url}/orders/`, {
-      headers
-    })
-      .then((response) => response.json())
-      .then((response) =>
-        dispatch({
-          type: GET_ALL_ORDERS,
-          payload: response,
-        })
-      )
-      .catch(err => console.error(err))
-  };
+export const getAllOrders = (orders) => {
+  if(!orders) {
+    return (dispatch) => {
+      fetch(`${url}/orders/`, {
+        headers
+      })
+        .then((response) => response.json())
+        .then((response) =>
+          dispatch({
+            type: GET_ALL_ORDERS,
+            payload: response,
+          })
+        )
+        .catch(err => console.error(err))
+    };
+  }
+  else {
+    return (dispatch) => {
+      dispatch({
+        type: GET_ALL_ORDERS,
+        payload: orders,
+      })
+    }
+  }
 };
 
 export const getCartProducts = (userId) => (dispatch) => {
