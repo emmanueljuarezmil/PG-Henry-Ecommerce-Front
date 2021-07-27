@@ -35,8 +35,6 @@ function OrderAdmin() {
       id: e.target.id
     }   
     const {data} = await axios.put(`${url}/orders`, body, {headers})
-    console.log(data)
-    console.log("event id: ", typeof e.target.id)
     const newItem = data[(data.findIndex(el => el.id === parseInt(e.target.id)))]
     setInput({
       ...input,
