@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import Log from '../log/log';
 
@@ -6,6 +7,8 @@ import "./CartTotal.css";
 
 const CartTotal = ({ total, handleGoToCheckout }) => {
   const userId = Cookies.get('id');
+  let data = useSelector(state => state.user_address);
+
   return (
     <div>
       <div className="summary">
@@ -15,9 +18,10 @@ const CartTotal = ({ total, handleGoToCheckout }) => {
           <label>TOTAL: </label>
           <h2>${total}</h2>
         </div>
-        {/* Agregar renderizado condicional */
-        userId?<button onClick={handleGoToCheckout}>Ir al checkout</button>
-        : <Log/>}
+        {
+        userId ? data[0].length && data[1].length && data[2].length ? <button onClick={handleGoToCheckout}> Ir al checkout</button>
+        : <p>Indica tu direccion postal</p> : <Log/>
+      }
       </div>
     </div>
   );

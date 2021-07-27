@@ -20,7 +20,9 @@ import {
   GET_REVIEWS,
   DELETE_ITEM_FROM_CART_LOCAL_STORAGE,
   ADD_TO_CART_FROM_DB,
-  USER
+  USER,
+  CHANGE_ADDRESS,
+  GET_ADDRESS
 } from "../constants";
 import { url } from "../../constantURL"
 import { headers } from "../../controllers/GetHeaders"
@@ -303,6 +305,7 @@ export const getReviews=(idProd)=>{
     }))
   }
 }
+
 export const saveUser=(obj)=>{
   return (dispatch)=>{
     dispatch({
@@ -312,3 +315,23 @@ export const saveUser=(obj)=>{
   }
 }
 
+export const updateShippingAddress = (idUser, shippingAddress) => async dispatch => {
+  if (idUser) {
+    axios.put(`${url}/users/updateShippingAddress/${idUser}`, 
+    { shippingAddress })
+      .then(res => {
+        dispatch({ type: CHANGE_ADDRESS, payload: res });
+      })
+      .catch(err => console.error(err));
+  }
+}
+
+export const getShippingAddress = (idUser) => async dispatch => {
+  if (idUser) {
+    axios.get(`${url}/users/getShippingAddress/${idUser}`)
+      .then(res => {
+        dispatch({ type: GET_ADDRESS, payload: res.data.shippingAddress });
+      })
+      .catch(err => console.error(err));
+  }
+}

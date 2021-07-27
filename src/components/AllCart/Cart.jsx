@@ -1,14 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 import CartItem from './CartItem';
 import CartTotal from './CartTotal';
-import { deleteAllCart, getCartProducts, goToCheckout } from '../../Redux/Actions';
+import { deleteAllCart, getCartProducts, goToCheckout, getShippingAddress } from '../../Redux/Actions';
+import FormShipping from '../FormShipping/FormShipping'
+import InfoShipping from '../FormShipping/InfoShipping';
 
 const Cart = () => {
     const dispatch = useDispatch();
     const products = useSelector(state => state.cart);
+    
     const userId = Cookies.get('id');
+
+    const [flag, setFlag] = useState('Hay direccion');
+
+    useEffect(() => {
+        dispatch(getShippingAddress(userId));
+    }, [userId]);
+
+    const onClick = () => {
+        setFlag('No hay direccion')
+    }
+
     useEffect(() => {
         dispatch(getCartProducts(userId)); //  ID user + merge cart from DB
     }, [userId, dispatch]); // add userId to dependencies.
@@ -29,11 +43,14 @@ const Cart = () => {
                                 ))
                             }
                         </div>
+                        <button onClick={handleDeleteAll} >Eliminar carrito</button>
+                        {flag == 'Hay direccion' ? <div>
+                            <InfoShipping/>
+                            </div> : <FormShipping/>}
                         <div>
                             <CartTotal total={total} handleGoToCheckout={handleGoToCheckout} />
                         </div>
                     </div>
-                    <button onClick={handleDeleteAll} >Eliminar carrito</button>
                 </div>
                 : <h3 className='no_items'>No tienes productos agregados a tu carrito de compras</h3>
             }

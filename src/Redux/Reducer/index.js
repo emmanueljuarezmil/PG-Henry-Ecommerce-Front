@@ -18,7 +18,9 @@ import {
   DELETE_ITEM_FROM_CART_LOCAL_STORAGE,
   CART_FROM_DB_TO_LOCALSTORAGE,
   ADD_TO_CART_FROM_DB,
-  USER
+  USER,
+  CHANGE_ADDRESS,
+  GET_ADDRESS
 } from "../constants";
 
 const initialState = {
@@ -43,7 +45,8 @@ const initialState = {
   order_detail: [],
   cart: JSON.parse(localStorage.getItem("cart") || "[]"),
   orderId: null,
-  user:{}
+  user:{},
+  user_address: ['', '', '']
   // logged: false, //
   // admin: false,
 };
@@ -163,8 +166,18 @@ const rootReducer = (state = initialState, action) => {
     case USER:
       return{
         ...state,
-        user:action.payload
+        user: action.payload
       }
+    case CHANGE_ADDRESS:
+      return{
+        ...state,
+        user_address: action.payload
+      }
+      case GET_ADDRESS:
+        return{
+          ...state,
+          user_address: action.payload
+        }
     default:
       return state;
   }
