@@ -6,14 +6,16 @@ import Cookies from 'js-cookie';
 export let headers;
 
 function GetHeaders() {
-    const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+    const { user, getAccessTokenSilently, isAuthenticated } = useAuth0();
     const setHeaders = async () => {
-        const token = isAuthenticated && await getAccessTokenSilently();
-        const idUser = Cookies.get('id');
-        return headers = {
-            authorization: `Bearer ${token}`,
-            idUser
-        }
+            const token = isAuthenticated && await getAccessTokenSilently();
+            const idUser = Cookies.get('id');
+            return headers = {
+                authorization: `Bearer ${token}`,
+                idUser,
+                email: user?.email,
+                name: user?.name
+            }
     }
     setHeaders()
     return (
