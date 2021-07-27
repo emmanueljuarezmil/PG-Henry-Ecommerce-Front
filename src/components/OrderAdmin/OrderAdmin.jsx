@@ -14,28 +14,38 @@ function OrderAdmin() {
   const dispatch = useDispatch()
   const orders = useSelector((state) => state.orders)
   const [stateAux, setStateAux] = useState('tabla')
+  const [input,setInput] = useState({})
 
   useEffect(() => {
     dispatch(getAllOrders())
   }, [dispatch])
 
-  async function handleChange(e, id){ 
+  useEffect(() => {
+    const statuses = {}
+    orders.forEach(order => {
+      statuses[order.id] = order.shippingStatus
+    })
+    setInput(statuses)
+  }, [orders])
 
-    e.preventDefault()      
-    await axios.put(`${url}/orders`,{
+  async function handleChange(e){ 
+    e.preventDefault()
+    const body = {
       status: e.target.value,
-      id: id
-    }, {headers}).then(()=>{
-      dispatch(getAllOrders())
-    }) 
+      id: e.target.id
+    }   
+    const {data} = await axios.put(`${url}/orders`, body, {headers})
+    const newItem = data[(data.findIndex(el => el.id === parseInt(e.target.id)))]
+    setInput({
+      ...input,
+      [newItem.id]: newItem.shippingStatus
+    })
+    dispatch(getAllOrders(data))
 }
   
 
 
   const dataTable = orders.map(order => {
-
-  
-
     return {
       col1: order.id,
       col2: order.status,
@@ -47,12 +57,12 @@ function OrderAdmin() {
       }}> <BiDetail
         /> </button>),
       col6: (
-          <select onChange={(e) => handleChange(e, order.id)}>
-          <option value={order.shippingStatus}>Modifica el status</option>
-          <option id={order.id} value="uninitiated" >Uninitiated</option>
-          <option id={order.id} value="processing">Processing</option>
-          <option id={order.id} value="approved">Approved</option>
-          <option id={order.id} value="cancelled">Cancelled</option>
+          <select id={order.id} value={input[order.id]} onChange={handleChange}>
+          {/* <option value={order.shippingStatus}>Modifica el status</option> */}
+          <option value="uninitiated" >Uninitiated</option>
+          <option value="processing">Processing</option>
+          <option value="approved">Approved</option>
+          <option value="cancelled">Cancelled</option>
           </select>
       )
     }

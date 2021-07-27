@@ -57,10 +57,8 @@ function ProductCard({product, index}) {
 
     const addToCartBtn = () => {
         if ((Number(quantity)) < product.stock) {
-            console.log('quantity-stock',quantity, product.stock )
             setQuantity(Number(quantity) + 1);
             dispatch(addToCart({ ...product, quantity}, userId)); 
-            console.log('cart', product, quantity )
             swal({
                 icon: "success",
                 title: "Producto agregado exitosamente!",
