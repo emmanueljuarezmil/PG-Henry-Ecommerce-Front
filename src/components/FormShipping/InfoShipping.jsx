@@ -15,7 +15,7 @@ const InfoShipping = () => {
     
     return (
         <div>
-            { data[0].length > 1 && data[1].length > 1 && data[2].length > 1 ? <div>
+            {data && data[0].length > 1 && data[1].length > 1 && data[2].length > 1 ? <div>
             <p className="label_shipping_form">Direccion de envio: {data[0]}</p>
             <p className="label_shipping_form">Ciudad: {data[1]}</p>
             <p className="label_shipping_form">Codigo postal: {data[2]}</p>
