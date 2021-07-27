@@ -4,9 +4,13 @@ import { getAllOrders, getOrderDetail } from '../../Redux/Actions/index';
 import { useTable } from 'react-table'
 import { BiDetail } from 'react-icons/bi'
 import OrderDetail from '../OrderDetail/OrderDetail.jsx'
+import axios from 'axios'
+import { url } from "../../constantURL"
+import { headers } from "../../controllers/GetHeaders"
 
 
 function OrderAdmin() {
+  
   const dispatch = useDispatch()
   const orders = useSelector((state) => state.orders)
   const [stateAux, setStateAux] = useState('tabla')
@@ -15,7 +19,23 @@ function OrderAdmin() {
     dispatch(getAllOrders())
   }, [dispatch])
 
+  async function handleChange(e, id){ 
+
+    e.preventDefault()      
+    await axios.put(`${url}/orders`,{
+      status: e.target.value,
+      id: id
+    }, {headers}).then(()=>{
+      dispatch(getAllOrders())
+    }) 
+}
+  
+
+
   const dataTable = orders.map(order => {
+
+  
+
     return {
       col1: order.id,
       col2: order.status,
@@ -25,7 +45,16 @@ function OrderAdmin() {
         dispatch(getOrderDetail(order.id));
         setStateAux('orden');
       }}> <BiDetail
-        /> </button>)
+        /> </button>),
+      col6: (
+          <select onChange={(e) => handleChange(e, order.id)}>
+          <option value={order.shippingStatus}>Modifica el status</option>
+          <option id={order.id} value="uninitiated" >Uninitiated</option>
+          <option id={order.id} value="processing">Processing</option>
+          <option id={order.id} value="approved">Approved</option>
+          <option id={order.id} value="cancelled">Cancelled</option>
+          </select>
+      )
     }
   })
 
@@ -50,6 +79,10 @@ function OrderAdmin() {
       Header: 'Ver detalle',
       accessor: 'col5',
     },
+    {
+      Header: "Modificar shipping status",
+      accessor: 'col6'
+    }
   ]
 
   // eslint-disable-next-line
