@@ -6,7 +6,7 @@ import {  addToCart } from '../../Redux/Actions';
 import { useDispatch,  } from 'react-redux';
 import {  useState } from 'react';
 import Cookies from 'js-cookie';
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 import { MdShoppingCart } from "react-icons/md";
 
 
@@ -60,14 +60,17 @@ function ProductCard({product, index}) {
         if ((Number(quantity)) <= product.stock) {
             setQuantity(Number(quantity) + 1);
             dispatch(addToCart({ ...product, quantity}, userId)); 
-            swal({
-                icon: "success",
-                title: "Producto agregado exitosamente!",
-                text: "  ",
-                button: null,
+            Swal.fire({
+                icon: 'success',
+                text: 'Producto agregado exitosamente!',
+                showConfirmButton: false,
                 timer: 2000
-            });
-        };
+              })
+        }
+        else Swal.fire({
+            icon: 'error',
+            text: 'Lo sentimos, no hay stock de este producto',
+          })
     };
     let iconStyles = { color: "white", fontSize: "2rem" , position: 'center'};
 
