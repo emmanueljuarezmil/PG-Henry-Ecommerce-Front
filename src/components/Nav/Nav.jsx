@@ -4,14 +4,17 @@ import { NavLink } from 'react-router-dom';
 import { setFilterName, setCategoryId, setOrder } from '../../Redux/Actions/index';
 import Log from '../log/log';
 import LogoNav from '../../img/LOGOnav.png';
+import LogoLanding from '../../img/LOGOx2000.png';
 import Cookies from 'universal-cookie';
 
 import './Nav.css';
 
-function Nav() {
+function Nav(fotoLanding) {
     const dispatch = useDispatch()
     const cookies = new Cookies()
     const admin = cookies.get('admin')
+    let pathname = fotoLanding.location.pathname;
+    console.log('******', pathname)
 
     return (
         <div className='nav_container'>
@@ -26,7 +29,7 @@ function Nav() {
                 <NavLink className="NavLink" to='/about'>Nosotros</NavLink>
             </div>
             <div className='nav_item'>
-                <NavLink to='/'><img className='nav_logo_icon' src={LogoNav} alt="ModoVintage" /></NavLink>
+                <NavLink to='/'><img className='nav_logo_icon' src={pathname === '/' ? LogoLanding : LogoNav} alt="LogoNavbar" /></NavLink>
             </div>
             <div className='nav_item'>
                 <h4>ModoVintage</h4>
