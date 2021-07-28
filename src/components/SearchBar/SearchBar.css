@@ -9,7 +9,11 @@
     border: 2px solid #d3d6e4;
     width: 12rem;
     margin-top: 1.4rem;
-} 
+}
+
+.basic-single {
+    width: 400px;
+}
 
 .input-icon :hover{
     border: 2px solid black;

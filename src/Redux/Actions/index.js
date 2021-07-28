@@ -21,12 +21,12 @@ import {
   DELETE_ITEM_FROM_CART_LOCAL_STORAGE,
   ADD_TO_CART_FROM_DB,
   USER,
-  CHANGE_ADDRESS,
+  CHANGE_ADDRESS, 
   GET_ADDRESS,
   AUTHENTICATED_BY_CODE
   GET_USER_ORDERS,
   GET_ALL_USERS,
-
+  GET_SEARCH_BAR_PRODUCTS
 } from "../constants";
 import { url } from "../../constantURL"
 import { headers } from "../../controllers/GetHeaders"
@@ -40,6 +40,15 @@ export function getAllProducts(name, page, orderBy, orderType, category) {
     return dispatch({ type: GET_ALL_PRODUCTS, payload: json.data });
   };
 };
+
+export function getSearchBarProducts() {
+  return async function (dispatch) {
+    const {data} = await axios(
+      `${url}/productsforsearchbar`
+      );
+    return dispatch({ type: GET_SEARCH_BAR_PRODUCTS, payload: data });
+  };
+}
 
 export const getProductDetail = (id) => {
   return (dispatch) => {

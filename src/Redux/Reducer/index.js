@@ -22,8 +22,9 @@ import {
   GET_USER_ORDERS,
   CHANGE_ADDRESS,
   GET_ADDRESS,
+  GET_ALL_USERS,
+  GET_SEARCH_BAR_PRODUCTS
   AUTHENTICATED_BY_CODE,
-  GET_ALL_USERS
 } from "../constants";
 
 const initialState = {
@@ -199,7 +200,12 @@ const rootReducer = (state = initialState, action) => {
         return{
           ...state,
           users: [...action.payload]
-        }  
+        }
+      case GET_SEARCH_BAR_PRODUCTS:
+        return{
+          ...state,
+          searchProducts: [...action.payload]
+        } 
     default:
       return state;
   }
