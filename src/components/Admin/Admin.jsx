@@ -11,6 +11,9 @@ function Admin() {
             </div>
             <div className='admin_item'>
                 <NavLink to='/admin/category' className="NavLink">Agregar categoria</NavLink>
+            </div> 
+            <div className='admin_item'>
+                <NavLink to='/admin/editUsers' className="NavLink">Editar Usuarios</NavLink>
             </div>   
             <div className='admin_item'>
                 <NavLink to='/admin/orders' className="NavLink">Ver ordenes</NavLink>

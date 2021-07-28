@@ -23,7 +23,14 @@
     margin-bottom: 1.563rem;
     height: 318px;
     width: 250px;
-    background: #cc0022
+    background: #cc0022;
+    transition: 0.3s;
+}
+
+.card_container_link_red:hover{
+    box-shadow: 1px 1px 10px rgb(20 20 20 / 80%);
+    transform: translateY(-3px);
+    transition: 0.3s;
 }
 
 .card_container_link_darkred {
@@ -44,7 +51,14 @@
     margin-bottom: 1.563rem;
     height: 318px;
     width: 250px;
-    background: #7f0b0b
+    background: #7f0b0b;
+    transition: 0.3s;
+}
+
+.card_container_link_darkred:hover{
+    box-shadow: 1px 1px 10px rgb(20 20 20 / 80%);
+    transform: translateY(-3px);
+    transition: 0.3s;
 }
 
 .card_container_link_blue {
@@ -65,7 +79,14 @@
     margin-bottom: 1.563rem;
     height: 318px;
     width: 250px;
-    background: #243644
+    background: #243644;
+    transition: 0.3s;
+}
+
+.card_container_link_blue:hover{
+    box-shadow: 1px 1px 10px rgb(20 20 20 / 80%);
+    transform: translateY(-3px);
+    transition: 0.3s;
 }
 
 .card_container_link_lightblue {
@@ -86,7 +107,14 @@
     margin-bottom: 1.563rem;
     height: 318px;
     width: 250px;
-    background: #3690d5
+    background: #3690d5;
+    transition: 0.3s;
+}
+
+.card_container_link_lightblue:hover{
+    box-shadow: 1px 1px 10px rgb(20 20 20 / 80%);
+    transform: translateY(-3px);
+    transition: 0.3s;
 }
 
 .card_container_link_green {
@@ -107,7 +135,14 @@
     margin-bottom: 1.563rem;
     height: 318px;
     width: 250px;
-    background: #4b6005
+    background: #4b6005;
+    transition: 0.3s;
+}
+
+.card_container_link_green:hover{
+    box-shadow: 1px 1px 10px rgb(20 20 20 / 80%);
+    transform: translateY(-3px);
+    transition: 0.3s;
 }
 
 .card_container_link_orange {
@@ -128,12 +163,14 @@
     margin-bottom: 1.563rem;
     height: 318px;
     width: 250px;
-    background: #fd6b08
+    background: #fd6b08;
+    transition: 0.3s;
 }
 
-.card_container_link:hover{
+.card_container_link_orange:hover{
     box-shadow: 1px 1px 10px rgb(20 20 20 / 80%);
-    transition: transform .5s ease;
+    transform: translateY(-3px);
+    transition: 0.3s;
 }
 
 .card_container_item {
@@ -170,18 +207,38 @@
 }
 
 .product_name {
-    font-size: 1rem;
+    font-size: 1.2rem;
     text-overflow: ellipsis;
     max-width: 12rem;
     margin: auto;
 }
 
 .product_price {
-    font-size: 2rem;
+    font-size: 2.1rem;
     font-weight: 700;
-    margin: auto
+    margin: auto;
+    margin-bottom: 0.1rem;
 }
 
 .sold_out {
     opacity: 0.4
+}
+
+.add_to_cart_btn{
+    height:2.5rem;
+    width:2.5rem;
+    color:white;
+    background-color: transparent;
+    border: 3px solid white;
+    margin-top: -3rem;
+    margin-right: -0rem;
+}
+
+.add_to_cart_icon{
+    margin-left: -0.7rem;
+    margin-top:-0.2rem;
+}
+
+.price_cart_line{
+    flex-direction: row;
 }

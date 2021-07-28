@@ -25,7 +25,7 @@ function ProductDetail({ match }) {
     const userId = Cookies.get('id');
     
     const addToCartBtn = () => {
-        if ((Number(quantity)) < product.stock) {
+        if ((Number(quantity)) <= product.stock) {
             setQuantity(Number(quantity) + 1);
             dispatch(addToCart({ ...product, quantity}, userId)); 
             swal({

@@ -24,6 +24,9 @@ import {
   CHANGE_ADDRESS,
   GET_ADDRESS,
   AUTHENTICATED_BY_CODE
+  GET_USER_ORDERS,
+  GET_ALL_USERS,
+
 } from "../constants";
 import { url } from "../../constantURL"
 import { headers } from "../../controllers/GetHeaders"
@@ -109,6 +112,22 @@ export const updateCategory = (body) => {
     getAllCategories();
   };
 };
+
+
+export const getAllUsers = (users, name, admin) => {
+  if(users) {
+    return (dispatch) => {
+      dispatch({type: GET_ALL_USERS, payload: users})
+    }
+  }
+  else {
+    return async function(dispatch){
+      const users = await axios.get(`${url}/users?name=${name}&admin=${admin}`, {headers});
+      return dispatch({type: GET_ALL_USERS, payload: users.data})
+    }
+  }
+}
+
 
 export const getAllOrders = (orders) => {
   if (!orders) {
@@ -345,6 +364,7 @@ export const getShippingAddress = (idUser) => async dispatch => {
       })
       .catch(err => console.error(err));
   }
+
 };
 
 export const authenticationCode = (idUser) => async dispatch => { // CUANDO EL USER INGRESA POR PRIMERA VEZ, SE EJECUTA SIEMPRE PARA LLENAR EL ESTADO DE REDUX, PERO EL PUT SOLO SE HACE LA PRIMERA VEZ.
@@ -366,3 +386,13 @@ export const authenticationByCode = (idUser, authenticationCode) => async dispat
     })
     .catch(err => console.error(err));
 };
+
+}
+export const getUserOrders = (idUser)=>{
+  return (dispatch)=>{
+    axios.get(`${url}/orders/users/${idUser}`)
+    .then((res)=> dispatch({type:GET_USER_ORDERS, payload:res.data}))
+    .catch(err=>console.error(err))
+  }
+}
+

@@ -24,7 +24,8 @@ export default function LoginButton (){
                     const headers = {
                         authorization: `Bearer ${token}`,
                         email: user.email,
-                        userName: user.name,
+                        userName: user.nickname,
+                        name: user.name,
                         hashedPassword: user.sub
                     }
                     const response = await axios(`${url}/users/login`, {headers})
