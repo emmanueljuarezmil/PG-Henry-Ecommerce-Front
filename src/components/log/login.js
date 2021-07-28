@@ -5,7 +5,7 @@ import axios from 'axios';
 import {url} from '../../constantURL'
 import Cookies from 'universal-cookie';
 import {useHistory} from 'react-router-dom'
-import { localStorageCartToDB, saveUser} from '../../Redux/Actions';
+import { localStorageCartToDB, saveUser, authenticationCode} from '../../Redux/Actions';
 
 export let token;
 export let idUser
@@ -34,12 +34,13 @@ export default function LoginButton (){
                     cookies.set('id', id, { path: '/' });
                     cookies.set('admin', admin, { path: '/' })
                     idUser = await cookies.get('id')
-                    dispatch(localStorageCartToDB(idUser));
-                    // history.push('/home')
+                    dispatch(authenticationCode(idUser))
+                    dispatch(localStorageCartToDB(idUser, {headers}));
                 } catch(err) {
                     console.error(err)                                          
                 }
             }   
+            // history.push('/home')
         })()
     }, [user, isAuthenticated, history, getAccessTokenSilently, dispatch]);
     

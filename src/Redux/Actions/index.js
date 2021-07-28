@@ -23,7 +23,10 @@ import {
   USER,
   CHANGE_ADDRESS,
   GET_ADDRESS,
+  AUTHENTICATED_BY_CODE
+  GET_USER_ORDERS,
   GET_ALL_USERS,
+
 } from "../constants";
 import { url } from "../../constantURL"
 import { headers } from "../../controllers/GetHeaders"
@@ -33,10 +36,10 @@ export function getAllProducts(name, page, orderBy, orderType, category) {
   return async function (dispatch) {
     var json = await axios(
       `${url}/products?page=${page}&name=${name}&orderBy=${orderBy}&orderType=${orderType}&category=${category}`
-      );
+    );
     return dispatch({ type: GET_ALL_PRODUCTS, payload: json.data });
   };
-}
+};
 
 export const getProductDetail = (id) => {
   return (dispatch) => {
@@ -100,12 +103,12 @@ export const setOrder = (order) => {
 export const updateCategory = (body) => {
   return (dispatch) => {
     axios.put(`${url}/category/update`,
-    body,
-    { headers }).then(() =>
-      dispatch({
-        type: null,
-      })
-    );
+      body,
+      { headers }).then(() =>
+        dispatch({
+          type: null,
+        })
+      );
     getAllCategories();
   };
 };
@@ -150,7 +153,6 @@ export const getAllOrders = (orders, order, shipping) => {
     }
   } 
 };
-
 
 export const getCartProducts = (userId) => (dispatch) => {
   if (!userId) {
@@ -210,8 +212,8 @@ export const addToCart = (product, userId) => dispatch => {
   }
   if (userId) {
     const body = { id: product.id, quantity: 1 }
-    return axios.post(`${url}/cart/${userId}`,body,
-      {headers}
+    return axios.post(`${url}/cart/${userId}`, body,
+      { headers }
     )
       .then((response) => {
         dispatch({ type: ADD_TO_CART_FROM_DB, payload: response.data });
@@ -228,8 +230,8 @@ export const localStorageCartToDB = (userId) => async (dispatch) => {
         headers: {
           ...headers, idUser: userId
         }
-       })
-        .then((response) => {     
+      })
+        .then((response) => {
           localStorage.setItem('orderId', response.data.orderId)
           dispatch({ type: CART_FROM_LOCALSTORAGE_TO_DB, payload: response.data });
         })
@@ -243,7 +245,7 @@ export const localStorageCartToDB = (userId) => async (dispatch) => {
 
 export const DBcartToLocalStorage = (idUser) => async (dispatch) => {
   try {
-    const {data} = await axios(`${url}/cart/${idUser}`, { headers })
+    const { data } = await axios(`${url}/cart/${idUser}`, { headers })
     localStorage.setItem('cart', JSON.stringify(data.products))
     localStorage.setItem('orderId', data.orderId)
     dispatch({ type: CART_FROM_DB_TO_LOCALSTORAGE, payload: data })
@@ -256,7 +258,7 @@ export const deleteFromCart = (userId, idProduct) => async (dispatch) => {
   if (!userId) {
     let products = JSON.parse(localStorage.getItem('cart') || "[]")
     products = products.map(el => {
-      if(el.id === idProduct) {
+      if (el.id === idProduct) {
         el.quantity = 0
         return el
       }
@@ -266,7 +268,7 @@ export const deleteFromCart = (userId, idProduct) => async (dispatch) => {
     dispatch({ type: DELETE_ITEM_FROM_CART_LOCAL_STORAGE, payload: idProduct });
   }
   if (userId) {
-    axios.delete(`${url}/cart/${userId}/${idProduct}`, {headers})
+    axios.delete(`${url}/cart/${userId}/${idProduct}`, { headers })
       .then(res => {
         dispatch({ type: DELETE_ITEM_FROM_CART, payload: idProduct });
       })
@@ -278,7 +280,7 @@ export const deleteAllCart = (userId) => async (dispatch) => {
   localStorage.removeItem('cart');
   if (userId) {
     await axios.delete(`${url}/cart/${userId}`,
-    { headers })
+      { headers })
       .catch(err => console.error(err));
   };
   dispatch({ type: DELETE_ALL_CART });
@@ -286,8 +288,8 @@ export const deleteAllCart = (userId) => async (dispatch) => {
 
 export const goToCheckout = (products, userId) => async (dispatch) => {
   return axios.post(`${url}/checkout`,
-    {products},
-    {headers}
+    { products },
+    { headers }
   )
     .then(res => {
       window.location = res.data.init_point;
@@ -298,14 +300,14 @@ export const goToCheckout = (products, userId) => async (dispatch) => {
 
 export const changeQuantity = (product, quantity, userId) => async dispatch => {
   if (userId) {
-    axios.put(`${url}/cart/${userId}`, 
-    { ...product, quantity, idUser: userId },
-    { headers })
+    axios.put(`${url}/cart/${userId}`,
+      { ...product, quantity, idUser: userId },
+      { headers })
       .then(res => {
         dispatch({ type: CHANGE_QUANTITY, payload: res.data.products });
       })
       .catch(err => console.error(err));
-  }
+  };
 
   if (!userId) {
     let products = JSON.parse(localStorage.getItem('cart'));
@@ -317,41 +319,41 @@ export const changeQuantity = (product, quantity, userId) => async dispatch => {
     });
     localStorage.setItem('cart', JSON.stringify(products));
     dispatch({ type: CHANGE_QUANTITY, payload: products });
-  }
-}
+  };
+};
 
-export const getReviews=(idProd)=>{
-  return (dispatch)=>{
-    fetch('', { 
-      headers 
+export const getReviews = (idProd) => {
+  return (dispatch) => {
+    fetch('', {
+      headers
     })
-    .then(response=>response.json())
-    .then(response=> dispatch({
-      payload:response,
-      type:GET_REVIEWS
-    }))
+      .then(response => response.json())
+      .then(response => dispatch({
+        payload: response,
+        type: GET_REVIEWS
+      }))
   }
-}
+};
 
-export const saveUser=(obj)=>{
-  return (dispatch)=>{
+export const saveUser = (obj) => {
+  return (dispatch) => {
     dispatch({
-      type:USER,
-      payload:obj
+      type: USER,
+      payload: obj
     })
   }
-}
+};
 
 export const updateShippingAddress = (idUser, shippingAddress) => async dispatch => {
   if (idUser) {
-    axios.put(`${url}/users/updateShippingAddress/${idUser}`, 
-    { shippingAddress })
+    axios.put(`${url}/users/updateShippingAddress/${idUser}`,
+      { shippingAddress })
       .then(res => {
         dispatch({ type: CHANGE_ADDRESS, payload: res });
       })
       .catch(err => console.error(err));
   }
-}
+};
 
 export const getShippingAddress = (idUser) => async dispatch => {
   if (idUser) {
@@ -360,6 +362,36 @@ export const getShippingAddress = (idUser) => async dispatch => {
         dispatch({ type: GET_ADDRESS, payload: res.data.shippingAddress });
       })
       .catch(err => console.error(err));
+  }
+
+};
+
+export const authenticationCode = (idUser) => async dispatch => { // CUANDO EL USER INGRESA POR PRIMERA VEZ, SE EJECUTA SIEMPRE PARA LLENAR EL ESTADO DE REDUX, PERO EL PUT SOLO SE HACE LA PRIMERA VEZ.
+    axios.get(`${url}/users/authenticationByCode/${idUser}`)
+    .then(res => {
+      if (res.data === true) return dispatch({ type: AUTHENTICATED_BY_CODE, payload: res.data });
+      if (res.data === false) {
+        const authenticationCode = Math.floor(Math.random() * 1000000)
+        axios.put(`${url}/users/authenticationCode/${idUser}?authenticationCode=${authenticationCode}`, null, {headers})
+      }
+    })
+    .catch(err => console.error(err));
+};
+
+export const authenticationByCode = (idUser, authenticationCode) => async dispatch => { // CUANDO EL USUARIO TIENE EL CODIGO Y LO TIENE QUE VERIFICAR
+  axios.get(`${url}/users/authenticationByCode/${idUser}?authenticationCode=${authenticationCode}`)
+    .then(res => {
+      dispatch({ type: AUTHENTICATED_BY_CODE, payload: res.data });
+    })
+    .catch(err => console.error(err));
+};
+
+}
+export const getUserOrders = (idUser)=>{
+  return (dispatch)=>{
+    axios.get(`${url}/orders/users/${idUser}`)
+    .then((res)=> dispatch({type:GET_USER_ORDERS, payload:res.data}))
+    .catch(err=>console.error(err))
   }
 }
 

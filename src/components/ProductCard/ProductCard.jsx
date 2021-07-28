@@ -7,6 +7,7 @@ import { useDispatch,  } from 'react-redux';
 import {  useState } from 'react';
 import Cookies from 'js-cookie';
 import swal from 'sweetalert';
+import { MdShoppingCart } from "react-icons/md";
 
 
 function ProductCard({product, index}) {
@@ -68,30 +69,31 @@ function ProductCard({product, index}) {
             });
         };
     };
+    let iconStyles = { color: "white", fontSize: "2rem" , position: 'center'};
 
     return (
         <div>
             <div className={product.stock > 0 ? 'card_container' : 'card_container sold_out'}>
-                <div>
-                    { product.stock > 0 ? (
-                    <button onClick={addToCartBtn}>Agregar al carrito</button>): null}
-                </div>
-                <Link to={`/product/${product.id}`}
+                <div
                 className={cardCss(index)}
                 style={{ textDecoration: 'none' }}>
-                    <div className='card_container_item_img'>
+                    <Link to={`/product/${product.id}` }className='card_container_item_img'>
                         {
                             product.photo[0] ?
                             <img src={product.photo[0]} alt='' className='product_img' /> :
                             <img src="https://shenandoahcountyva.us/bos/wp-content/uploads/sites/4/2018/01/picture-not-available-clipart-12.jpg" alt='' className='product_img' />   
                         }
-
-                    </div>
+                    </Link>
                     <div className='card_container_item'>
-                        <h5 className='product_price'>${product.price}</h5>
+                        <Link to={`/product/${product.id}`}style={{ color: 'inherit', textDecoration: 'inherit'}}>
+                            <h5 className='product_price'>${product.price}</h5>
+                            </Link>
+                            { product.stock > 0 ? (
+                            <button onClick={addToCartBtn} className='add_to_cart_btn'><MdShoppingCart style={iconStyles} className='add_to_cart_icon'/></button>): null}
+                        <Link to={`/product/${product.id}`}style={{ color: 'inherit', textDecoration: 'inherit'}}>
                         <h4 className='product_name'>{product.name} {
                             product.stock === 0 ? '(Sin stock)' : null
-                        }</h4>
+                        }</h4></Link>
                     </div>
                     <div>
                         {
@@ -100,7 +102,7 @@ function ProductCard({product, index}) {
                             null
                         }
                     </div>
-                </Link>
+                </div>
             </div>
         </div>
     )

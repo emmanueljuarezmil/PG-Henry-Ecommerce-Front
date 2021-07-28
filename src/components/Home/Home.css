@@ -20,9 +20,81 @@
  }
 
  .filter_catalogue{
+    font-size: 1rem;
     display:flex;
     flex-wrap: wrap;
     margin-left: 11rem;
     margin-bottom: 2rem;
+    background-color: transparent;
+    transition: 0.3s;
  }
 
+ .filter_catalogue select:hover{
+    transition: 0.3s;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.055);
+    box-shadow: 0 0 5px 0 black;
+}
+
+ .filter_catalogue select{
+    cursor: pointer;
+    font-family: 'Josefin Sans', sans-serif;
+    color: black;
+    background-color: transparent;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    border-radius: 6px;
+    font-weight: 1000;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+.filter_catalogue option {
+    color: black;
+    background-color:transparent;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 1000;
+    font-size: 0.9rem;
+}
+
+.prev{
+    cursor: pointer;
+    font-family: 'Josefin Sans', sans-serif;
+    color: black;
+    background-color: transparent;
+    border-style: solid;
+    border-color: black;
+    border-width: 3px;
+    border-radius: 6px;
+    font-weight: 1000;
+    transition: 0.3s;
+}
+
+.prev:hover{
+    transition: 0.3s;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.233);
+    transform: translateY(-3px);
+    box-shadow: 0 0 5px 0 black;
+}
+
+.next{
+    cursor: pointer;
+    font-family: 'Josefin Sans', sans-serif;
+    color: black;
+    background-color: transparent;
+    border-style: solid;
+    border-color: black;
+    border-width: 3px;
+    border-radius: 6px;
+    font-weight: 1200;
+    transition: 0.3s;
+}
+
+.next:hover{
+    transition: 0.3s;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.233);
+    transform: translateY(-3px);
+    box-shadow: 0 0 5px 0 black;
+}
