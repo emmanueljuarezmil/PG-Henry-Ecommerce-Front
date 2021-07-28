@@ -13,7 +13,6 @@ import { headers } from "../../controllers/GetHeaders"
 function EditUsers() {
 
     const dispatch = useDispatch()
-    const [input,setInput] = useState({})
     const users = useSelector((state) => state.users)
     const [name,setName] = useState('')
     const [admin,setAdmin] = useState(undefined)

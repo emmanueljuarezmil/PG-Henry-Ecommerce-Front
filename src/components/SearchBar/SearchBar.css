@@ -8,5 +8,9 @@
     box-shadow: 0 4px 5px rgba(0 0 0 /0.45);
     width: 12rem;
     margin-top: 1.4rem;
-} 
+}
+
+.basic-single {
+    width: 400px;
+}
 
