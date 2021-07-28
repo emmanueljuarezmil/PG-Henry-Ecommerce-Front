@@ -14,7 +14,6 @@ function Nav(fotoLanding) {
     const cookies = new Cookies()
     const admin = cookies.get('admin')
     let pathname = fotoLanding.location.pathname;
-    console.log('******', pathname)
 
     return (
         <div className='nav_container'>

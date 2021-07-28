@@ -27,7 +27,6 @@ useEffect(() => {
 
 const deleteUser= async (e) => {
   try {
-    console.log(e.target.id)
     const {data} = await axios.delete(`${url}/users/${e.target.id}`, {headers})
     alert('Usuario eliminado con éxito')
     dispatch(getAllUsers(data))
