@@ -123,29 +123,38 @@ function FormProduct() {
 
     const deleteProduct = async (id) => {
         const name = allProducts.filter(product => product.id === id)[0].name
-        const result = window.confirm(`Estás seguro de que deseas eliminar ${name}`)
-        if(result) {
-            try {
-                await axios.delete(`${backendUrl}/products`,
-                { data: {id}, headers},
-                 )
-                dispatch(getAllProducts())
-                Swal.fire({
-                    icon: 'success',
-                    text: 'Se ha eliminado el producto con éxito',
-                    showConfirmButton: false,
-                    timer: 2000
-                  })
-            } catch(err) {
-                Swal.fire({
-                    icon: 'error',
-                    text: 'Ocurrió un problema y no se pudo eliminar el producto',
-                    showConfirmButton: false,
-                    timer: 2000
-                  })
-                console.error(err)
-            }
-        }
+        Swal.fire({
+            text: `Estás seguro de que deseas eliminar "${name}" ?`,
+            icon: 'warning',
+            showCancelButton: true,
+            // confirmButtonColor: '#3085d6',
+            // cancelButtonColor: '#d33',
+            confirmButtonText: 'Si',
+            cancelButtonText: "No"
+            }).then(async (result) => {
+              if(result.isConfirmed) {
+                  try {
+                      await axios.delete(`${backendUrl}/products`,
+                      { data: {id}, headers},
+                       )
+                      dispatch(getAllProducts())
+                      Swal.fire({
+                          icon: 'success',
+                          text: 'Se ha eliminado el producto con éxito',
+                          showConfirmButton: false,
+                          timer: 2000
+                        })
+                  } catch(err) {
+                      Swal.fire({
+                          icon: 'error',
+                          text: 'Ocurrió un problema y no se pudo eliminar el producto',
+                          showConfirmButton: false,
+                          timer: 2000
+                        })
+                      console.error(err)
+                  }
+              }
+          })
     }
 
     const editProduct = async (id) => {
