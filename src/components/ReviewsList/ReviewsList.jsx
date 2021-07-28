@@ -11,7 +11,7 @@ const ReviewList=(props)=>{
                 {reviews && reviews.map((Rev, index)=>{
                     return(
                         <li className='item' key={index}>
-                            <p className='userName'>{Rev.User.userName}</p>
+                            <p className='userName'>{Rev.User && Rev.User.userName}</p>
                             <p className='comment'>{Rev.comment}</p>
                             <Box component="fieldset" mb={3} borderColor="transparent">        
                                 <Rating name="read-only" value={parseInt(Rev.rating)} readOnly />

@@ -126,22 +126,21 @@ export const getAllUsers = (users, name, admin) => {
 }
 
 
-export const getAllOrders = (orders) => {
+export const getAllOrders = (orders, order, shipping) => {
   if(!orders) {
-    return (dispatch) => {
-      fetch(`${url}/orders/`, {
-        headers
+    return async (dispatch) => {
+      console.log('order: ', order)
+      console.log('shipping: ', shipping)
+      const {data} = await axios.get(`${url}/orders?status=${order}&shippingStatus=${shipping}`, {
+        headers,
       })
-        .then((response) => response.json())
-        .then((response) =>
-          dispatch({
-            type: GET_ALL_ORDERS,
-            payload: response,
-          })
-        )
-        .catch(err => console.error(err))
+      return dispatch({
+        type: GET_ALL_ORDERS,
+        payload: data,
+      })
     };
   }
+
   else {
     return (dispatch) => {
       dispatch({
@@ -149,8 +148,9 @@ export const getAllOrders = (orders) => {
         payload: orders,
       })
     }
-  }
+  } 
 };
+
 
 export const getCartProducts = (userId) => (dispatch) => {
   if (!userId) {
