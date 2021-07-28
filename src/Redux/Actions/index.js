@@ -23,7 +23,7 @@ import {
   USER,
   CHANGE_ADDRESS, 
   GET_ADDRESS,
-  AUTHENTICATED_BY_CODE
+  AUTHENTICATED_BY_CODE,
   GET_USER_ORDERS,
   GET_ALL_USERS,
   GET_SEARCH_BAR_PRODUCTS
@@ -141,8 +141,6 @@ export const getAllUsers = (users, name, admin) => {
 export const getAllOrders = (orders, order, shipping) => {
   if(!orders) {
     return async (dispatch) => {
-      console.log('order: ', order)
-      console.log('shipping: ', shipping)
       const {data} = await axios.get(`${url}/orders?status=${order}&shippingStatus=${shipping}`, {
         headers,
       })
@@ -387,15 +385,18 @@ export const authenticationCode = (idUser) => async dispatch => { // CUANDO EL U
     .catch(err => console.error(err));
 };
 
-export const authenticationByCode = (idUser, authenticationCode) => async dispatch => { // CUANDO EL USUARIO TIENE EL CODIGO Y LO TIENE QUE VERIFICAR
-  axios.get(`${url}/users/authenticationByCode/${idUser}?authenticationCode=${authenticationCode}`)
-    .then(res => {
-      dispatch({ type: AUTHENTICATED_BY_CODE, payload: res.data });
-    })
-    .catch(err => console.error(err));
+// export const authenticationByCode = (idUser, authenticationCode) => async dispatch => { // CUANDO EL USUARIO TIENE EL CODIGO Y LO TIENE QUE VERIFICAR
+//   axios.get(`${url}/users/authenticationByCode/${idUser}?authenticationCode=${authenticationCode}`)
+//     .then(res => {
+//       dispatch({ type: AUTHENTICATED_BY_CODE, payload: res.data });
+//     })
+//     .catch(err => console.error(err));
+// };
+
+export const authenticationByCode = (data) => dispatch => { // CUANDO EL USUARIO TIENE EL CODIGO Y LO TIENE QUE VERIFICAR
+    dispatch({ type: AUTHENTICATED_BY_CODE, payload: data });
 };
 
-}
 export const getUserOrders = (idUser)=>{
   return (dispatch)=>{
     axios.get(`${url}/orders/users/${idUser}`)

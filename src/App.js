@@ -16,9 +16,8 @@ import FormNewUser from './components/FormNewUser/FormNewUser';
 import Login from './components/Login/Login';
 import Review from './components/Review/Review';
 import GetHeaders from './controllers/GetHeaders';
-import AuthenticationCode from './components/AuthenticationCode'
-import EditUsers from './components/EditUsers/EditUsers'
-
+import EditUsers from './components/EditUsers/EditUsers';
+import AuthenticationCode from './components/AuthenticationCode/AuthenticationCode';
 
 function App() {
   return (
@@ -32,7 +31,7 @@ function App() {
       <Route exact path='/about' component={About} />
       <Route exact path='/cart' component={Cart} />
       <Route exact path='/user_settings' component={User} />
-      <Route exact path='/user_validate' component={AuthenticationCode} />
+      <Route exact path='/user_validation' component={AuthenticationCode} />
       <Route exact path='/admin/category' component={FormCategories} />
       <Route exact path='/admin' component={Admin} />
       <Route exact path='/admin/orders' component={OrderAdmin} />
