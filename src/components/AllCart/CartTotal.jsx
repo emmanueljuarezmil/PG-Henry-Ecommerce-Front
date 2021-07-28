@@ -10,9 +10,8 @@ const CartTotal = ({ total, handleGoToCheckout }) => {
   let data = useSelector(state => state.user_address);
 
   return (
-    <div>
-      <div className="summary">
-        <div className="summary_text">
+      <div className="summary_2">
+        <div className="summary_text_2">
           <label>ENVIO: </label>
           <h4>Gratis</h4>
           <label>TOTAL: </label>
@@ -23,7 +22,6 @@ const CartTotal = ({ total, handleGoToCheckout }) => {
         : <p>Indica tu direccion postal</p> : <Log/>
       }
       </div>
-    </div>
   );
 };
 
