@@ -19,7 +19,7 @@ const Filter = () =>{
     }
     
     return (
-        <div>
+        <div className='div_filters'>
             <select name='Category' value={categoryActual} onChange={(e) => handleCategory(e)}>
                 <option value=''>Todas</option>
                 {categories?.map((c, i) => (

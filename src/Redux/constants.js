@@ -25,3 +25,5 @@ export const USER='USER';
 export const CHANGE_ADDRESS='CHANGE_ADDRESS';
 export const GET_ADDRESS='GET_ADDRESS';
 export const GET_USER_ORDERS='GET_USER_ORDERS';
+export const GET_ALL_USERS= 'GET_ALL_USERS';
+

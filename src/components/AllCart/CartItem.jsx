@@ -50,7 +50,7 @@ const CartItem = ({ product, index }) => {
                     <input type="number" onChange={handleChangeQuantity} value={quantity} />
                 </div>
             </div>
-                <button onClick={handleDeleteItem} > X</button>
+                <button onClick={handleDeleteItem} className='delete_item_btn'> X</button>
         </div>
     );
 };

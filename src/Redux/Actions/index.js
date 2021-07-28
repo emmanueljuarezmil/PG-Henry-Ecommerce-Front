@@ -24,6 +24,8 @@ import {
   CHANGE_ADDRESS,
   GET_ADDRESS,
   GET_USER_ORDERS,
+  GET_ALL_USERS,
+
 } from "../constants";
 import { url } from "../../constantURL"
 import { headers } from "../../controllers/GetHeaders"
@@ -109,6 +111,22 @@ export const updateCategory = (body) => {
     getAllCategories();
   };
 };
+
+
+export const getAllUsers = (users, name, admin) => {
+  if(users) {
+    return (dispatch) => {
+      dispatch({type: GET_ALL_USERS, payload: users})
+    }
+  }
+  else {
+    return async function(dispatch){
+      const users = await axios.get(`${url}/users?name=${name}&admin=${admin}`, {headers});
+      return dispatch({type: GET_ALL_USERS, payload: users.data})
+    }
+  }
+}
+
 
 export const getAllOrders = (orders) => {
   if(!orders) {
@@ -353,3 +371,6 @@ export const getUserOrders = (idUser)=>{
     .catch(err=>console.error(err))
   }
 }
+
+
+
