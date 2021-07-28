@@ -22,6 +22,7 @@ import {
   GET_USER_ORDERS,
   CHANGE_ADDRESS,
   GET_ADDRESS,
+  AUTHENTICATED_BY_CODE,
   GET_ALL_USERS
 } from "../constants";
 
@@ -48,8 +49,9 @@ const initialState = {
   cart: JSON.parse(localStorage.getItem("cart") || "[]"),
   orderId: null,
   user:{},
+  user_address: ['', '', ''],
+  authenticatedByCode: false,
   userOrders:[],
-  user_address: ['', '', '']
   // logged: false, //
   // admin: false,
 };
@@ -182,6 +184,11 @@ const rootReducer = (state = initialState, action) => {
           user_address: action.payload
         }
 
+      case AUTHENTICATED_BY_CODE:
+        return{
+          ...state,
+          authenticatedByCode: action.payload
+        }
       case GET_USER_ORDERS:
         return {
           ...state,
@@ -193,7 +200,6 @@ const rootReducer = (state = initialState, action) => {
           ...state,
           users: [...action.payload]
         }  
-
     default:
       return state;
   }
