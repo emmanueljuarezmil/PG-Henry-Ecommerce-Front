@@ -22,7 +22,8 @@ import {
   ADD_TO_CART_FROM_DB,
   USER,
   CHANGE_ADDRESS,
-  GET_ADDRESS
+  GET_ADDRESS,
+  GET_USER_ORDERS,
 } from "../constants";
 import { url } from "../../constantURL"
 import { headers } from "../../controllers/GetHeaders"
@@ -343,5 +344,12 @@ export const getShippingAddress = (idUser) => async dispatch => {
         dispatch({ type: GET_ADDRESS, payload: res.data.shippingAddress });
       })
       .catch(err => console.error(err));
+  }
+}
+export const getUserOrders = (idUser)=>{
+  return (dispatch)=>{
+    axios.get(`${url}/orders/users/${idUser}`)
+    .then((res)=> dispatch({type:GET_USER_ORDERS, payload:res.data}))
+    .catch(err=>console.error(err))
   }
 }

@@ -1,3 +1,34 @@
-h1 {
-    margin-left: 2.5rem;
+.perfil{
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+    width: fit-content;
+    padding: 2em;
+    border-radius: 2em;
+    border: .2em solid rgb(104,104, 104);
+    margin-top: 4em;
+    margin-left: 4em;
+    box-shadow: 0.5em .5em 0.4em rgb(104, 104, 104);
+    position: fixed;
+}
+.picture{
+    border-radius: 10em;
+}
+.all{
+    display: flex;
+}
+.orders{
+    width: fit-content;
+    margin-left: 25em;
+}
+
+.product{
+    text-align: center;
+    width: 15em;
+}
+.products{
+    display: flex;
+    flex-wrap: wrap;
+}
+.product_img{
+    box-shadow:  0.2em .2em 0.1em rgb(104, 104, 104);;
 }
