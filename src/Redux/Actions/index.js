@@ -23,7 +23,9 @@ import {
   USER,
   CHANGE_ADDRESS,
   GET_ADDRESS,
+  GET_USER_ORDERS,
   GET_ALL_USERS,
+
 } from "../constants";
 import { url } from "../../constantURL"
 import { headers } from "../../controllers/GetHeaders"
@@ -362,4 +364,13 @@ export const getShippingAddress = (idUser) => async dispatch => {
       .catch(err => console.error(err));
   }
 }
+export const getUserOrders = (idUser)=>{
+  return (dispatch)=>{
+    axios.get(`${url}/orders/users/${idUser}`)
+    .then((res)=> dispatch({type:GET_USER_ORDERS, payload:res.data}))
+    .catch(err=>console.error(err))
+  }
+}
+
+
 
