@@ -8,9 +8,12 @@ import {  useState } from 'react';
 import Cookies from 'js-cookie';
 import Swal from 'sweetalert2';
 import { MdShoppingCart } from "react-icons/md";
+import { useAuth0 } from '@auth0/auth0-react'
+import { AddToFavs } from '../addToFavourites/addToFavs';
 
 
 function ProductCard({product, index}) {
+    const  { isAuthenticated } = useAuth0()
     const dispatch = useDispatch(); 
     const userId = Cookies.get('id');
     const [quantity, setQuantity] = useState(product?.quantity || 1);
@@ -93,6 +96,9 @@ function ProductCard({product, index}) {
                             </Link>
                             { product.stock > 0 ? (
                             <button onClick={addToCartBtn} className='add_to_cart_btn'><MdShoppingCart style={iconStyles} className='add_to_cart_icon'/></button>): null}
+                            {isAuthenticated && (
+                                <AddToFavs product={product}/>
+                            )}
                         <Link to={`/product/${product.id}`}style={{ color: 'inherit', textDecoration: 'inherit'}}>
                         <h4 className='product_name'>{product.name} {
                             product.stock === 0 ? '(Sin stock)' : null
