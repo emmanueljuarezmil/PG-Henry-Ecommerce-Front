@@ -14,7 +14,8 @@ function GetHeaders() {
                 authorization: `Bearer ${token}`,
                 idUser,
                 email: user?.email,
-                name: user?.name
+                name: user?.name,
+                username: user?.nickname
             }
     }
     setHeaders()

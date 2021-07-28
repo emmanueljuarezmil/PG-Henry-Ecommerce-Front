@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateShippingAddress } from '../../Redux/Actions';
 import Cookies from 'js-cookie';
+import './FormShipping.css'
 
 const FormShipping = () => {
     const dispatch = useDispatch();

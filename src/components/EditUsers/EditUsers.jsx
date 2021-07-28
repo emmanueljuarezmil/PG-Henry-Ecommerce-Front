@@ -16,7 +16,6 @@ function EditUsers() {
     const users = useSelector((state) => state.users)
     const [name,setName] = useState('')
     const [admin,setAdmin] = useState(undefined)
-   //const admin = undefined
 
 
 
@@ -24,20 +23,7 @@ useEffect(() => {
   dispatch(getAllUsers(null, name, admin))
 },[dispatch, name, admin])
 
-/* async function handleChange(e){ 
-    e.preventDefault()
-    const body = {
-      value: e.target.value,
-      id: e.target.id
-    }   
-    // const {data} = await axios.put(`${url}/users/newadminforpostman`, body, {headers}) 
-    const newItem = data[(data.findIndex(el => el.id === parseInt(e.target.id)))]
-    setInput({
-      ...input,
-      [newItem.id]: newItem.shippingStatus
-    })
-    // dispatch(getAllOrders(data))
-} */
+
 
 const deleteUser= async (e) => {
   try {
@@ -142,11 +128,11 @@ const dataTable = users.map(users => {
       <div>
         <div>
           <input type="text" value={name} onChange={handleNameChange}/>
-          <span>Filter By:</span>
+          <span>Filtrar por:</span>
           <select name="select" onChange={filterAdmin}>
           <option value="undefined">Select</option> 
-            <option value={true}>Is Admin</option>
-            <option value={false}>Not Admin</option>
+            <option value={true}>Es Admin</option>
+            <option value={false}>No es Admin</option>
             </select>   
         </div>
           <div>
