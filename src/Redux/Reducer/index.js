@@ -20,7 +20,8 @@ import {
   ADD_TO_CART_FROM_DB,
   USER,
   CHANGE_ADDRESS,
-  GET_ADDRESS
+  GET_ADDRESS,
+  AUTHENTICATED_BY_CODE
 } from "../constants";
 
 const initialState = {
@@ -46,7 +47,8 @@ const initialState = {
   cart: JSON.parse(localStorage.getItem("cart") || "[]"),
   orderId: null,
   user:{},
-  user_address: ['', '', '']
+  user_address: ['', '', ''],
+  authenticatedByCode: false
   // logged: false, //
   // admin: false,
 };
@@ -177,6 +179,11 @@ const rootReducer = (state = initialState, action) => {
         return{
           ...state,
           user_address: action.payload
+        }
+      case AUTHENTICATED_BY_CODE:
+        return{
+          ...state,
+          authenticatedByCode: action.payload
         }
     default:
       return state;
