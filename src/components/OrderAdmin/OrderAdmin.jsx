@@ -14,10 +14,12 @@ function OrderAdmin() {
   const dispatch = useDispatch()
   const orders = useSelector((state) => state.orders)
   const [stateAux, setStateAux] = useState('tabla')
+  const [order,setOrder] = useState('')
+  const [shipping,setShipping] = useState('')
 
   useEffect(() => {
-    dispatch(getAllOrders())
-  }, [dispatch])
+    dispatch(getAllOrders(null, order, shipping))
+  }, [dispatch, order, shipping])
 
   async function handleChange(e){ 
     e.preventDefault()
@@ -47,7 +49,7 @@ function OrderAdmin() {
     return {
       col1: order.id,
       col2: statusTranslates[order.status],
-      col3: order.createdAt.split('T')[0],
+      col3: order.createdAt && order.createdAt.split('T')[0],
       col4: (<button onClick={() => {
         dispatch(getOrderDetail(order.id));
         setStateAux('orden');
@@ -123,9 +125,34 @@ function OrderAdmin() {
   const onClick = () => {
     setStateAux('tabla')
   }
+  
+  const filterOrder = (e) => {
+   e.preventDefault()
+  setOrder(e.target.value) 
+ }
+  const filterShipping = (e) => {
+    e.preventDefault()
+   setShipping(e.target.value) 
+ }
+
 
   return (
     <div>
+       <span>Filtrar por Estado de orden:</span>
+          <select name="select" onChange={filterOrder} >
+          <option value="">Select</option> 
+            <option value="cart">Carrito</option>
+            <option value="approved">Aprobada</option>
+            <option value="rejected">Rechazada</option>
+          </select> 
+          <span>Filtrar por Estado de envio:</span>
+          <select name="select" onChange={filterShipping}>
+          <option value="">Select</option> 
+          <option value="uninitiated">No iniciado</option>
+          <option value="processing">En proceso</option>
+          <option value="approved">Aprobado</option>
+          <option value="cancelled">Cancelado</option>
+          </select> 
       {
         (stateAux === 'orden') ?
           <div>
