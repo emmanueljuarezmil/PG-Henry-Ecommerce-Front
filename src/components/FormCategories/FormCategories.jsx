@@ -6,6 +6,7 @@ import { getAllCategories} from '../../Redux/Actions'
 import './FormCategories.css'
 import { useDispatch,useSelector} from 'react-redux';
 import { headers } from '../../controllers/GetHeaders'
+import Swal from 'sweetalert2';
 
 function FormCategories() {
     const [name, setName] = useState('');
@@ -33,14 +34,29 @@ function FormCategories() {
                 )
                 dispatch(getAllCategories())
                 setName('');
-                alert('Categoria creada');
+                Swal.fire({
+                    icon: 'success',
+                    text: 'Categoria creada',
+                    showConfirmButton: false,
+                    timer: 2000
+                  })
             }
             catch(err) {
                 console.error(err)
-                alert('Ocurrió un problema y no se pudo crear la categoria')
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Ocurrió un problema y no se pudo crear la categoria',
+                    showConfirmButton: false,
+                    timer: 2000
+                  })
             }
         }
-        else alert('Debes especificar un nombre que no exista para la categoria');
+        else Swal.fire({
+            icon: 'error',
+            text: 'Debes especificar un nombre para la categoria',
+            showConfirmButton: false,
+            timer: 2000
+          })
     }
 
     const handleDelete = async (id)=>{
@@ -48,10 +64,21 @@ function FormCategories() {
             const body={id};
             await axios.delete(`${url}/category/${body.id}`,{data:body, headers});
             dispatch(getAllCategories())
-            alert('Categoria eliminada con éxito.')
+            Swal.fire({
+                icon: 'success',
+                text: 'Categoria eliminada con éxito',
+                showConfirmButton: false,
+                timer: 2000
+              })
         }catch(err){
-        console.error(err)
-         alert('Ocurrió un problema y no se pudo eliminar la categoria.')}
+            console.error(err)
+            Swal.fire({
+                icon: 'error',
+                text: 'Ocurrió un problema y no se pudo eliminar la categoria',
+                showConfirmButton: false,
+                timer: 2000
+            })
+        }
     }
     const handleChangeMod= (e)=>{
         e.preventDefault();
@@ -69,10 +96,20 @@ function FormCategories() {
             await axios.put(`${url}/category/update`,body, {headers});
             setNewName({...newName,[id]:''});
             dispatch(getAllCategories())
-            alert('Categoria modificada con éxito.')
+            Swal.fire({
+                icon: 'success',
+                text: 'Categoria modificada con éxito',
+                showConfirmButton: false,
+                timer: 2000
+              })
         }catch(err){
             console.error(err)
-            alert('Ocurrio un problema y no se pudo modificar la categoria.')
+            Swal.fire({
+                icon: 'error',
+                text: 'Ocurrió un problema y no se pudo modificar la categoria',
+                showConfirmButton: false,
+                timer: 2000
+              })
         }
     }
 

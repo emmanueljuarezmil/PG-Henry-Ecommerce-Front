@@ -10,6 +10,7 @@ import {url} from '../../constantURL'
 import './FormProduct.css'
 import axios from 'axios'
 import { headers } from '../../controllers/GetHeaders'
+import Swal from 'sweetalert2';
 
 const backendUrl = url
 const compressImageUrl = 'https://imagecompressor.com/'
@@ -122,19 +123,38 @@ function FormProduct() {
 
     const deleteProduct = async (id) => {
         const name = allProducts.filter(product => product.id === id)[0].name
-        const result = window.confirm(`Estás seguro de que deseas eliminar ${name}`)
-        if(result) {
-            try {
-                await axios.delete(`${backendUrl}/products`,
-                { data: {id}, headers},
-                 )
-                dispatch(getAllProducts())
-                window.alert('Se ha eliminado el producto con exito')
-            } catch(err) {
-                window.alert('ocurrió un problema y no se pudo eliminar el producto')
-                console.error(err)
-            }
-        }
+        Swal.fire({
+            text: `Estás seguro de que deseas eliminar "${name}" ?`,
+            icon: 'warning',
+            showCancelButton: true,
+            // confirmButtonColor: '#3085d6',
+            // cancelButtonColor: '#d33',
+            confirmButtonText: 'Si',
+            cancelButtonText: "No"
+            }).then(async (result) => {
+              if(result.isConfirmed) {
+                  try {
+                      await axios.delete(`${backendUrl}/products`,
+                      { data: {id}, headers},
+                       )
+                      dispatch(getAllProducts())
+                      Swal.fire({
+                          icon: 'success',
+                          text: 'Se ha eliminado el producto con éxito',
+                          showConfirmButton: false,
+                          timer: 2000
+                        })
+                  } catch(err) {
+                      Swal.fire({
+                          icon: 'error',
+                          text: 'Ocurrió un problema y no se pudo eliminar el producto',
+                          showConfirmButton: false,
+                          timer: 2000
+                        })
+                      console.error(err)
+                  }
+              }
+          })
     }
 
     const editProduct = async (id) => {
@@ -253,7 +273,12 @@ function FormProduct() {
         if(actionType === 'create') {
             try {
                 await axios.post(`${backendUrl}/products`, body, { headers })
-                window.alert('Se ha creado el producto con exito')
+                Swal.fire({
+                    icon: 'success',
+                    text: 'Producto creado con éxito',
+                    showConfirmButton: false,
+                    timer: 2000
+                  })
                 setInput({
                     photo: [],
                     name: '',
@@ -268,7 +293,12 @@ function FormProduct() {
             }
             catch(err) {
                 console.error(err)
-                window.alert('Ocurrió un problema y no se pudo crear el producto')
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Ocurrió un problema y no se pudo crear el producto',
+                    showConfirmButton: false,
+                    timer: 2000
+                  })
             }
         }
         if(actionType === 'update') {
@@ -277,11 +307,21 @@ function FormProduct() {
                 try {
                     body.id = input.id
                     await axios.put(`${backendUrl}/products/update`, body, { headers })
-                    window.alert('Se ha actualizado el producto con exito')
+                    Swal.fire({
+                        icon: 'success',
+                        text: 'Producto actualizado con éxito',
+                        showConfirmButton: false,
+                        timer: 2000
+                      })
                 }
                 catch(err) {
                     console.error(err)
-                    window.alert('Ocurrió un problema y no se pudo actualizar el producto')
+                    Swal.fire({
+                        icon: 'error',
+                        text: 'Ocurrió un problema y no se pudo actualizar el producto',
+                        showConfirmButton: false,
+                        timer: 2000
+                      })
                 }
             }
         }

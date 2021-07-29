@@ -4,7 +4,7 @@ import { getProductDetail, addToCart } from '../../Redux/Actions';
 import CarouselComponent from '../CarouselComponent/CarouselComponent';
 import { Fade } from 'react-awesome-reveal';
 import Cookies from 'js-cookie';
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 
 import './ProductDetail.css';
 // import Review from '../Review/Review';
@@ -28,13 +28,12 @@ function ProductDetail({ match }) {
         if ((Number(quantity)) <= product.stock) {
             setQuantity(Number(quantity) + 1);
             dispatch(addToCart({ ...product, quantity}, userId)); 
-            swal({
-                icon: "success",
-                title: "Producto agregado exitosamente!",
-                text: "  ",
-                button: null,
+            Swal.fire({
+                icon: 'success',
+                text: 'Producto agregado exitosamente!',
+                showConfirmButton: false,
                 timer: 2000
-            });
+              })
         };
     };
 

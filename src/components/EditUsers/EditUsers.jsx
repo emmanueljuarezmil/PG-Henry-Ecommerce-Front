@@ -6,8 +6,7 @@ import axios from 'axios'
 import { RiDeleteBin2Line } from 'react-icons/ri'
 import { url } from "../../constantURL"
 import { headers } from "../../controllers/GetHeaders"
-
-
+import Swal from 'sweetalert2';
 
 
 function EditUsers() {
@@ -17,18 +16,21 @@ function EditUsers() {
     const [name,setName] = useState('')
     const [admin,setAdmin] = useState(undefined)
 
-
-
-useEffect(() => {
-  dispatch(getAllUsers(null, name, admin))
-},[dispatch, name, admin])
+  useEffect(() => {
+    dispatch(getAllUsers(null, name, admin))
+  },[dispatch, name, admin])
 
 
 
 const deleteUser= async (e) => {
   try {
     const {data} = await axios.delete(`${url}/users/${e.target.id}`, {headers})
-    alert('Usuario eliminado con éxito')
+    Swal.fire({
+      icon: 'success',
+      text: 'Usuario eliminado con éxito',
+      showConfirmButton: false,
+      timer: 2000
+    })
     dispatch(getAllUsers(data))
   } catch(err) {
     console.error(err)
@@ -44,8 +46,18 @@ const changeAdmin = async (e) => {
       },
       { headers}
     )
-    if(e.target.value === 'true') alert('Usuario elevado a admin') 
-    else alert('Usuario sin credencial de admin')
+    if(e.target.value === 'true') Swal.fire({
+      icon: 'success',
+      text: 'Usuario elevado a admin',
+      showConfirmButton: false,
+      timer: 2000
+    })
+    else Swal.fire({
+      icon: 'success',
+      text: 'Usuario sin credencial de admin',
+      showConfirmButton: false,
+      timer: 2000
+    })
     dispatch(getAllUsers())
   } catch(err) {
     console.error(err)
