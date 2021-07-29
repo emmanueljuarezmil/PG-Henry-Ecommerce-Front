@@ -41,7 +41,6 @@ function User() {
                 {!user.email_verified && (
                     <p>¡Vaya! Tu email aun no esta verificado</p>                    
                 )}
-                <NavLink className="NavLink" to={{ pathname: 'https://dev-8yg4kp4m.us.auth0.com/u/reset-password/request/Username-Password-Authentication?state=hKFo2SBUU0NLVGhoa3B6NzVqTWtodlpQWDA0Zy1fakxMejlhbqFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIFdxc0RCSmRNV1JNT21WbHk5T0xuZVFsVG9JT2JaOHhvo2NpZNkgcjlUWHAxYnYyTXd2M3dRYmNEV3YzV3RqOUhKZGE3V0g' }}target="_blank">Cambia tu contraseña</NavLink>
             </div>
             {isAuthenticated && (
                 <NavLink to='/favourites'>Tus productos favoritos</NavLink>
