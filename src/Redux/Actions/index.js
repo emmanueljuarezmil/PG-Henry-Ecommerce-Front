@@ -116,8 +116,6 @@ export const setOrder = (order) => {
 
 export const deleteFav = (id) => {
   return (dispatch) => {
-    
-    const body = {idProduct: id}
     axios.delete(`${url}/users/favs`, { data: {idProduct: id}, headers }).then((response) => {
         dispatch({
           type: DELETE_FAV,
