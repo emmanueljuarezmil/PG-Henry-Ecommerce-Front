@@ -39,6 +39,7 @@ function App() {
       <Route exact path='/register' component={FormNewUser} />
       <Route exact path='/login' component={Login} />
       <Route exact path='/prueba' component={Review} />
+     {/*  <Route path='/' component={Footer} /> */}
     </React.Fragment>
   );
 }

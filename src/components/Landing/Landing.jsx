@@ -9,6 +9,7 @@ import otro2 from "../../img/OTRO2.png";
 import axios from "axios";
 import { url } from "../../constantURL";
 import { headers } from "../../controllers/GetHeaders";
+import Footer from '../Footer/Footer';
 
 const imagesLanding = [guitarras, baterias, otro, otro2];
 
@@ -40,6 +41,9 @@ function Landing(props) {
   return (
     <div>
       <CarouselLanding images={imagesLanding} />
+      <div>
+        <Footer/>
+        </div>
     </div>
   );
 }
