@@ -5,6 +5,7 @@ import CarouselComponent from '../CarouselComponent/CarouselComponent';
 import { Fade } from 'react-awesome-reveal';
 import Cookies from 'js-cookie';
 import swal from 'sweetalert';
+import Share from '../Share/Share'
 
 import './ProductDetail.css';
 // import Review from '../Review/Review';
@@ -70,6 +71,7 @@ function ProductDetail({ match }) {
                 </div>
             </div>
             <div className='detail_description' dangerouslySetInnerHTML={description()}/>
+            <Share name={product.name} description={product.description} id={product.id} photo={product.photo} />
         </div>
         <ReviewsList reviews={product.Reviews}/>
         </Fade>
