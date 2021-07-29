@@ -36,8 +36,8 @@ export default function About() {
                             <div className='div_nombre'>
                                 <h4>{d.nombre}</h4>
                                 <div className='div_container_links'>
-                                    <a href={d.linkedin}><FaLinkedin style={iconStyles} className='linkedin_icon'/></a>
-                                    <a href={d.github}><GoMarkGithub style={iconStyles} className='github_icon'/></a>
+                                    <a href={d.linkedin} target="_blank" rel="noopener noreferrer"><FaLinkedin style={iconStyles} className='linkedin_icon'/></a>
+                                    <a href={d.github} target="_blank" rel="noopener noreferrer"><GoMarkGithub style={iconStyles} className='github_icon'/></a>
                                 </div>
                             </div>
                         </div>
