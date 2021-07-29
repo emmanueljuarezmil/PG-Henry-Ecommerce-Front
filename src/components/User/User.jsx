@@ -3,8 +3,12 @@ import {useDispatch,useSelector} from 'react-redux';
 import './User.css';
 import Cookies from 'universal-cookie'
 import { getUserOrders } from '../../Redux/Actions';
+import { NavLink } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react'
+
 
 function User() {    
+    const { isAuthenticated } = useAuth0()
     const dispatch=useDispatch();
     useEffect(() => {
         const cookie= new Cookies();
@@ -37,8 +41,10 @@ function User() {
                 {!user.email_verified && (
                     <p>¡Vaya! Tu email aun no esta verificado</p>                    
                 )}
-
             </div>
+            {isAuthenticated && (
+                <NavLink to='/favourites'>Tus productos favoritos</NavLink>
+            )}
             <div className='orders'>
                 <ul className='order_list'>
                     <h2>Lista de órdenes:</h2>

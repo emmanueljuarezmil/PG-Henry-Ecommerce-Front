@@ -26,7 +26,8 @@ import {
   AUTHENTICATED_BY_CODE,
   GET_USER_ORDERS,
   GET_ALL_USERS,
-  GET_SEARCH_BAR_PRODUCTS
+  GET_SEARCH_BAR_PRODUCTS,
+  GET_FAVOURITES
 } from "../constants";
 import { url } from "../../constantURL"
 import { headers } from "../../controllers/GetHeaders"
@@ -259,7 +260,13 @@ export const DBcartToLocalStorage = (idUser) => async (dispatch) => {
   } catch (e) {
     console.error(e);
   };
-};
+}; 
+
+export const getAllFavourites = () => async (dispatch) => {
+  const response = await axios.get(`${url}/users/favs`,{headers})
+  .catch(error => console.error(error));
+  dispatch({type: GET_FAVOURITES, payload: response})  
+}
 
 export const deleteFromCart = (userId, idProduct) => async (dispatch) => {
   if (!userId) {

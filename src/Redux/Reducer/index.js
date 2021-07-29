@@ -25,6 +25,7 @@ import {
   GET_ALL_USERS,
   GET_SEARCH_BAR_PRODUCTS,
   AUTHENTICATED_BY_CODE,
+  GET_FAVOURITES
 } from "../constants";
 
 const initialState = {
@@ -53,6 +54,7 @@ const initialState = {
   user_address: ['', '', ''],
   authenticatedByCode: false,
   userOrders:[],
+  favourites:{}
   // logged: false, //
   // admin: false,
 };
@@ -205,6 +207,11 @@ const rootReducer = (state = initialState, action) => {
         return{
           ...state,
           searchProducts: [...action.payload]
+        }
+      case GET_FAVOURITES:
+        return{
+          ...state,
+          favourites: action.payload
         } 
     default:
       return state;

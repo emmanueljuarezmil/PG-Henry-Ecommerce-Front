@@ -6,8 +6,6 @@ import swal from 'sweetalert';
 
 
 
-
-
 export function AddToFavs (props){
     
     async function handleChange(){

@@ -1,0 +1,21 @@
+.catalogue_container{
+    margin-top: 1.5rem;
+    display: -webkit-flex; 
+    display: flex;
+    justify-content: space-evenly; 
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.catalogue_buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.catalogue_buttons button{
+    margin-right: 2rem;
+    margin-left: 2rem;
+    font-size: 1rem;
+}
