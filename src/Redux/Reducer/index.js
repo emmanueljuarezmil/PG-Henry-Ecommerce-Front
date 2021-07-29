@@ -217,7 +217,7 @@ const rootReducer = (state = initialState, action) => {
       case DELETE_FAV:
           return{
             ...state,
-            favourites: favourites.filter(element => element.id !== action.payload)
+            favourites: state.favourites.filter(element => element.id !== action.payload)
           }
     default:
       return state;
