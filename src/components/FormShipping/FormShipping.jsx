@@ -26,7 +26,7 @@ const FormShipping = () => {
     }
 
     const handleSubmit = (e) => {
-        //e.preventDefault()
+        e.preventDefault()
         let shippingAddress = [];
         shippingAddress.push(input.direccion, input.ciudad, input.codigo)
         dispatch(updateShippingAddress(userId, shippingAddress))
@@ -73,7 +73,7 @@ const FormShipping = () => {
                     />
                 </div>
                 <button className="submit_shipping_button" type="submit">
-                    Aceptar
+                    Actualizar direccion
                 </button>
             </form>
         </div>
