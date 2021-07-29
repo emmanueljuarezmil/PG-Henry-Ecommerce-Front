@@ -55,7 +55,6 @@ const Cart = () => {
                             <InfoShipping />
                         </div>
                     </div>
-                </div>
                 : <h3 className='no_items'>No tienes productos agregados a tu carrito de compras</h3>
             }
         </div>

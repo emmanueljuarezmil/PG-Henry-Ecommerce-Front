@@ -8,7 +8,7 @@ function OrderDetail() {
 
     const products = useSelector(state => state.order_detail)
     
-    const dataTable = products.map(product => {
+    const dataTable = products?.map(product => {
         return {
           col1: product.name,
           col2: product.stock,
@@ -62,7 +62,7 @@ function OrderDetail() {
         data
     })
     let total = 0
-    products.forEach(el => {
+    products?.forEach(el => {
     total+=(el.price*el.quantity*(100-el.perc_desc))
     })
 

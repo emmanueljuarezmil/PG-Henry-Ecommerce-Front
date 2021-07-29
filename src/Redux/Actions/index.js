@@ -220,7 +220,7 @@ export const getOrderDetail = (id) => {
       .then((response) => {
         dispatch({
           type: GET_ORDER_DETAIL,
-          payload: response,
+          payload: response.data,
         })
       })
       .catch(err => console.error(err))
