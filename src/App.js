@@ -17,6 +17,7 @@ import Review from './components/Review/Review';
 import GetHeaders from './controllers/GetHeaders';
 import EditUsers from './components/EditUsers/EditUsers';
 import AuthenticationCode from './components/AuthenticationCode/AuthenticationCode';
+import Favourites from './components/favourites/favourites';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
       <Route exact path='/admin/editUsers' component={EditUsers}/>
       <Route exact path='/login' component={Login} />
       <Route exact path='/prueba' component={Review} />
+      <Route exact path='/favourites' component={Favourites} />
     </React.Fragment>
   );
 }

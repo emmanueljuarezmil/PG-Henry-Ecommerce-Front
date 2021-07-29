@@ -5,7 +5,6 @@ import { headers } from "../../controllers/GetHeaders";
 import swal from 'sweetalert';
 
 export function AddToFavs(props) {
-
     // eslint-disable-next-line
     async function handleChange() {
         try {

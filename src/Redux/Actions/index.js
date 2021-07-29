@@ -27,6 +27,8 @@ import {
   GET_USER_ORDERS,
   GET_ALL_USERS,
   GET_SEARCH_BAR_PRODUCTS,
+  GET_FAVOURITES,
+  DELETE_FAV,
   SET_DESC_FILTER,
   RESET_ADDRESS
 } from "../constants";
@@ -110,6 +112,24 @@ export const setOrder = (order) => {
     dispatch({ type: SET_ORDER, payload: or });
   };
 };
+
+
+export const deleteFav = (id) => {
+  return (dispatch) => {
+    
+    const body = {idProduct: id}
+    console.log(body)
+    axios.delete(`${url}/users/favs`, { data: {idProduct: id}, headers }).then((response) => {
+        dispatch({
+          type: DELETE_FAV,
+          payload: id
+        })}
+      )
+      .catch(error =>{
+        console.error(error)
+      })   
+  };
+}
 
 export const setDesc = (descFilter) => {
   return (dispatch) => {
@@ -267,7 +287,17 @@ export const DBcartToLocalStorage = (idUser) => async (dispatch) => {
   } catch (e) {
     console.error(e);
   };
-};
+}; 
+
+export const getAllFavourites = () => async(dispatch) => {
+  try {
+    const {data} = await axios.get(`${url}/users/favs`, {headers})  
+    console.log(data)
+    dispatch({type: GET_FAVOURITES, payload: data})
+  }catch(error) {
+    console.error(error);
+  } 
+}
 
 export const deleteFromCart = (userId, idProduct) => async (dispatch) => {
   if (!userId) {

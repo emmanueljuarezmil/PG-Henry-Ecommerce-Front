@@ -1,19 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './ProductCard2.css';
+import './favouriteCard.css';
 import Rating from '@material-ui/lab/Rating';
 import {  addToCart } from '../../Redux/Actions';
 import { useDispatch,  } from 'react-redux';
 import {  useState } from 'react';
 import Cookies from 'js-cookie';
-import Swal from 'sweetalert2';
+import swal from 'sweetalert';
 import { MdShoppingCart } from "react-icons/md";
 import { useAuth0 } from '@auth0/auth0-react'
-import { AddToFavs } from '../addToFavourites/addToFavs';
-import {RiPriceTag3Fill} from 'react-icons/ri'
 
-
-function ProductCard({product, index}) {
+export default function FavouriteCard({product, index}) {
     const  { isAuthenticated } = useAuth0()
     const dispatch = useDispatch(); 
     const userId = Cookies.get('id');
@@ -22,25 +19,25 @@ function ProductCard({product, index}) {
         let cont =index%6;
         switch(cont){
             case 0:{
-                return 'card-content-red'
+                return 'card_container_link_red'
             }
             case 1:{
-                return 'card-content-darkred'
+                return 'card_container_link_darkred'
             }
             case 2:{
-                return 'card-content-blue'
+                return 'card_container_link_blue'
             }
             case 3:{
-                return 'card-content-lightblue'
+                return 'card_container_link_lightblue'
             }
             case 4:{
-                return 'card-content-green'
+                return 'card_container_link_green'
             }
             case 5:{
-                return 'card-content-orange'
+                return 'card_container_link_orange'
             }
             default:
-                return 'card-content-red'
+                return 'card_container_link_red'
             
         }
     }
@@ -64,17 +61,14 @@ function ProductCard({product, index}) {
         if ((Number(quantity)) <= product.stock) {
             setQuantity(Number(quantity) + 1);
             dispatch(addToCart({ ...product, quantity}, userId)); 
-            Swal.fire({
-                icon: 'success',
-                text: 'Producto agregado exitosamente!',
-                showConfirmButton: false,
-                timer: 2000
-              })
-        }
-        else Swal.fire({
-            icon: 'error',
-            text: 'Lo sentimos, no hay stock de este producto',
-          })
+            swal({
+                icon: "success",
+                title: "Producto agregado exitosamente!",
+                text: "  ",
+                button: null,
+                timer: 2000 
+            });
+        };
     };
     let iconStyles = { color: "white", fontSize: "2rem" , position: 'center'};
 
@@ -97,29 +91,15 @@ function ProductCard({product, index}) {
                             </Link>
                             { product.stock > 0 ? (
                             <button onClick={addToCartBtn} className='add_to_cart_btn'><MdShoppingCart style={iconStyles} className='add_to_cart_icon'/></button>): null}
-                            {isAuthenticated && (
-                                <AddToFavs product={product}/>
-                            )}
+                          
                         <Link to={`/product/${product.id}`}style={{ color: 'inherit', textDecoration: 'inherit'}}>
                         <h4 className='product_name'>{product.name} {
                             product.stock === 0 ? '(Sin stock)' : null
                         }</h4></Link>
-                    </div>
-                    <div>
-                        {
-                            product.Reviews?.length ?
-                            <Rating name="read-only" precision={0.5} value={prom} readOnly /> :
-                            null
-                        }
-                    </div>
-                    <div>
-                        <button>X</button>
-                    </div>
+                    </div>                    
                 </div>
-
             </div>
-        </>
+        </div>
     )
 };
 
-export default ProductCard;
