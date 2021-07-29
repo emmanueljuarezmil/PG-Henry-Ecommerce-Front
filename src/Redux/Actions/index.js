@@ -26,16 +26,17 @@ import {
   AUTHENTICATED_BY_CODE,
   GET_USER_ORDERS,
   GET_ALL_USERS,
-  GET_SEARCH_BAR_PRODUCTS
+  GET_SEARCH_BAR_PRODUCTS,
+  SET_DESC_FILTER
 } from "../constants";
 import { url } from "../../constantURL"
 import { headers } from "../../controllers/GetHeaders"
 import axios from "axios";
 
-export function getAllProducts(name, page, orderBy, orderType, category) {
+export function getAllProducts(name, page, orderBy, orderType, category, descFilter) {
   return async function (dispatch) {
     var json = await axios(
-      `${url}/products?page=${page}&name=${name}&orderBy=${orderBy}&orderType=${orderType}&category=${category}`
+      `${url}/products?page=${page}&name=${name}&orderBy=${orderBy}&orderType=${orderType}&category=${category}&descFilter=${descFilter}`
     );
     return dispatch({ type: GET_ALL_PRODUCTS, payload: json.data });
   };
@@ -106,6 +107,12 @@ export const setOrder = (order) => {
   const or = order.split(" ");
   return (dispatch) => {
     dispatch({ type: SET_ORDER, payload: or });
+  };
+};
+
+export const setDesc = (descFilter) => {
+  return (dispatch) => {
+    dispatch({ type: SET_DESC_FILTER, payload: descFilter });
   };
 };
 
