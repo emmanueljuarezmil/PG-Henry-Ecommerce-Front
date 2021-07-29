@@ -17,15 +17,16 @@ function Home() {
     const page = useSelector(state => state.actualPage);
     const orderBy = useSelector(state => state.orderBy);
     const orderType = useSelector(state => state.orderType);
+    const descFilter = useSelector(state => state.descFilter);
     let totalPages = useSelector((state) => state.totalPages);
     totalPages = Math.ceil(totalPages);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getAllProducts(name, page, orderBy , orderType, category)) 
+        dispatch(getAllProducts(name, page, orderBy , orderType, category, descFilter)) 
         dispatch(getAllCategories())
         dispatch(getSearchBarProducts())
-    }, [dispatch, name, page, orderBy , orderType, category ])
+    }, [dispatch, name, page, orderBy , orderType, category, descFilter ])
       
       const prevPage = (e) => {
           e.preventDefault();

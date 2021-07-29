@@ -6,6 +6,7 @@ import {
   deleteFromCart,
 } from "../../Redux/Actions/index";
 import "./AddToCart.css";
+import Swal from 'sweetalert2';
 
 export function AddToCart(props) {
   const dispatch = useDispatch();
@@ -15,10 +16,16 @@ export function AddToCart(props) {
   const [quantity, setQuantity] = useState(1);
 
   const onClick = (props) => {
-    if (product.stock === 0) return alert("No hay stock de este producto");
+    if (product.stock === 0) return Swal.fire({
+      icon: 'error',
+      text: 'Lo sentimos, no hay stock de este producto',
+    })
 
     if (Number(quantity) + productInCart?.quantity > product.stock) {
-      return alert("La cantidad deseada debe ser menor al Stock disponible");
+      return Swal.fire({
+        icon: 'error',
+        text: 'Lo sentimos, no hay stock de este producto',
+      })
     }
     dispatch(
       addToCart({
@@ -29,11 +36,22 @@ export function AddToCart(props) {
         price: product.price,
         stock: product.stock,
       })
-    );
+    )
+    Swal.fire({
+      icon: 'success',
+      text: 'Producto agregado exitosamente!',
+      showConfirmButton: false,
+      timer: 2000
+    })
   };
   const onChange = (e) => {
     if (Number(quantity) + productInCart?.quantity >= product.stock) {
-      alert("La cantidad deseada debe ser menor al Stock disponible");
+      Swal.fire({
+        icon: 'error',
+        text: 'La cantidad deseada debe ser menor al stock disponible',
+        showConfirmButton: false,
+        timer: 2000
+      })
       return setQuantity(quantity - 1);
     }
     setQuantity(e.target.value);

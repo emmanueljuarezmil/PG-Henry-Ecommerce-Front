@@ -12,7 +12,6 @@ import Nav from './components/Nav/Nav';
 import FormCategories from './components/FormCategories/FormCategories';
 import Admin from './components/Admin/Admin';
 import OrderAdmin from './components/OrderAdmin/OrderAdmin';
-import FormNewUser from './components/FormNewUser/FormNewUser';
 import Login from './components/Login/Login';
 import Review from './components/Review/Review';
 import GetHeaders from './controllers/GetHeaders';
@@ -36,7 +35,6 @@ function App() {
       <Route exact path='/admin' component={Admin} />
       <Route exact path='/admin/orders' component={OrderAdmin} />
       <Route exact path='/admin/editUsers' component={EditUsers}/>
-      <Route exact path='/register' component={FormNewUser} />
       <Route exact path='/login' component={Login} />
       <Route exact path='/prueba' component={Review} />
      {/*  <Route path='/' component={Footer} /> */}

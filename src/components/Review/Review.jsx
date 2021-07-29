@@ -9,6 +9,7 @@ import axios from 'axios';
 import './Review.css'
 import {getProductDetail} from '../../Redux/Actions/index'
 import { headers } from '../../controllers/GetHeaders'
+import Swal from 'sweetalert2';
 
 export default function Review(props) {
     const {idProd}=props
@@ -26,13 +27,24 @@ export default function Review(props) {
         const userId=cookie.get('id');
         try{
             const {data} = await axios.post(`${url}/review/${userId}`,body, { headers });
-            alert(data.message);
+            Swal.fire({
+              icon: 'success',
+              text: data.message,
+              showConfirmButton: false,
+              timer: 2000
+            })
             dispatch(getProductDetail(idProd))
             setRating(0);
             setComment('')
 
         }catch (err){
-            alert(err);
+            console.error(err)
+            Swal.fire({
+              icon: 'error',
+              text: 'Ocurrió un problema y no se pudo cargar la review',
+              showConfirmButton: false,
+              timer: 2000
+            })
         }
     }
 
