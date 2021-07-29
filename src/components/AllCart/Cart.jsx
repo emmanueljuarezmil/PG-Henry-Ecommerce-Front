@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 import CartItem from './CartItem';
@@ -45,11 +45,11 @@ const Cart = () => {
                         <h4>Subtotal: $ {totalWithoutDesc}</h4>
                         {
                             desc > 0 ?
-                                <h3>Descuento total: -$ {desc}</h3>
+                                <h3>Descuento total: -$ {Math.floor(desc)}</h3>
                                 : <h3>Descuento total: 0</h3>
                         }
                         <div className='cart_total_div'>
-                            <CartTotal total={total} handleGoToCheckout={handleGoToCheckout} />
+                            <CartTotal total={Math.floor(total)} handleGoToCheckout={handleGoToCheckout} />
                         </div>
                         <div className='shipping_info_div'>
                             <InfoShipping />
