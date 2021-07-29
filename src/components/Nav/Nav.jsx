@@ -31,9 +31,6 @@ function Nav(fotoLanding) {
                 <NavLink to='/'><img className='nav_logo_icon' src={pathname === '/' ? LogoLanding : LogoNav} alt="LogoNavbar" /></NavLink>
             </div>
             <div className='nav_item'>
-                <h4>ModoVintage</h4>
-            </div>
-            <div className='nav_item'>
                 <NavLink className="NavLink" to='/cart'>Carrito</NavLink>
             </div>
             {

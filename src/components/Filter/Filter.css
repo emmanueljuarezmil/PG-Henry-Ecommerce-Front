@@ -1,0 +1,10 @@
+.div_filters{
+    display: flex;
+    align-items: space-between;
+    justify-content: space-between;
+    margin: 1em 2em 1em 2em;
+}
+
+.div_filters select{
+    margin: 2em;
+}

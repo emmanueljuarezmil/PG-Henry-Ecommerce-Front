@@ -79,46 +79,6 @@ function ProductCard({ product, index }) {
     let iconStyles = { color: "white", fontSize: "2rem", position: 'center' };
 
     return (
-        // <div>
-        //     <div className={product.stock > 0 ? 'card_container' : 'card_container sold_out'}>
-        //         <div
-        //         className={cardCss(index)}
-        //         style={{ textDecoration: 'none' }}>
-        //             <Link to={`/product/${product.id}` }className='card_container_item_img'>
-        //                 {
-        //                     product.photo[0] ?
-        //                     <img src={product.photo[0]} alt='' className='product_img' /> :
-        //                     <img src="https://shenandoahcountyva.us/bos/wp-content/uploads/sites/4/2018/01/picture-not-available-clipart-12.jpg" alt='' className='product_img' />   
-        //                 }
-        //             </Link>
-        //             <div className='card_container_item'>
-        //                 <Link to={`/product/${product.id}`}style={{ color: 'inherit', textDecoration: 'inherit'}}>
-        //                     <h5 className='product_price'>${product.price}</h5>
-        //                     </Link>
-        //                     { product.stock > 0 ? (
-        //                     <button onClick={addToCartBtn} className='add_to_cart_btn'><MdShoppingCart style={iconStyles} className='add_to_cart_icon'/></button>): null}
-        //                     {isAuthenticated && (
-        //                         <AddToFavs product={product}/>
-        //                     )}
-        //                 <Link to={`/product/${product.id}`}style={{ color: 'inherit', textDecoration: 'inherit'}}>
-        //                 <h4 className='product_name'>{product.name} {
-        //                     product.stock === 0 ? '(Sin stock)' : null
-        //                 }</h4></Link>
-        //             </div>
-        //             <div>
-        //                 {
-        //                     product.Reviews?.length ?
-        //                     <Rating name="read-only" precision={0.5} value={prom} readOnly /> :
-        //                     null
-        //                 }
-        //             </div>
-        //             <div>
-        //                 <button>X</button>
-        //             </div>
-        //         </div>
-
-        //     </div>
-        // </div>
         <div>
             <div className={cardCss(index)}>
 
@@ -131,7 +91,7 @@ function ProductCard({ product, index }) {
                 </Link>
 
 
-                <h4>{product.name} {product.stock === 0 ? '(Sin stock)' : null}</h4>
+                <h4 className='product_name'>{product.name} {product.stock === 0 ? '(Sin stock)' : null}</h4>
 
                 <div className='stars'>
                     {
@@ -148,9 +108,11 @@ function ProductCard({ product, index }) {
 
                 <div className='cart-price-container'>
                     <h5>${product.price}</h5>
+                    <div className='addtocart-and-fav-button'>
                     {product.stock > 0 ? (
-                        <button onClick={addToCartBtn} className='add_to_cart_btn'><MdShoppingCart style={iconStyles} /></button>) : null}
+                        <button onClick={addToCartBtn} className='add-to-cart-buton'><MdShoppingCart style={iconStyles} /></button>) : null}
                     {isAuthenticated && (<AddToFavs product={product} />)}
+                    </div>
                     <div className='views'>
                         <p>{product.views} visitas</p>
                     </div>

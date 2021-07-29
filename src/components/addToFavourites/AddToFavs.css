@@ -1,0 +1,12 @@
+.add-to-favs-button-container button {
+    color:white;
+    background-color: transparent;
+    border: 3px solid white;
+    transition: 0.3s;
+}
+
+.add-to-favs-button-container button:hover {
+    transition: 0.3s;
+    background-color: rgba(0, 0, 0, 0.233);
+    box-shadow: 0 0 5px 0 black;
+}
