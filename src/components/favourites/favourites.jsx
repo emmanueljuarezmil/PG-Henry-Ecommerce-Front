@@ -14,7 +14,7 @@ export default function Favourites(){
 
     function delFav(id){
         dispatch(deleteFav(id))       
-    }
+    } 
     
     const products = useSelector(state => state.favourites)
     console.log(products)
