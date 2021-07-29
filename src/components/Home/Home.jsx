@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import Catalogue from '../Catalogue/Catalogue';
 // import SearchBar from '../SearchBar/SearchBar';
 import SearchBar2 from '../SearchBar/SearchBar2';
+import Footer from '../Footer/Footer';
 import './Home.css'
 
 function Home() {
@@ -16,15 +17,16 @@ function Home() {
     const page = useSelector(state => state.actualPage);
     const orderBy = useSelector(state => state.orderBy);
     const orderType = useSelector(state => state.orderType);
+    const descFilter = useSelector(state => state.descFilter);
     let totalPages = useSelector((state) => state.totalPages);
     totalPages = Math.ceil(totalPages);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getAllProducts(name, page, orderBy , orderType, category)) 
+        dispatch(getAllProducts(name, page, orderBy , orderType, category, descFilter)) 
         dispatch(getAllCategories())
         dispatch(getSearchBarProducts())
-    }, [dispatch, name, page, orderBy , orderType, category ])
+    }, [dispatch, name, page, orderBy , orderType, category, descFilter ])
       
       const prevPage = (e) => {
           e.preventDefault();
@@ -47,9 +49,7 @@ function Home() {
             </div>
             {products && products.length ?
                 <div>
-                    <div className='catalogue_div'>
-                        <Catalogue products={products}/>
-                    </div>
+                    <Catalogue products={products}/>
                 </div> : <div>
                     <h3>No se han encontrado resultados para tu busqueda</h3>
                     <img src="https://media1.tenor.com/images/65145586c6658008cbd0efb6f491a90c/tenor.gif?itemid=17104237" alt="not found"/> 
@@ -60,6 +60,7 @@ function Home() {
                 <button className='next' disabled={page === totalPages ? true : false} onClick={nextPage}>{'Siguiente >'}</button>
             </div>
             </div>
+            <Footer/>
         </div>
     )
 }

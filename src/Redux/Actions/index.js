@@ -28,16 +28,18 @@ import {
   GET_ALL_USERS,
   GET_SEARCH_BAR_PRODUCTS,
   GET_FAVOURITES,
-  DELETE_FAV
+  DELETE_FAV,
+  SET_DESC_FILTER,
+  RESET_ADDRESS
 } from "../constants";
 import { url } from "../../constantURL"
 import { headers } from "../../controllers/GetHeaders"
 import axios from "axios";
 
-export function getAllProducts(name, page, orderBy, orderType, category) {
+export function getAllProducts(name, page, orderBy, orderType, category, descFilter) {
   return async function (dispatch) {
     var json = await axios(
-      `${url}/products?page=${page}&name=${name}&orderBy=${orderBy}&orderType=${orderType}&category=${category}`
+      `${url}/products?page=${page}&name=${name}&orderBy=${orderBy}&orderType=${orderType}&category=${category}&descFilter=${descFilter}`
     );
     return dispatch({ type: GET_ALL_PRODUCTS, payload: json.data });
   };
@@ -111,6 +113,7 @@ export const setOrder = (order) => {
   };
 };
 
+
 export const deleteFav = (id) => {
   return (dispatch) => {
     
@@ -127,6 +130,12 @@ export const deleteFav = (id) => {
       })   
   };
 }
+
+export const setDesc = (descFilter) => {
+  return (dispatch) => {
+    dispatch({ type: SET_DESC_FILTER, payload: descFilter });
+  };
+};
 
 export const updateCategory = (body) => {
   return (dispatch) => {
@@ -385,10 +394,15 @@ export const updateShippingAddress = (idUser, shippingAddress) => async dispatch
     axios.put(`${url}/users/updateShippingAddress/${idUser}`,
       { shippingAddress })
       .then(res => {
-        dispatch({ type: CHANGE_ADDRESS, payload: res });
+        dispatch({ type: CHANGE_ADDRESS, payload: res.data.shippingAddress });
       })
       .catch(err => console.error(err));
   }
+};
+
+export const resetShippingAddress = () => dispatch => {
+  dispatch({ type: RESET_ADDRESS});
+
 };
 
 export const getShippingAddress = (idUser) => async dispatch => {

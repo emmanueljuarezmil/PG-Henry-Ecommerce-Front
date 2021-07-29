@@ -46,11 +46,22 @@ const CartItem = ({ product, index }) => {
             <div className="cart_info">
                 <h2>{product.name}</h2>
                 <div className="cart_info_buttons">
-                    <h3>Precio: {`$${product.price}`}</h3>
                     <input type="number" onChange={handleChangeQuantity} value={quantity} />
+                    <div>
+                        <h3>Precio unitario: {`$ ${product.price}`}</h3>
+                        {product.perc_desc > 0 ?
+                        <div>
+                        <h3>Descuento: {product.perc_desc}%</h3>
+                        <h3>Descuento unitario: {`$ ${Math.floor(product.perc_desc*product.price/100)}`}</h3>
+                        </div>
+                        : <div>
+                            <h3>Descuento: -</h3>
+                            <h3>Descuento unitario: -</h3>
+                        </div>}
+                    </div>
                 </div>
             </div>
-                <button onClick={handleDeleteItem} className='delete_item_btn'> X</button>
+            <button onClick={handleDeleteItem} className='delete_item_btn'> X</button>
         </div>
     );
 };

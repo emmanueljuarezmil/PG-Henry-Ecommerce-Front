@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { updateShippingAddress } from '../../Redux/Actions';
 import Cookies from 'js-cookie';
 import './FormShipping.css'
+import Swal from 'sweetalert2';
 
 const FormShipping = () => {
     const dispatch = useDispatch();
@@ -22,31 +23,19 @@ const FormShipping = () => {
             ...input,
             [e.target.name]: e.target.value
         });
-        /* setErrors(
-          validate({
-            ...input,
-            [e.target.name]: e.target.value,
-          })
-        ); */
     }
 
     const handleSubmit = (e) => {
-        //e.preventDefault()
+        e.preventDefault()
         let shippingAddress = [];
         shippingAddress.push(input.direccion, input.ciudad, input.codigo)
         dispatch(updateShippingAddress(userId, shippingAddress))
-        alert("Bien ahi")
-        /*  if(Object.keys(errors).length === 0)
-       {dispatch(addNewRecipe(input))
-         alert("Bien ahi")
-       setInput({
-        direccion: '',
-        codigo: 0,
-        ciudad: ''
-         })
-       } else {
-         alert("Mal ahi")
-       }   */
+        Swal.fire({
+            icon: 'success',
+            text: 'Dirección actualizada',
+            showConfirmButton: false,
+            timer: 2000
+          })
     }
 
     return (
@@ -84,7 +73,7 @@ const FormShipping = () => {
                     />
                 </div>
                 <button className="submit_shipping_button" type="submit">
-                    Aceptar
+                    Actualizar direccion
                 </button>
             </form>
         </div>

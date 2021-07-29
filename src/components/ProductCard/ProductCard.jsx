@@ -1,15 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './ProductCard.css';
+import './ProductCard2.css';
 import Rating from '@material-ui/lab/Rating';
 import {  addToCart } from '../../Redux/Actions';
 import { useDispatch,  } from 'react-redux';
 import {  useState } from 'react';
 import Cookies from 'js-cookie';
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 import { MdShoppingCart } from "react-icons/md";
 import { useAuth0 } from '@auth0/auth0-react'
 import { AddToFavs } from '../addToFavourites/addToFavs';
+import {RiPriceTag3Fill} from 'react-icons/ri'
 
 
 function ProductCard({product, index}) {
@@ -21,25 +22,25 @@ function ProductCard({product, index}) {
         let cont =index%6;
         switch(cont){
             case 0:{
-                return 'card_container_link_red'
+                return 'card-content-red'
             }
             case 1:{
-                return 'card_container_link_darkred'
+                return 'card-content-darkred'
             }
             case 2:{
-                return 'card_container_link_blue'
+                return 'card-content-blue'
             }
             case 3:{
-                return 'card_container_link_lightblue'
+                return 'card-content-lightblue'
             }
             case 4:{
-                return 'card_container_link_green'
+                return 'card-content-green'
             }
             case 5:{
-                return 'card_container_link_orange'
+                return 'card-content-orange'
             }
             default:
-                return 'card_container_link_red'
+                return 'card-content-red'
             
         }
     }
@@ -63,14 +64,17 @@ function ProductCard({product, index}) {
         if ((Number(quantity)) <= product.stock) {
             setQuantity(Number(quantity) + 1);
             dispatch(addToCart({ ...product, quantity}, userId)); 
-            swal({
-                icon: "success",
-                title: "Producto agregado exitosamente!",
-                text: "  ",
-                button: null,
-                timer: 2000 
-            });
-        };
+            Swal.fire({
+                icon: 'success',
+                text: 'Producto agregado exitosamente!',
+                showConfirmButton: false,
+                timer: 2000
+              })
+        }
+        else Swal.fire({
+            icon: 'error',
+            text: 'Lo sentimos, no hay stock de este producto',
+          })
     };
     let iconStyles = { color: "white", fontSize: "2rem" , position: 'center'};
 
@@ -112,8 +116,9 @@ function ProductCard({product, index}) {
                         <button>X</button>
                     </div>
                 </div>
+
             </div>
-        </div>
+        </>
     )
 };
 

@@ -38,6 +38,7 @@ function SearchBar() {
             name="color"
             options={options}
             onChange={handleChange}
+            placeholder='Buscar productos'
             />
         </div>
     )

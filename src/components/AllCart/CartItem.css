@@ -36,6 +36,7 @@
     margin: 1rem;
     border-radius: 0.2rem;
     color:white;
+    position: relative;
 }
 
 .card_container_two{
@@ -46,6 +47,7 @@
     margin: 1rem;
     border-radius: 0.2rem;
     color:white;
+    position: relative;
 }
 
 .card_container_three{
@@ -56,6 +58,7 @@
     margin: 1rem;
     border-radius: 0.2rem;
     color:white;
+    position: relative;
 }
 
 .delete_item_btn{
@@ -71,6 +74,10 @@
     transition: 0.3s;
     height: 3rem;
     width: 3rem;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 1em;
 }
 
 .delete_item_btn:hover{
