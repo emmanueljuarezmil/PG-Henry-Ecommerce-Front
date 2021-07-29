@@ -33,7 +33,7 @@ const Cart = () => {
         <div>
             {productsToShow && productsToShow.length > 0 ?
                 <div className='cart_total_items'>
-                    <div>
+                    {/* <div> */}
                         <div className='cart_prods_10'>
                             {
                                 productsToShow.map((product, index) => (

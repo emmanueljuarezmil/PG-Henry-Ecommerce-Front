@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './ProductCard.css';
+import './ProductCard2.css';
 import Rating from '@material-ui/lab/Rating';
 import {  addToCart } from '../../Redux/Actions';
 import { useDispatch,  } from 'react-redux';
@@ -22,25 +22,25 @@ function ProductCard({product, index}) {
         let cont =index%6;
         switch(cont){
             case 0:{
-                return 'card_container_link_red'
+                return 'card-content-red'
             }
             case 1:{
-                return 'card_container_link_darkred'
+                return 'card-content-darkred'
             }
             case 2:{
-                return 'card_container_link_blue'
+                return 'card-content-blue'
             }
             case 3:{
-                return 'card_container_link_lightblue'
+                return 'card-content-lightblue'
             }
             case 4:{
-                return 'card_container_link_green'
+                return 'card-content-green'
             }
             case 5:{
-                return 'card_container_link_orange'
+                return 'card-content-orange'
             }
             default:
-                return 'card_container_link_red'
+                return 'card-content-red'
             
         }
     }
@@ -79,48 +79,45 @@ function ProductCard({product, index}) {
     let iconStyles = { color: "white", fontSize: "2rem" , position: 'center'};
 
     return (
-        <div>
-            <div className={product.stock > 0 ? 'card_container' : 'card_container sold_out'}>
-                <div
-                className={cardCss(index)}
-                style={{ textDecoration: 'none' }}>
-                    <Link to={`/product/${product.id}` }className='card_container_item_img'>
-                        {
-                            product.photo[0] ?
-                            <img src={product.photo[0]} alt='' className='product_img' /> :
-                            <img src="https://shenandoahcountyva.us/bos/wp-content/uploads/sites/4/2018/01/picture-not-available-clipart-12.jpg" alt='' className='product_img' />   
-                        }
-                    </Link>
-                    <div className='card_container_item'>
-                        <Link to={`/product/${product.id}`}style={{ color: 'inherit', textDecoration: 'inherit'}}>
-                            {
-                                product.perc_desc > 0 ?
-                                <h5><RiPriceTag3Fill style={iconStyles} className='product_desc_icon'/>{product.perc_desc}% OFF</h5> :
-                                null
-                            }
-                            <h5 className='product_price'>${product.price}</h5>
-                            </Link>
-                            { product.stock > 0 ? (
-                            <button onClick={addToCartBtn} className='add_to_cart_btn'><MdShoppingCart style={iconStyles} className='add_to_cart_icon'/></button>): null}
-                            {isAuthenticated && (
-                                <AddToFavs product={product}/>
-                            )}
-                        <Link to={`/product/${product.id}`}style={{ color: 'inherit', textDecoration: 'inherit'}}>
-                        <h4 className='product_name'>{product.name} {
-                            product.stock === 0 ? '(Sin stock)' : null
-                        }</h4></Link>
-                        <h5>{product.views} visitas</h5>
-                    </div>
-                    <div>
-                        {
-                            product.Reviews.length ?
-                            <Rating name="read-only" precision={0.5} value={prom} readOnly /> :
-                            null
-                        }
+        <>
+            <div className={cardCss(index)}>
+
+                <Link to={`/product/${product.id}` }>
+                    {
+                        product.photo[0] ?
+                        <img src={product.photo[0]} alt='' className='card-image' /> :
+                        <img src="https://shenandoahcountyva.us/bos/wp-content/uploads/sites/4/2018/01/picture-not-available-clipart-12.jpg" alt='' className='card-image' />   
+                    }
+                </Link>
+
+
+                <h4>{product.name} {product.stock === 0 ? '(Sin stock)' : null}</h4>
+
+                <div className='stars'>
+                    {
+                        product.Reviews.length ?
+                        <Rating name="read-only" precision={0.5} value={prom} readOnly /> :
+                        null
+                    }
+                </div>
+                
+                <div className='discount'>
+                    {product.perc_desc > 0 ?
+                    <h5><RiPriceTag3Fill style={iconStyles}/>{product.perc_desc}%</h5> : null}
+                </div>
+
+                <div className='cart-price-container'>
+                    <h5>${product.price}</h5>
+                    {product.stock > 0 ? (
+                        <button onClick={addToCartBtn} className='add_to_cart_btn'><MdShoppingCart style={iconStyles}/></button>): null}
+                    {isAuthenticated && (<AddToFavs product={product}/>)}
+                    <div className='views'>
+                        <p>{product.views} visitas</p>
                     </div>
                 </div>
+
             </div>
-        </div>
+        </>
     )
 };
 

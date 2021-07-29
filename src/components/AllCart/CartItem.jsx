@@ -61,7 +61,7 @@ const CartItem = ({ product, index }) => {
                     </div>
                 </div>
             </div>
-                <button onClick={handleDeleteItem} className='delete_item_btn'> X</button>
+            <button onClick={handleDeleteItem} className='delete_item_btn'> X</button>
         </div>
     );
 };
