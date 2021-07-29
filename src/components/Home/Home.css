@@ -9,6 +9,7 @@
 
  .search_div {
      display: inline;
+     margin-top: 1em;
  }
 
  .home_products {
@@ -19,8 +20,6 @@
     font-size: 1rem;
     display:flex;
     flex-wrap: wrap;
-    margin-left: 11rem;
-    margin-bottom: 2rem;
     background-color: transparent;
     transition: 0.3s;
  }

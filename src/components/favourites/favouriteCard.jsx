@@ -8,10 +8,10 @@ import {  useState } from 'react';
 import Cookies from 'js-cookie';
 import swal from 'sweetalert';
 import { MdShoppingCart } from "react-icons/md";
-import { useAuth0 } from '@auth0/auth0-react'
+//import { useAuth0 } from '@auth0/auth0-react'
 
-export default function FavouriteCard({product, index}) {
-    const  { isAuthenticated } = useAuth0()
+export default function FavouriteCard({product, index, delFav}) {
+    //const  { isAuthenticated } = useAuth0()
     const dispatch = useDispatch(); 
     const userId = Cookies.get('id');
     const [quantity, setQuantity] = useState(product?.quantity || 1);
@@ -55,6 +55,7 @@ export default function FavouriteCard({product, index}) {
         return suma/cont;
     }
     let prom=0;
+    // eslint-disable-next-line
     if(quantityRev) prom=promedio(reviews); 
 
     const addToCartBtn = () => {
@@ -78,13 +79,16 @@ export default function FavouriteCard({product, index}) {
                 <div
                 className={cardCss(index)}
                 style={{ textDecoration: 'none' }}>
-                    <Link to={`/product/${product.id}` }className='card_container_item_img'>
+                <div className='delete-from-favs-button'>
+                <button onClick={() => delFav(product.id)}>X</button>
+                </div>
+                    <div className='card_container_item_img'>
                         {
                             product.photo[0] ?
                             <img src={product.photo[0]} alt='' className='product_img' /> :
                             <img src="https://shenandoahcountyva.us/bos/wp-content/uploads/sites/4/2018/01/picture-not-available-clipart-12.jpg" alt='' className='product_img' />   
                         }
-                    </Link>
+                    </div>
                     <div className='card_container_item'>
                         <Link to={`/product/${product.id}`}style={{ color: 'inherit', textDecoration: 'inherit'}}>
                             <h5 className='product_price'>${product.price}</h5>
@@ -96,6 +100,13 @@ export default function FavouriteCard({product, index}) {
                         <h4 className='product_name'>{product.name} {
                             product.stock === 0 ? '(Sin stock)' : null
                         }</h4></Link>
+                        <div className='stars'>
+                        {
+                        product.Reviews.length ?
+                            <Rating name="read-only" precision={0.5} value={prom} readOnly /> :
+                            null
+                        }
+                    </div>
                     </div>                    
                 </div>
             </div>

@@ -1,3 +1,12 @@
+.cart-container{
+    display: -webkit-flex; 
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
 .cart_total_items{
     display: -webkit-flex; 
     display: flex;
@@ -5,8 +14,6 @@
     justify-content: center;
     align-items: center;
     align-content: center;
-    margin-left: -25em;
-    position: relative;
 }
 
 .cart_prods_10{
@@ -14,10 +21,12 @@
 }
 
 .cart_total_div{
-    position: fixed;
-    right: 0;
-    margin-right: 27em;
-    margin-bottom: 23.2em;
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    justify-content: center;
+    margin-top: 1rem;
+    width: auto;
 }
 
 .delete_cart_btn{
@@ -32,12 +41,8 @@
     font-weight: 1200;
     transition: 0.3s;
     height: 3rem;
-    position: absolute;
     font-size: 1rem;
     font-weight: 1000;
-    position: absolute;
-    bottom: 0;
-    right: 0;
     margin-right: 28.2em;
 }
 
@@ -50,5 +55,5 @@
 }
 
 .shipping_info_div{
-    width: 20rem;
+    width: auto;
 }

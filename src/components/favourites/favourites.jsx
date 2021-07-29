@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import  FavouriteCard  from './favouriteCard.jsx'
 import './favourites.css';
 import { Fade } from "react-awesome-reveal";
+import Rating from '@material-ui/lab/Rating';
 
 
 export default function Favourites(){
@@ -16,20 +17,18 @@ export default function Favourites(){
     function delFav(id){
         dispatch(deleteFav(id))       
         dispatch(getAllFavourites())
-    } 
-    
-    console.log(products)
+    }
     return (
         <div>
             <Fade duration={1500} cascade={true} direction={'right'}>
             <div className='catalogue_container'>
                 {
-                    products && products.map((products, index) => (
+                    products && products.length > 0 ? products.map((products, index) => (
                         <div>
-                        <button onClick={() => delFav(products.id)}>X</button>
-                        <FavouriteCard index={index} key={index} product={products} />
+                        <FavouriteCard index={index} key={index} product={products} delFav={delFav}/>
                     </div>
                     ))
+                    : <h3 className='no_favs'>No tienes productos agregados a favoritos</h3>
                 }
             </div>
             </Fade>

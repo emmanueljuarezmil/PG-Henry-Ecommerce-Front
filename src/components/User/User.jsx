@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './User.css';
 import Cookies from 'universal-cookie'
-import { NavLink } from 'react-router-dom';
-import { useAuth0 } from '@auth0/auth0-react'
+//import { NavLink } from 'react-router-dom';
+//import { useAuth0 } from '@auth0/auth0-react'
 import { getUserOrders, resetShippingAddress, authenticationByCode } from '../../Redux/Actions';
 import FormShipping from '../FormShipping/FormShipping';
 import Menu from '@material-ui/core/Menu';
@@ -14,7 +14,7 @@ import { url } from "../../constantURL"
 import { headers } from '../../controllers/GetHeaders'
 
 function User() {
-    const { isAuthenticated } = useAuth0()
+    //const { isAuthenticated } = useAuth0()
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -24,9 +24,10 @@ function User() {
     }, [dispatch]);
 
     const user = useSelector((state) => state.user);
-    const orders = useSelector((state) => state.userOrders);
+    let orders = useSelector((state) => state.userOrders);
     const validated = useSelector((state) => state.authenticatedByCode);
     const address = useSelector((state) => state.user_address);
+    orders = typeof orders === 'string' ? [] : orders
 
     const forAnchor = {}
 

@@ -10,6 +10,7 @@ import {
   saveUser,
   authenticationCode
 } from "../../Redux/Actions";
+import './log.css'
 
 export let token;
 export let idUser;
@@ -53,7 +54,7 @@ export default function LoginButton() {
   return (
     !isAuthenticated && (
       <div>
-        <button onClick={() => loginWithPopup()}>Iniciar sesión</button>
+        <button onClick={() => loginWithPopup()} className='inicial-sesion-buton'>Iniciar sesión</button>
       </div>
     )
   );

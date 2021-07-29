@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {setCategoryId, setOrder, setDesc} from '../../Redux/Actions/index';
+import './Filter.css';
 
 const Filter = () =>{
     const dispatch = useDispatch()
@@ -24,7 +25,7 @@ const Filter = () =>{
     }
     
     return (
-        <div className='div_filters'>
+            <div className='div_filters'>
             <select name='Category' value={categoryActual} onChange={(e) => handleCategory(e)}>
                 <option value=''>Todas</option>
                 {categories?.map((c, i) => (
@@ -52,13 +53,13 @@ const Filter = () =>{
             </select>
             <select name='desc' value={descFilter} onChange={(e) => handleDesc(e)}>
                 <option key={1} value={false}>
-                    Productos con y sin descuento
+                    Todos los productos
                 </option>
                 <option key={2} value={true}>
-                    Solo productos con descuento
+                    Productos con descuento
                 </option>            
             </select>
-        </div>
+            </div>
     )
 }
 
