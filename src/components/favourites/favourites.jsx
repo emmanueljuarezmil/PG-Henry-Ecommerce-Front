@@ -8,15 +8,16 @@ import { Fade } from "react-awesome-reveal";
 
 export default function Favourites(){
     const dispatch = useDispatch()
+    const products = useSelector(state => state.favourites)
     useEffect(() => {
         dispatch(getAllFavourites())
     },[dispatch])
 
     function delFav(id){
         dispatch(deleteFav(id))       
+        dispatch(getAllFavourites())
     } 
     
-    const products = useSelector(state => state.favourites)
     console.log(products)
     return (
         <div>

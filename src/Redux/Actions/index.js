@@ -113,13 +113,14 @@ export const setOrder = (order) => {
 
 export const deleteFav = (id) => {
   return (dispatch) => {
-    axios.delete(`${url}/users/favs`,
-      {idProduct: id},
-      { headers }).then((response) =>
+    
+    const body = {idProduct: id}
+    console.log(body)
+    axios.delete(`${url}/users/favs`, { data: {idProduct: id}, headers }).then((response) => {
         dispatch({
           type: DELETE_FAV,
           payload: id
-        })
+        })}
       )
       .catch(error =>{
         console.error(error)
