@@ -56,7 +56,6 @@ export default function LogoutButton() {
                             onClose={handleClose}>
                             <NavLink className='Nav-menu' to='/user_settings'><MenuItem onClick={handleClose}>Cuenta</MenuItem></NavLink>
                             <MenuItem onClick={() => clearsession()}>Cerrar sesión</MenuItem>
-                            <NavLink className='Nav-menu' to='/user_validation'><MenuItem onClick={handleClose}>Valida tu cuenta</MenuItem></NavLink>                        
                         </Menu>
                     </div>
                 )

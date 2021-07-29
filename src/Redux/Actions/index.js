@@ -27,7 +27,8 @@ import {
   GET_USER_ORDERS,
   GET_ALL_USERS,
   GET_SEARCH_BAR_PRODUCTS,
-  SET_DESC_FILTER
+  SET_DESC_FILTER,
+  RESET_ADDRESS
 } from "../constants";
 import { url } from "../../constantURL"
 import { headers } from "../../controllers/GetHeaders"
@@ -363,10 +364,15 @@ export const updateShippingAddress = (idUser, shippingAddress) => async dispatch
     axios.put(`${url}/users/updateShippingAddress/${idUser}`,
       { shippingAddress })
       .then(res => {
-        dispatch({ type: CHANGE_ADDRESS, payload: res });
+        dispatch({ type: CHANGE_ADDRESS, payload: res.data.shippingAddress });
       })
       .catch(err => console.error(err));
   }
+};
+
+export const resetShippingAddress = () => dispatch => {
+  dispatch({ type: RESET_ADDRESS});
+
 };
 
 export const getShippingAddress = (idUser) => async dispatch => {

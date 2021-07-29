@@ -20,7 +20,7 @@
     align-items: center;
     flex-wrap: wrap;
     align-content: center;
-    flex-direction: column;
+    flex-direction: row;
 }
 .orders{
     width: fit-content;
@@ -35,6 +35,29 @@
     display: flex;
     flex-wrap: wrap;
 }
+.product_img_dios_mio_gus_container{
+    width: 15vw;
+}
 .product_img_dios_mio_gus{
+    width: 100%;
     box-shadow:  0.2em .2em 0.1em rgb(104, 104, 104);;
+}
+
+.orders_history{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; 
+
+}
+
+.orders_history_container{
+    margin-right: 4rem;
+}
+
+.each_order_history{
+    
+}
+
+.each_menu_order {
+    border: 2px solid red
 }
