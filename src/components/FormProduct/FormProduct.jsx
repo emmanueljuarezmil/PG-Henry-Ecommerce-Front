@@ -302,28 +302,37 @@ function FormProduct() {
             }
         }
         if(actionType === 'update') {
-            const result = window.confirm(`Estás seguro de que deseas actualizar el producto con los cambios propuestos?`)
-            if(result) {
-                try {
-                    body.id = input.id
-                    await axios.put(`${backendUrl}/products/update`, body, { headers })
-                    Swal.fire({
-                        icon: 'success',
-                        text: 'Producto actualizado con éxito',
-                        showConfirmButton: false,
-                        timer: 2000
-                      })
-                }
-                catch(err) {
-                    console.error(err)
-                    Swal.fire({
-                        icon: 'error',
-                        text: 'Ocurrió un problema y no se pudo actualizar el producto',
-                        showConfirmButton: false,
-                        timer: 2000
-                      })
-                }
-            }
+            Swal.fire({
+                text: `Estás seguro de que deseas actualizar el producto con los cambios propuestos?`,
+                icon: 'warning',
+                showCancelButton: true,
+                // confirmButtonColor: '#3085d6',
+                // cancelButtonColor: '#d33',
+                confirmButtonText: 'Si',
+                cancelButtonText: "No"
+                }).then(async (result) => {
+                  if(result.isConfirmed) {
+                    try {
+                        body.id = input.id
+                        await axios.put(`${backendUrl}/products/update`, body, { headers })
+                        Swal.fire({
+                            icon: 'success',
+                            text: 'Producto actualizado con éxito',
+                            showConfirmButton: false,
+                            timer: 2000
+                          })
+                    }
+                    catch(err) {
+                        console.error(err)
+                        Swal.fire({
+                            icon: 'error',
+                            text: 'Ocurrió un problema y no se pudo actualizar el producto',
+                            showConfirmButton: false,
+                            timer: 2000
+                          })
+                    }
+                  }
+              })
         }
         dispatch(getAllProducts())        
     }

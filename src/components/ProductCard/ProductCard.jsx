@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { MdShoppingCart } from "react-icons/md";
 import { useAuth0 } from '@auth0/auth0-react'
 import { AddToFavs } from '../addToFavourites/addToFavs';
+import {RiPriceTag3Fill} from 'react-icons/ri'
 
 
 function ProductCard({product, index}) {
@@ -92,6 +93,11 @@ function ProductCard({product, index}) {
                     </Link>
                     <div className='card_container_item'>
                         <Link to={`/product/${product.id}`}style={{ color: 'inherit', textDecoration: 'inherit'}}>
+                            {
+                                product.perc_desc > 0 ?
+                                <h5><RiPriceTag3Fill style={iconStyles} className='product_desc_icon'/>{product.perc_desc}% OFF</h5> :
+                                null
+                            }
                             <h5 className='product_price'>${product.price}</h5>
                             </Link>
                             { product.stock > 0 ? (
@@ -103,6 +109,7 @@ function ProductCard({product, index}) {
                         <h4 className='product_name'>{product.name} {
                             product.stock === 0 ? '(Sin stock)' : null
                         }</h4></Link>
+                        <h5>{product.views} visitas</h5>
                     </div>
                     <div>
                         {
