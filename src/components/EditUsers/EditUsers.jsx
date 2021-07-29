@@ -77,7 +77,7 @@ const dataTable = users.map(user => {
         <button onClick={changeAdmin} id={user.id} value={true}>Hacer admin</button> :
         <button onClick={changeAdmin} id={user.id} value={false}>Quitar admin</button>
       ),
-      col6: (<RiDeleteBin2Line id={user.id} onClick={deleteUser}/>)
+      col6: (<RiDeleteBin2Line style={{ cursor: 'pointer' }} id={user.id} onClick={deleteUser}/>)
     }
 })
 
