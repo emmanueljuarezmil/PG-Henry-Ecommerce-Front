@@ -78,7 +78,7 @@ function FormProduct() {
         if (!stock) errors = 'Se debe especificar el stock del producto'    
         if (price < 1) errors = 'El precio debe ser un entero positivo'
         if (!price) errors = 'Se debe especificar un precio para el producto'    
-        if (!/^[a-zA-Z0-9 ,.-ñÑ]+$/.test(name)) errors = 'El nombre del producto no puede contener caracteres especiales'
+        if (!/^[a-zA-Z0-9 ,.\-ñÑáÁéÉíÍóÓúÚ/]+$/.test(name)) errors = 'El nombre del producto no puede contener caracteres especiales'
         if (name.length < 5) errors = 'El nombre del producto debe tener al menos 5 caracteres'
         if (name.length === 0) errors = 'El nombre del producto es requerido'    
         setErrors(errors)      
