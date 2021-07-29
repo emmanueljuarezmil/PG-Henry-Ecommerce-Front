@@ -7,6 +7,11 @@
     transition: 0.3s;
     border-radius: 0.3rem;
     color: #ffffff;
+    text-align: center;
+}
+
+.card-content-red h4 {
+    text-align: center;
 }
 
 .card-content-red:hover{
@@ -24,6 +29,7 @@
     transition: 0.3s;
     border-radius: 0.3rem;
     color: #ffffff;
+    text-align: center;
 }
 
 .card-content-darkred:hover{
@@ -41,6 +47,7 @@
     transition: 0.3s;
     border-radius: 0.3rem;
     color: #ffffff;
+    text-align: center;
 }
 
 .card-content-blue:hover{
@@ -58,6 +65,7 @@
     transition: 0.3s;
     border-radius: 0.3rem;
     color: #ffffff;
+    text-align: center;
 }
 
 .card-content-lightblue:hover{
@@ -75,6 +83,7 @@
     transition: 0.3s;
     border-radius: 0.3rem;
     color: #ffffff;
+    text-align: center;
 }
 
 .card-content-green:hover{
@@ -92,6 +101,7 @@
     transition: 0.3s;
     border-radius: 0.3rem;
     color: #ffffff;
+    text-align: center;
 }
 
 .card-content-orange:hover{
@@ -114,6 +124,17 @@
     text-align: center;
     margin: 0;
     font-size: 2em;
+}
+
+.addtocart-and-fav-button{
+    display: flex;
+    align-self: center;
+    flex-direction: row-reverse;
+    margin-bottom: 2em;
+    margin-top: 1em;
+}
+.addtocart-and-fav-button button{
+   margin: 0em 0em 1em 1em;
 }
 
 .card-image {
@@ -150,8 +171,8 @@
     margin: 0;
     padding-right: 1em;
 }
-
-.add_to_cart_btn{
+ 
+.add-to-cart-buton{
     color:white;
     background-color: transparent;
     border: 3px solid white;
@@ -163,3 +184,4 @@
     background-color: rgba(0, 0, 0, 0.233);
     box-shadow: 0 0 5px 0 black;
 }
+

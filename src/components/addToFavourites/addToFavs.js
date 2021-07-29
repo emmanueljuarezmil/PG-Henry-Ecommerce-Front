@@ -2,6 +2,8 @@ import React from "react";
 import axios from 'axios';
 import { url } from '../constantURL'
 import { headers } from "../../controllers/GetHeaders";
+import { MdStar } from "react-icons/md";
+import './AddToFavs.css'
 import swal from 'sweetalert';
 
 export function AddToFavs(props) {
@@ -27,10 +29,11 @@ export function AddToFavs(props) {
             })
         }
     }
+    let iconStyles = { color: "white", fontSize: "2rem", position: 'center' };
 
     return (
-        <div>
-            <button onClick={handleChange} >Agregar a favoritos</button>
+        <div className='add-to-favs-button-container'>
+            <button onClick={handleChange}><MdStar style={iconStyles} /></button>
         </div>
     )
 };

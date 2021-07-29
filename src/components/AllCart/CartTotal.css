@@ -1,14 +1,38 @@
 .summary_2{
-    height: 20rem;
-    width: 10rem;
+    height: 25rem;
+    width: 15rem;
     text-align: center;
     background-image: url('../../img/PRODSUM.png');
     background-size: auto;
     border-radius: 0.5rem;
-    position: absolute;
 }
 
 .summary_text_2{
     margin-top: 4rem;
     color:white;
+}
+
+.summary_2 p{
+    color:white;
+}
+
+.summary_2 button{
+    font-family: 'Josefin Sans', sans-serif;
+    color: white;
+    background-color: transparent;
+    border: 3px solid white;
+    border-radius: 6px;
+    font-weight: 1200;
+    transition: 0.3s;
+    height: 3rem;
+    font-size: 1em;
+    font-weight: 1000;
+}
+
+.summary_2 button:hover{
+    transition: 0.3s;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.151);
+    transform: translateY(-3px);
+    box-shadow: 0 0 5px 0 white;
 }

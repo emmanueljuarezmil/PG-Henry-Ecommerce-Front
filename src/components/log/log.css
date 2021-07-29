@@ -1,0 +1,10 @@
+.inicial-sesion-buton{
+    background-color: transparent;
+    border: 0px solid transparent;
+    font-size: 1em;
+    width: 8em;
+}
+
+.inicial-sesion-buton:hover{
+    box-shadow: 1px 1px 5px rgb(20 20 20 / 80%); 
+}

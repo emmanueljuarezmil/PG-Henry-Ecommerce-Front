@@ -18,7 +18,7 @@ const CartTotal = ({ total, handleGoToCheckout }) => {
           <h2>${total}</h2>
         </div>
         {
-        userId ? data && data[0].length && data[1].length && data[2].length ? <button onClick={handleGoToCheckout}> Ir al checkout</button>
+        userId ? data && data[0].length && data[1].length && data[2].length ? <button onClick={handleGoToCheckout}> Checkout</button>
         : <p>Indica tu direccion postal</p> : <Log/>
       }
       </div>

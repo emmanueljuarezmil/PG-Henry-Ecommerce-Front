@@ -29,8 +29,6 @@
 
 .card_container_link_red:hover{
     box-shadow: 1px 1px 10px rgb(20 20 20 / 80%);
-    transform: translateY(-3px);
-    transition: 0.3s;
 }
 
 .card_container_link_darkred {
@@ -57,8 +55,6 @@
 
 .card_container_link_darkred:hover{
     box-shadow: 1px 1px 10px rgb(20 20 20 / 80%);
-    transform: translateY(-3px);
-    transition: 0.3s;
 }
 
 .card_container_link_blue {
@@ -85,8 +81,6 @@
 
 .card_container_link_blue:hover{
     box-shadow: 1px 1px 10px rgb(20 20 20 / 80%);
-    transform: translateY(-3px);
-    transition: 0.3s;
 }
 
 .card_container_link_lightblue {
@@ -113,8 +107,6 @@
 
 .card_container_link_lightblue:hover{
     box-shadow: 1px 1px 10px rgb(20 20 20 / 80%);
-    transform: translateY(-3px);
-    transition: 0.3s;
 }
 
 .card_container_link_green {
@@ -141,8 +133,6 @@
 
 .card_container_link_green:hover{
     box-shadow: 1px 1px 10px rgb(20 20 20 / 80%);
-    transform: translateY(-3px);
-    transition: 0.3s;
 }
 
 .card_container_link_orange {
@@ -169,8 +159,6 @@
 
 .card_container_link_orange:hover{
     box-shadow: 1px 1px 10px rgb(20 20 20 / 80%);
-    transform: translateY(-3px);
-    transition: 0.3s;
 }
 
 .card_container_item {
@@ -185,18 +173,6 @@
 
 
 .product_img {
-  /*   max-width: 5rem;
-    border-radius: 0.2rem;
-    box-shadow: 3px 3px 5px rgb(20 20 20 / 80%);
-    border: solid magenta 5px;
-    object-fit: cover; */
- /*    max-width: 100%;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto; */
     display: block;
     border-radius: 0.2rem;
     margin: 0.6rem;
@@ -241,4 +217,30 @@
 
 .price_cart_line{
     flex-direction: row;
+}
+
+.delete-from-favs-button{
+    display:flex;
+    position: fixed;
+    top:0;
+    margin-left:-10em;
+}
+
+.delete-from-favs-button button{
+    text-align: center;
+    font-size: 1.2rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    background-color: transparent;
+    border: 2px solid transparent;
+    color: gray;
+    transition: 0.3s;
+}
+
+.delete-from-favs-button button:hover{
+    background-color: red;
+    color: white;
+    border: 3px solid white;
+    transform: translateY(-3px);
+    box-shadow: 0 0 5px 0 black;
 }

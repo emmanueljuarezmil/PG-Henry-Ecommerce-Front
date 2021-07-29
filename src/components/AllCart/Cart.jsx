@@ -30,7 +30,7 @@ const Cart = () => {
     const handleGoToCheckout = () => dispatch(goToCheckout(products, userId)); // userId hardcoded for now. If user is not logged in, ask for redirect to login route.
     const productsToShow = products.filter(product => product.quantity > 0)
     return (
-        <div>
+        <div className='cart-container'>
             {productsToShow && productsToShow.length > 0 ?
                 <div className='cart_total_items'>
                     {/* <div> */}
@@ -48,15 +48,19 @@ const Cart = () => {
                                 <h3>Descuento total: -$ {Math.floor(desc)}</h3>
                                 : <h3>Descuento total: 0</h3>
                         }
-                        <div className='cart_total_div'>
-                            <CartTotal total={Math.floor(total)} handleGoToCheckout={handleGoToCheckout} />
-                        </div>
-                        <div className='shipping_info_div'>
-                            <InfoShipping />
-                        </div>
-                    </div>
+                     </div>
+                
                 : <h3 className='no_items'>No tienes productos agregados a tu carrito de compras</h3>
             }
+            {productsToShow && productsToShow.length > 0 ?
+            <div className='cart_total_div'>
+                <CartTotal total={Math.floor(total)} handleGoToCheckout={handleGoToCheckout} />
+            <div className='shipping_info_div'>
+                <InfoShipping />
+            </div>
+            </div>
+            : null
+        }
         </div>
     );
 };
