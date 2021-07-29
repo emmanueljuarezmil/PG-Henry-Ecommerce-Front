@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {setCategoryId, setOrder} from '../../Redux/Actions/index';
+import {setCategoryId, setOrder, setDesc} from '../../Redux/Actions/index';
 
 const Filter = () =>{
     const dispatch = useDispatch()
@@ -9,6 +9,7 @@ const Filter = () =>{
     const orderBy = useSelector(state => state.orderBy)
     const orderType = useSelector(state => state.orderType)
     const orderActual = orderBy + ' ' + orderType
+    const descFilter = useSelector(state => state.descFilter);
 
     const handleCategory = (e) => {
 		dispatch(setCategoryId(e.target.value));
@@ -16,6 +17,10 @@ const Filter = () =>{
     
     const handleOrder = (e) => {
         dispatch(setOrder(e.target.value));
+    }
+
+    const handleDesc = (e) => {
+        dispatch(setDesc(e.target.value));
     }
     
     return (
@@ -28,9 +33,6 @@ const Filter = () =>{
                     </option>
                 ))}
             </select>
-            
-        
-
             <select name='Order' value={orderActual} onChange={(e) => handleOrder(e)}>
                 <option key={1} value={'name ASC'}>
                     Nombre A-Z
@@ -44,7 +46,17 @@ const Filter = () =>{
                 <option key={4} value={'price DESC'}>
                     Mayor precio
                 </option>
-            
+                <option key={5} value={'views DESC'}>
+                    Más vistos
+                </option>             
+            </select>
+            <select name='desc' value={descFilter} onChange={(e) => handleDesc(e)}>
+                <option key={1} value={false}>
+                    Productos con y sin descuento
+                </option>
+                <option key={2} value={true}>
+                    Solo productos con descuento
+                </option>            
             </select>
         </div>
     )

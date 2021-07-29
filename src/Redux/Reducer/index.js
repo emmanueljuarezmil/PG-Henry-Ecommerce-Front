@@ -25,6 +25,7 @@ import {
   GET_ALL_USERS,
   GET_SEARCH_BAR_PRODUCTS,
   AUTHENTICATED_BY_CODE,
+  SET_DESC_FILTER
 } from "../constants";
 
 const initialState = {
@@ -53,6 +54,7 @@ const initialState = {
   user_address: ['', '', ''],
   authenticatedByCode: false,
   userOrders:[],
+  descFilter: false,
   // logged: false, //
   // admin: false,
 };
@@ -129,7 +131,7 @@ const rootReducer = (state = initialState, action) => {
     case ADD_TO_CART_FROM_DB:
       return {
         ...state,
-        cart: [...state.cart, action.payload],
+        cart: action.payload,
       };
     case DELETE_ITEM_FROM_CART:
       return {
@@ -205,6 +207,11 @@ const rootReducer = (state = initialState, action) => {
         return{
           ...state,
           searchProducts: [...action.payload]
+        }
+      case SET_DESC_FILTER:
+        return{
+          ...state,
+          descFilter: action.payload
         } 
     default:
       return state;
