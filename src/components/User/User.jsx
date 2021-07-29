@@ -107,9 +107,6 @@ function User() {
                     <p>¡Vaya! Tu email aun no esta verificado</p>
                 )}
             </div>
-            {isAuthenticated && (
-                <NavLink to='/favourites'>Tus productos favoritos</NavLink>
-            )}
             <div className='orders'>
                 {address[0].length ?
                     <div>
