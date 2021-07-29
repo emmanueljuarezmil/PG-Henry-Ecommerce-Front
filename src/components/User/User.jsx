@@ -25,9 +25,9 @@ function User() {
     }
 
     return (
-        <div className='all'>
+        <div className='all_gus'>
             <div className='perfil'>
-                <img className='picture' src={user.picture} alt="" />
+                <img className='picture_dios_mio_gus' src={user.picture} alt="" />
                 <p>Nick: {user.nickname}</p>
                 <p>Nombre: {user.name}</p>
                 <p>Correo: {user.email}</p>
@@ -57,8 +57,8 @@ function User() {
                                 <div className='products'>
                                     {order.Products.map(prod=>{
                                     return(
-                                        <div className='product'>
-                                            <img className='product_img' src={prod.photo[0]} alt="" />
+                                        <div className='product_dios_mio_gus'>
+                                            <img className='product_img_dios_mio_gus' src={prod.photo[0]} alt="" />
                                             <h4>Nombre: {prod.name}</h4>
                                             <h5>Precio: {prod.price}</h5>
                                         </div>

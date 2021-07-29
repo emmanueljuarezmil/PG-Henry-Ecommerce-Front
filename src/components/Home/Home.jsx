@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import Catalogue from '../Catalogue/Catalogue';
 // import SearchBar from '../SearchBar/SearchBar';
 import SearchBar2 from '../SearchBar/SearchBar2';
+import Footer from '../Footer/Footer';
 import './Home.css'
 
 function Home() {
@@ -61,6 +62,7 @@ function Home() {
                 <button className='next' disabled={page === totalPages ? true : false} onClick={nextPage}>{'Siguiente >'}</button>
             </div>
             </div>
+            <Footer/>
         </div>
     )
 }
