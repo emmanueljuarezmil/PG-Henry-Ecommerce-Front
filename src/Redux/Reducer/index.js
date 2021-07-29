@@ -25,7 +25,8 @@ import {
   GET_ALL_USERS,
   GET_SEARCH_BAR_PRODUCTS,
   AUTHENTICATED_BY_CODE,
-  SET_DESC_FILTER
+  SET_DESC_FILTER,
+  RESET_ADDRESS
 } from "../constants";
 
 const initialState = {
@@ -212,6 +213,11 @@ const rootReducer = (state = initialState, action) => {
         return{
           ...state,
           descFilter: action.payload
+        }
+      case RESET_ADDRESS:
+        return{
+          ...state,
+          user_address: ['', '', '']
         } 
     default:
       return state;

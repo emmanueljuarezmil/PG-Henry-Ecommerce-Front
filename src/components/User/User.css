@@ -35,6 +35,10 @@
     display: flex;
     flex-wrap: wrap;
 }
+.product_img_dios_mio_gus_container{
+    width: 15vw;
+}
 .product_img_dios_mio_gus{
+    width: 100%;
     box-shadow:  0.2em .2em 0.1em rgb(104, 104, 104);;
 }
