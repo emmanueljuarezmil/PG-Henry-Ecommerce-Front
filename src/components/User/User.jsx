@@ -24,9 +24,10 @@ function User() {
     }, [dispatch]);
 
     const user = useSelector((state) => state.user);
-    const orders = useSelector((state) => state.userOrders);
+    let orders = useSelector((state) => state.userOrders);
     const validated = useSelector((state) => state.authenticatedByCode);
     const address = useSelector((state) => state.user_address);
+    orders = typeof orders === 'string' ? [] : orders
 
     const forAnchor = {}
 

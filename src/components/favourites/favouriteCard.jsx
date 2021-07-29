@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './favouriteCard.css';
-//import Rating from '@material-ui/lab/Rating';
+import Rating from '@material-ui/lab/Rating';
 import {  addToCart } from '../../Redux/Actions';
 import { useDispatch,  } from 'react-redux';
 import {  useState } from 'react';
@@ -100,6 +100,13 @@ export default function FavouriteCard({product, index, delFav}) {
                         <h4 className='product_name'>{product.name} {
                             product.stock === 0 ? '(Sin stock)' : null
                         }</h4></Link>
+                        <div className='stars'>
+                        {
+                        product.Reviews.length ?
+                            <Rating name="read-only" precision={0.5} value={prom} readOnly /> :
+                            null
+                        }
+                    </div>
                     </div>                    
                 </div>
             </div>
