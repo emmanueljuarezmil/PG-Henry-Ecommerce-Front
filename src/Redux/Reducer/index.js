@@ -196,7 +196,7 @@ const rootReducer = (state = initialState, action) => {
       case GET_USER_ORDERS:
         return {
           ...state,
-          userOrders:action.payload
+          userOrders: action.payload
         }
 
       case GET_ALL_USERS:

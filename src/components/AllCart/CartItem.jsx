@@ -52,7 +52,7 @@ const CartItem = ({ product, index }) => {
                         {product.perc_desc > 0 ?
                         <div>
                         <h3>Descuento: {product.perc_desc}%</h3>
-                        <h3>Descuento unitario: {`$ ${product.perc_desc*product.price/100}`}</h3>
+                        <h3>Descuento unitario: {`$ ${Math.floor(product.perc_desc*product.price/100)}`}</h3>
                         </div>
                         : <div>
                             <h3>Descuento: -</h3>
