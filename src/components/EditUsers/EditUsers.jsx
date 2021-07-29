@@ -24,6 +24,7 @@ function EditUsers() {
 
 const deleteUser= async (e) => {
   try {
+    console.log(e.target.id)
     const {data} = await axios.delete(`${url}/users/${e.target.id}`, {headers})
     Swal.fire({
       icon: 'success',
@@ -65,18 +66,18 @@ const changeAdmin = async (e) => {
 }
 
 
-const dataTable = users.map(users => {
+const dataTable = users.map(user => {
     return {
-      col1: users.id,
-      col2: users.name,
-      col3: users.email,
-      col4: users.admin ? "Si" : "No",
+      col1: user.id,
+      col2: user.name,
+      col3: user.email,
+      col4: user.admin ? "Si" : "No",
       col5: (
-        !users.admin ?
-        <button onClick={changeAdmin} id={users.id} value={true}>Hacer admin</button> :
-        <button onClick={changeAdmin} id={users.id} value={false}>Quitar admin</button>
+        !user.admin ?
+        <button onClick={changeAdmin} id={user.id} value={true}>Hacer admin</button> :
+        <button onClick={changeAdmin} id={user.id} value={false}>Quitar admin</button>
       ),
-      col6: (<RiDeleteBin2Line id={users.id} onClick={deleteUser}/>)
+      col6: (<RiDeleteBin2Line id={user.id} onClick={deleteUser}/>)
     }
 })
 
