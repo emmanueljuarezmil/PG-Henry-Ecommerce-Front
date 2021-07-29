@@ -55,6 +55,7 @@ export default function LogoutButton() {
                             open={Boolean(anchorEl)}
                             onClose={handleClose}>
                             <NavLink className='Nav-menu' to='/user_settings'><MenuItem onClick={handleClose}>Cuenta</MenuItem></NavLink>
+                            <NavLink  className='Nav-menu' to='/favourites'><MenuItem onClick={handleClose}>Favoritos</MenuItem></NavLink>
                             <MenuItem onClick={() => clearsession()}>Cerrar sesión</MenuItem>
                             <NavLink className='Nav-menu' to='/user_validation'><MenuItem onClick={handleClose}>Valida tu cuenta</MenuItem></NavLink>                        
                         </Menu>
