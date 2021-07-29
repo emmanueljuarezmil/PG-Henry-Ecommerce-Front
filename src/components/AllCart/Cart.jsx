@@ -37,7 +37,7 @@ const Cart = () => {
         <div>
             {productsToShow && productsToShow.length > 0 ?
                 <div className='cart_total_items'>
-                    <div>
+                    {/* <div> */}
                         <div className='cart_prods_10'>
                             {
                                 productsToShow.map((product, index) => (
@@ -50,11 +50,14 @@ const Cart = () => {
                             <CartTotal total={total} handleGoToCheckout={handleGoToCheckout} />
                         </div>
                         <div className='shipping_info_div'>
-                        {flag === 'Hay direccion' ? <div>
-                            <InfoShipping/>
-                            </div> : <FormShipping/>}
-                            </div>
-                    </div>
+                        {flag === 'Hay direccion' ? 
+                            <div>
+                                <InfoShipping/>
+                            </div> 
+                            : 
+                            <FormShipping/>}
+                        </div>
+                    {/* </div> */}
                 </div>
                 : <h3 className='no_items'>No tienes productos agregados a tu carrito de compras</h3>
             }

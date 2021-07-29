@@ -5,6 +5,8 @@
     justify-content: center;
     align-items: center;
     align-content: center;
+    margin-left: -25em;
+    position: relative;
 }
 
 .cart_prods_10{
@@ -12,7 +14,10 @@
 }
 
 .cart_total_div{
-    margin-left: 70rem;
+    position: fixed;
+    right: 0;
+    margin-right: 27em;
+    margin-bottom: 23.2em;
 }
 
 .delete_cart_btn{
@@ -28,9 +33,12 @@
     transition: 0.3s;
     height: 3rem;
     position: absolute;
-    margin-left: 55rem;
     font-size: 1rem;
     font-weight: 1000;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-right: 28.2em;
 }
 
 .delete_cart_btn:hover{
@@ -42,7 +50,5 @@
 }
 
 .shipping_info_div{
-    margin-left: 67rem;
     width: 20rem;
-    margin-top: -15rem;
 }
