@@ -103,10 +103,13 @@ function ProductCard({product, index}) {
                     </div>
                     <div>
                         {
-                            product.Reviews.length ?
+                            product.Reviews?.length ?
                             <Rating name="read-only" precision={0.5} value={prom} readOnly /> :
                             null
                         }
+                    </div>
+                    <div>
+                        <button>X</button>
                     </div>
                 </div>
             </div>

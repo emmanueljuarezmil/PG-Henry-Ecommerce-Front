@@ -96,14 +96,7 @@ export default function FavouriteCard({product, index}) {
                         <h4 className='product_name'>{product.name} {
                             product.stock === 0 ? '(Sin stock)' : null
                         }</h4></Link>
-                    </div>
-                    <div>
-                        {
-                            product.Reviews.length ?
-                            <Rating name="read-only" precision={0.5} value={prom} readOnly /> :
-                            null
-                        }
-                    </div>
+                    </div>                    
                 </div>
             </div>
         </div>

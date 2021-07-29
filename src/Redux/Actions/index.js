@@ -27,7 +27,8 @@ import {
   GET_USER_ORDERS,
   GET_ALL_USERS,
   GET_SEARCH_BAR_PRODUCTS,
-  GET_FAVOURITES
+  GET_FAVOURITES,
+  DELETE_FAV
 } from "../constants";
 import { url } from "../../constantURL"
 import { headers } from "../../controllers/GetHeaders"
@@ -109,6 +110,22 @@ export const setOrder = (order) => {
     dispatch({ type: SET_ORDER, payload: or });
   };
 };
+
+export const deleteFav = (id) => {
+  return (dispatch) => {
+    axios.delete(`${url}/users/favs`,
+      {idProduct: id},
+      { headers }).then((response) =>
+        dispatch({
+          type: DELETE_FAV,
+          payload: id
+        })
+      )
+      .catch(error =>{
+        console.error(error)
+      })   
+  };
+}
 
 export const updateCategory = (body) => {
   return (dispatch) => {

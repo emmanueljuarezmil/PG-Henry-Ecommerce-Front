@@ -25,7 +25,8 @@ import {
   GET_ALL_USERS,
   GET_SEARCH_BAR_PRODUCTS,
   AUTHENTICATED_BY_CODE,
-  GET_FAVOURITES
+  GET_FAVOURITES,
+  DELETE_FAV
 } from "../constants";
 
 const initialState = {
@@ -54,7 +55,7 @@ const initialState = {
   user_address: ['', '', ''],
   authenticatedByCode: false,
   userOrders:[],
-  favourites:[]
+  favourites:[],
   // logged: false, //
   // admin: false,
 };
@@ -212,7 +213,12 @@ const rootReducer = (state = initialState, action) => {
         return{
           ...state,
           favourites: [...action.payload.Products]
-        } 
+        }
+      case DELETE_FAV:
+          return{
+            ...state,
+            favourites: favourites.filter(element => element.id !== action.payload)
+          }
     default:
       return state;
   }
