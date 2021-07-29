@@ -13,7 +13,7 @@ export default function Favourites(){
         dispatch(getAllFavourites())
     })
     
-    const products = useSelector(state => state.favourites.data.Products)
+    const products = useSelector(state => state.favourites.Products)
      
     return (
         <div>

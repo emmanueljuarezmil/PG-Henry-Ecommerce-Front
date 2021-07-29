@@ -54,7 +54,7 @@ const initialState = {
   user_address: ['', '', ''],
   authenticatedByCode: false,
   userOrders:[],
-  favourites:{}
+  favourites:[]
   // logged: false, //
   // admin: false,
 };
@@ -211,7 +211,7 @@ const rootReducer = (state = initialState, action) => {
       case GET_FAVOURITES:
         return{
           ...state,
-          favourites: action.payload
+          favourites: [...action.payload.Products]
         } 
     default:
       return state;

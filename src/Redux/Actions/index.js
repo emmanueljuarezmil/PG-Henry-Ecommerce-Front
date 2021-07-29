@@ -262,10 +262,14 @@ export const DBcartToLocalStorage = (idUser) => async (dispatch) => {
   };
 }; 
 
-export const getAllFavourites = () => async (dispatch) => {
-  const response = await axios.get(`${url}/users/favs`,{headers})
-  .catch(error => console.error(error));
-  dispatch({type: GET_FAVOURITES, payload: response})  
+export const getAllFavourites = () => async(dispatch) => {
+  try {
+    const {data} = await axios.get(`${url}/users/favs`, {headers})  
+    console.log(data)
+    dispatch({type: GET_FAVOURITES, payload: data})
+  }catch(error) {
+    console.error(error);
+  } 
 }
 
 export const deleteFromCart = (userId, idProduct) => async (dispatch) => {
