@@ -7,7 +7,7 @@ import { RiDeleteBin2Line } from 'react-icons/ri'
 import { url } from "../../constantURL"
 import { headers } from "../../controllers/GetHeaders"
 import Swal from 'sweetalert2';
-
+import NotFind from '../NotFind/NotFind'
 
 function EditUsers() {
 
@@ -24,7 +24,6 @@ function EditUsers() {
 
 const deleteUser= async (e) => {
   try {
-    console.log(e.target.id)
     const {data} = await axios.delete(`${url}/users/${e.target.id}`, {headers})
     Swal.fire({
       icon: 'success',
@@ -189,11 +188,7 @@ const dataTable = users.map(user => {
                     )
                   })}
               </tbody>
-            </table> :
-            <div>
-            <h3>No se han encontrado resultados para tu busqueda</h3>
-            <img src="https://media1.tenor.com/images/65145586c6658008cbd0efb6f491a90c/tenor.gif?itemid=17104237" alt="not found"/> 
-            </div>
+            </table> :  <NotFind/>
               }
           </div>
       </div>

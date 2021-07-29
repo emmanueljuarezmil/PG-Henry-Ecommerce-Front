@@ -7,6 +7,7 @@ import Catalogue from '../Catalogue/Catalogue';
 // import SearchBar from '../SearchBar/SearchBar';
 import SearchBar2 from '../SearchBar/SearchBar2';
 import Footer from '../Footer/Footer';
+import NotFind from '../NotFind/NotFind'
 import './Home.css'
 
 function Home() {
@@ -50,10 +51,7 @@ function Home() {
             {products && products.length ?
                 <div>
                     <Catalogue products={products}/>
-                </div> : <div>
-                    <h3>No se han encontrado resultados para tu busqueda</h3>
-                    <img src="https://media1.tenor.com/images/65145586c6658008cbd0efb6f491a90c/tenor.gif?itemid=17104237" alt="not found"/> 
-                    </div>
+                </div> : <NotFind/>
             }
             <div className='catalogue_buttons'>
                 <button className='prev' disabled={page === 1 ? true : false} onClick={prevPage}>{'< Anterior'}</button>

@@ -118,7 +118,6 @@ export const deleteFav = (id) => {
   return (dispatch) => {
     
     const body = {idProduct: id}
-    console.log(body)
     axios.delete(`${url}/users/favs`, { data: {idProduct: id}, headers }).then((response) => {
         dispatch({
           type: DELETE_FAV,
@@ -291,8 +290,7 @@ export const DBcartToLocalStorage = (idUser) => async (dispatch) => {
 
 export const getAllFavourites = () => async(dispatch) => {
   try {
-    const {data} = await axios.get(`${url}/users/favs`, {headers})  
-    console.log(data)
+    const {data} = await axios.get(`${url}/users/favs`, {headers})
     dispatch({type: GET_FAVOURITES, payload: data})
   }catch(error) {
     console.error(error);
