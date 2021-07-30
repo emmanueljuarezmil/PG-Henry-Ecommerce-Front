@@ -209,18 +209,16 @@ export const getCartProducts = (userId) => (dispatch) => {
 };
 
 export const getOrderDetail = (id) => {
-  return (dispatch) => {
-    fetch(`${url}/orders/${id}`, {
-      headers
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        dispatch({
-          type: GET_ORDER_DETAIL,
-          payload: response.data,
-        })
+  return async (dispatch) => {
+    try {
+      const {data} = await axios(`${url}/orders/${id}`, { headers })
+      dispatch({
+        type: GET_ORDER_DETAIL,
+        payload: data.Products,
       })
-      .catch(err => console.error(err))
+    } catch (err) {
+      console.error(err)
+    }
   };
 };
 

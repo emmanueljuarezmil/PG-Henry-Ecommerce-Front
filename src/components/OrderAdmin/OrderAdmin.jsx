@@ -45,32 +45,32 @@ function OrderAdmin() {
 
   }
 
-  const dataTable = orders.map(order => {
+  const dataTable = orders.map(ord => {
     return {
-      col1: order.id,
-      col2: statusTranslates[order.status],
-      col3: order.createdAt && order.createdAt.split('T')[0],
+      col1: ord.id,
+      col2: statusTranslates[ord.status],
+      col3: ord.createdAt && ord.createdAt.split('T')[0],
       col4: (<button onClick={() => {
-        dispatch(getOrderDetail(order.id));
+        dispatch(getOrderDetail(ord.id));
         setStateAux('orden');
       }}> <BiDetail
         /> </button>),
-      col5: shippingStatusTranslates[order.shippingStatus],
+      col5: shippingStatusTranslates[ord.shippingStatus],
       col6: (
-          <select id={order.id} onChange={handleChange}>
+          <select id={ord.id} onChange={handleChange}>
             <option>Cambiar estado</option>
             {
-              order.shippingStatus === 'uninitiated' ?
+              ord.shippingStatus === 'uninitiated' ?
               <option value="processing">En proceso</option> :
               null
             }
             {
-              order.shippingStatus === 'uninitiated' || order.shippingStatus === 'processing' ?
+              ord.shippingStatus === 'uninitiated' || ord.shippingStatus === 'processing' ?
               <option value="approved">Aprobado</option> :
               null
             }
             {
-              order.shippingStatus === 'uninitiated' || order.shippingStatus === 'processing' ?
+              ord.shippingStatus === 'uninitiated' || ord.shippingStatus === 'processing' ?
               <option value="cancelled">Cancelado</option> :
               null
             }
