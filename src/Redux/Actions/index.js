@@ -254,21 +254,22 @@ export const addToCart = (product, userId) => dispatch => {
   }
 };
 
-export const localStorageCartToDB = (userId) => async (dispatch) => {
+export const localStorageCartToDB = (userId, headers) => async (dispatch) => {
   if (userId) {
     try {
       let body = JSON.parse(localStorage.getItem('cart') || "[]");
-      axios.put(`${url}/orders/${userId}`, body, {
-        headers: {
-          ...headers, idUser: userId
-        }
+      axios.put(`${url}/orders/${userId}`, { 
+        products: body
+      },
+      {
+        headers
       })
         .then((response) => {
+          localStorage.removeItem('cart');
           localStorage.setItem('orderId', response.data.orderId)
           dispatch({ type: CART_FROM_LOCALSTORAGE_TO_DB, payload: response.data });
         })
         .catch((error) => console.error(error))
-      localStorage.removeItem('cart');
     } catch (e) {
       console.error('removeStorage: Error removing key cart from localStorage: ' + JSON.stringify(e));
     };
