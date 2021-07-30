@@ -7,6 +7,7 @@ import OrderDetail from '../OrderDetail/OrderDetail.jsx'
 import axios from 'axios'
 import { url } from "../../constantURL"
 import { headers } from "../../controllers/GetHeaders"
+import './orderadmin.css'
 
 
 function OrderAdmin() {
@@ -53,11 +54,11 @@ function OrderAdmin() {
       col4: (<button onClick={() => {
         dispatch(getOrderDetail(ord.id));
         setStateAux('orden');
-      }}> <BiDetail
+      }} style={{background: 'rgba(0, 0, 0, 0.233)',color: 'white', border: '2px solid white'}}> <BiDetail
         /> </button>),
       col5: shippingStatusTranslates[ord.shippingStatus],
       col6: (
-          <select id={ord.id} onChange={handleChange}>
+          <select id={ord.id} onChange={handleChange} className='cambiar-estado-order-table'>
             <option>Cambiar estado</option>
             {
               ord.shippingStatus === 'uninitiated' ?
@@ -134,10 +135,27 @@ function OrderAdmin() {
     e.preventDefault()
    setShipping(e.target.value) 
  }
+ const trCss = (index) => {
+  let cont = index % 3;
+  switch (cont) {
+      case 0: {
+          return "tr-one";
+      }
+      case 1: {
+          return "tr-two";
+      }
+      case 2: {
+          return "tr-three";
+      }
+      default:
+          return "tr-one";
+  }
+  };
 
 
   return (
-    <div>
+    <div className='edit-padre-order-container'>
+       <div className='edit-order-container'>
        <span>Filtrar por Estado de orden:</span>
           <select name="select" onChange={filterOrder} >
           <option value="">Select</option> 
@@ -153,6 +171,7 @@ function OrderAdmin() {
           <option value="approved">Aprobado</option>
           <option value="cancelled">Cancelado</option>
           </select> 
+          </div>
       {
         (stateAux === 'orden') ?
           <div>
@@ -160,7 +179,7 @@ function OrderAdmin() {
             <button onClick={onClick}>Volver</button>
           </div>
           :
-          <div>
+          <div className='edit-order-table-container'>
             <table {...getTableProps()}>
               <thead>
                 {// Loop over the header rows
@@ -181,12 +200,12 @@ function OrderAdmin() {
               {/* Apply the table body props */}
               <tbody {...getTableBodyProps()}>
                 {// Loop over the table rows
-                  rows.map(row => {
+                  rows.map((row, i) => {
                     // Prepare the row for display
                     prepareRow(row)
                     return (
                       // Apply the row props
-                      <tr {...row.getRowProps()}>
+                      <tr {...row.getRowProps()} className={trCss(i)}>
                         {// Loop over the rows cells
                           row.cells.map(cell => {
                             // Apply the cell props

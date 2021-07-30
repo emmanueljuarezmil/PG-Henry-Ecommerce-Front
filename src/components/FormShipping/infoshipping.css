@@ -1,0 +1,13 @@
+.div_shipping_form{
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    flex-wrap: wrap;
+    align-content: center;
+    flex-direction: column;
+    background-image: url('../../img/PRODUSER4.png');
+    color: white;
+    padding: 1em;
+    border-radius: 0.5rem;
+    width: auto;
+}

@@ -6,6 +6,7 @@ import { Fade } from 'react-awesome-reveal';
 import Cookies from 'js-cookie';
 import Share from '../Share/Share'
 import Swal from 'sweetalert2';
+import { AddToFavs } from '../addToFavourites/addToFavs';
 
 import './ProductDetail.css';
 // import Review from '../Review/Review';
@@ -65,6 +66,7 @@ function ProductDetail({ match }) {
                     { product.stock > 0 ? (
                         <button onClick={addToCartBtn}>Agregar al carrito</button>): null}
                 </div>
+                        <AddToFavs product={product} />
                 <div className='detail_stock'>
                     <h3>Stock disponible: {product.stock}</h3>
                 </div>

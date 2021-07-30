@@ -108,9 +108,9 @@ function User() {
                     <p>¡Vaya! Tu email aun no esta verificado</p>
                 )}
             </div>
-            <div className='orders'>
+            <div>
                 {address[0].length ?
-                    <div>
+                    <div className='orders'>
                         <p>Direccion de envio: {address[0]}</p>
                         <p>Ciudad: {address[1]}</p>
                         <p>Codigo postal: {address[2]}</p>
@@ -120,7 +120,7 @@ function User() {
                 }
             </div>
             {validated === false ?
-                <div>
+                <div className='validation-container'>
                     <h2>Ingresa tu codigo de validación acá</h2>
                     <form onSubmit={onSubmit}>
                         <input type="text" value={code} onChange={setInputCode}></input>
