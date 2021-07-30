@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import  FavouriteCard  from './favouriteCard.jsx'
 import './favourites.css';
 import { Fade } from "react-awesome-reveal";
-import Rating from '@material-ui/lab/Rating';
 
 
 export default function Favourites(){
