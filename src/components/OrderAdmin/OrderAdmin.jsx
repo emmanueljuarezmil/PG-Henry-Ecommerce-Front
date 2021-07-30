@@ -174,13 +174,13 @@ function OrderAdmin() {
           </div>
       {
         (stateAux === 'orden') ?
-          <div>
+          <div className='order-det-container-padre'>
             <OrderDetail/>
             <button onClick={onClick}>Volver</button>
           </div>
           :
           <div className='edit-order-table-container'>
-            <table {...getTableProps()}>
+            <table {...getTableProps()} border="0" cellspacing="0" >
               <thead>
                 {// Loop over the header rows
                   headerGroups.map(headerGroup => (

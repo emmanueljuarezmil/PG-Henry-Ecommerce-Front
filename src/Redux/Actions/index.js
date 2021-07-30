@@ -438,7 +438,7 @@ export const authenticationByCode = (data) => dispatch => { // CUANDO EL USUARIO
 
 export const getUserOrders = (idUser)=>{
   return (dispatch)=>{
-    axios.get(`${url}/orders/users/${idUser}`)
+    axios.get(`${url}/orders/users/${idUser}`, {headers})
     .then((res)=> dispatch({type:GET_USER_ORDERS, payload:res.data}))
     .catch(err=>console.error(err))
   }
