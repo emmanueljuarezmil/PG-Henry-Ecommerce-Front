@@ -1,0 +1,30 @@
+.order-detail-table-container{
+    color: white;
+    align-content: center;
+}
+
+.order-detail-table-container thead{
+    color: black;
+    font-size: 1.5em;
+}
+
+.order-detail-table-container tbody{
+    font-size: 1.2em;
+    padding: 1em;
+}
+
+.order-detail-table-container h3{
+    color: black;
+}
+
+.tr-one{
+    background-image: url('../../img/PRODDET.png');
+}
+
+.tr-two{
+    background-image: url('../../img/PRODDET2.png');
+}
+
+.tr-three{
+    background-image: url('../../img/PRODDET3.png');
+}

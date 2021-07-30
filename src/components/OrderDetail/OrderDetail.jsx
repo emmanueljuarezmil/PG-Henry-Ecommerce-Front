@@ -15,7 +15,7 @@ function OrderDetail() {
           col3: `$${product.price}`,
           col4: `${product.perc_desc}%`,
           col5: product.quantity,
-          col6: (product.price*product.quantity)*(100-product.perc_desc)
+          col6: ((product.price*product.quantity)*(100-product.perc_desc))/100
         }
       })
     
@@ -63,12 +63,28 @@ function OrderDetail() {
     })
     let total = 0
     products?.forEach(el => {
-    total+=(el.price*el.quantity*(100-el.perc_desc))
+    total+=((el.price*el.quantity*(100-el.perc_desc)))/100
     })
+    const trCss = (index) => {
+      let cont = index % 3;
+      switch (cont) {
+          case 0: {
+              return "tr-one";
+          }
+          case 1: {
+              return "tr-two";
+          }
+          case 2: {
+              return "tr-three";
+          }
+          default:
+              return "tr-one";
+      }
+    };
 
     return (
-        <div>
-            <table {...getTableProps()}>
+        <div className='order-detail-table-container'>
+            <table {...getTableProps()} border="0" cellspacing="0">
               <thead>
                 {// Loop over the header rows
                   headerGroups.map(headerGroup => (
@@ -88,12 +104,12 @@ function OrderDetail() {
               {/* Apply the table body props */}
               <tbody {...getTableBodyProps()}>
                 {// Loop over the table rows
-                  rows.map(row => {
+                  rows.map((row,i) => {
                     // Prepare the row for display
                     prepareRow(row)
                     return (
                       // Apply the row props
-                      <tr {...row.getRowProps()}>
+                      <tr {...row.getRowProps()} className={trCss(i)}>
                         {// Loop over the rows cells
                           row.cells.map(cell => {
                             // Apply the cell props

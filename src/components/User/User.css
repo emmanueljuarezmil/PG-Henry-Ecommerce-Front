@@ -81,8 +81,18 @@
     margin: 2em;
 }
 
-.each_menu_order {
-    border: 2px solid red
+.each_order_history button{
+    background: transparent;
+    color: black;
+    border: 3px solid black;
+    transition: 0.3s;
+}
+
+.each_order_history button:hover{
+    transition: 0.3s;
+    background-color: rgba(0, 0, 0, 0.233);
+    box-shadow: 0 0 3px 0 black;
+    transform: translateY(-2px);
 }
 
 .validation-container{

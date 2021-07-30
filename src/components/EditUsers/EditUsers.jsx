@@ -165,7 +165,7 @@ const dataTable = users.map(user => {
         </div>
           <div className='edit-user-table-container'>
               { users.length ? 
-            <table {...getTableProps()}>
+            <table {...getTableProps()} border="0" cellspacing="0">
               <thead>
                 {// Loop over the header rows
                   headerGroups.map(headerGroup => (
