@@ -116,9 +116,6 @@ export const setOrder = (order) => {
 
 export const deleteFav = (id) => {
   return (dispatch) => {
-    
-    const body = {idProduct: id}
-    console.log(body)
     axios.delete(`${url}/users/favs`, { data: {idProduct: id}, headers }).then((response) => {
         dispatch({
           type: DELETE_FAV,
@@ -212,18 +209,16 @@ export const getCartProducts = (userId) => (dispatch) => {
 };
 
 export const getOrderDetail = (id) => {
-  return (dispatch) => {
-    fetch(`${url}/orders/${id}`, {
-      headers
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        dispatch({
-          type: GET_ORDER_DETAIL,
-          payload: response.data,
-        })
+  return async (dispatch) => {
+    try {
+      const {data} = await axios(`${url}/orders/${id}`, { headers })
+      dispatch({
+        type: GET_ORDER_DETAIL,
+        payload: data.Products,
       })
-      .catch(err => console.error(err))
+    } catch (err) {
+      console.error(err)
+    }
   };
 };
 
@@ -257,21 +252,22 @@ export const addToCart = (product, userId) => dispatch => {
   }
 };
 
-export const localStorageCartToDB = (userId) => async (dispatch) => {
+export const localStorageCartToDB = (userId, headers) => async (dispatch) => {
   if (userId) {
     try {
       let body = JSON.parse(localStorage.getItem('cart') || "[]");
-      axios.put(`${url}/orders/${userId}`, body, {
-        headers: {
-          ...headers, idUser: userId
-        }
+      axios.put(`${url}/orders/${userId}`, { 
+        products: body
+      },
+      {
+        headers
       })
         .then((response) => {
+          localStorage.removeItem('cart');
           localStorage.setItem('orderId', response.data.orderId)
           dispatch({ type: CART_FROM_LOCALSTORAGE_TO_DB, payload: response.data });
         })
         .catch((error) => console.error(error))
-      localStorage.removeItem('cart');
     } catch (e) {
       console.error('removeStorage: Error removing key cart from localStorage: ' + JSON.stringify(e));
     };
@@ -291,8 +287,7 @@ export const DBcartToLocalStorage = (idUser) => async (dispatch) => {
 
 export const getAllFavourites = () => async(dispatch) => {
   try {
-    const {data} = await axios.get(`${url}/users/favs`, {headers})  
-    console.log(data)
+    const {data} = await axios.get(`${url}/users/favs`, {headers})
     dispatch({type: GET_FAVOURITES, payload: data})
   }catch(error) {
     console.error(error);

@@ -27,22 +27,22 @@ export default function LoginButton() {
               dispatch(saveUser(user));
               try {
                   token = await getAccessTokenSilently();
-                  const headers = {
+                  let headers = {
                       authorization: `Bearer ${token}`,
                       email: user.email,
                       userName: user.nickname,
                       name: user.name,
                       hashedPassword: user.sub,
                     };
-                    const response = await axios(`${url}/users/login`, { headers });
-                    const { id, admin } = response.data;
-                    const cookies = new Cookies();
-                    cookies.set("id", id, { path: "/" });
-                    cookies.set("admin", admin, { path: "/" });
-                    idUser = await cookies.get("id");
-                    dispatch(authenticationCode(idUser));
-                    dispatch(localStorageCartToDB(idUser, { headers }));
-                    
+                  const response = await axios(`${url}/users/login`, { headers });
+                  const { id, admin } = response.data;
+                  headers.iduser = id
+    
+                  const cookies = new Cookies();
+                  cookies.set("id", id, { path: "/" });
+                  cookies.set("admin", admin, { path: "/" });
+                  dispatch(authenticationCode(id));
+                  dispatch(localStorageCartToDB(id, headers));  
                 } catch (err) {
                     console.error(err);
                 }

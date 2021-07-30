@@ -120,7 +120,7 @@ const rootReducer = (state = initialState, action) => {
     case GET_ORDER_DETAIL:
       return {
         ...state,
-        order_detail: action.payload.products,
+        order_detail: [...action.payload],
       };
     case GET_CART_PRODUCTS:
       return {
@@ -166,7 +166,7 @@ const rootReducer = (state = initialState, action) => {
     case CART_FROM_LOCALSTORAGE_TO_DB:
       return {
         ...state,
-        cart: action.payload.products,
+        cart: action.payload.cart,
         orderId: action.payload.orderId
       }
     case CART_FROM_DB_TO_LOCALSTORAGE:
