@@ -39,7 +39,7 @@ const FormShipping = () => {
     }
 
     return (
-        <div>
+        <div className='div-formshipping-container'>
             <form className="shipping_form"
                 onSubmit={(e) => handleSubmit(e)}>
                 <div>

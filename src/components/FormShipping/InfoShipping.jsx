@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import FormShipping from './FormShipping';
 import Cookies from 'js-cookie';
 import { updateShippingAddress } from '../../Redux/Actions';
+import './infoshipping.css'
 
 const InfoShipping = () => {
     const dispatch = useDispatch();
@@ -14,11 +15,11 @@ const InfoShipping = () => {
     }
     
     return (
-        <div>
+        <div className="div_shipping_form">
             {data && data[0].length > 1 && data[1].length > 1 && data[2].length > 1 ? <div>
-            <p className="label_shipping_form">Direccion de envio: {data[0]}</p>
-            <p className="label_shipping_form">Ciudad: {data[1]}</p>
-            <p className="label_shipping_form">Codigo postal: {data[2]}</p>
+            <p>Direccion de envio: {data[0]}</p>
+            <p>Ciudad: {data[1]}</p>
+            <p>Codigo postal: {data[2]}</p>
             <form>
             <button className="submit_shipping_button" type="submit" onClick={onClick} >Editar</button>
             </form>

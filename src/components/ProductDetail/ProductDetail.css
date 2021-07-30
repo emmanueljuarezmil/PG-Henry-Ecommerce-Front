@@ -41,7 +41,6 @@
 .detail_name{
    text-shadow: -1px 1px 0 rgb(71, 70, 70);
    font-size: 1.1rem;
-   margin-top: 4rem;
    text-align:center;
 }
 .detail_price {
@@ -53,7 +52,7 @@
 }
 
 .detail_description {
-   font-size: 1.3rem;
+   font-size: 1rem;
    max-width: 55%;
    height: 100%;
    display: flex;
@@ -67,12 +66,13 @@
 .detail_stock {
    text-shadow: -1px 1px 0 rgb(71, 70, 70);
    text-align:center;
-   margin-top: 4rem;
+   margin-top: 1em;
 }
 
 .review_details{
    display:flex;
    align-self:center;
+   margin-top: -2em;
 }
 
 .add_cart_btn_div button{
@@ -82,7 +82,7 @@
    color: white;
    border: 2px solid white;
    align-self:center;
-   margin-top: 4rem;
+   margin-top: 3rem;
    font-size: 1rem;
 }
 

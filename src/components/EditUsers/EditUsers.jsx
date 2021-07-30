@@ -7,6 +7,7 @@ import { RiDeleteBin2Line } from 'react-icons/ri'
 import { url } from "../../constantURL"
 import { headers } from "../../controllers/GetHeaders"
 import Swal from 'sweetalert2';
+import './editUsers.css'
 
 
 function EditUsers() {
@@ -73,8 +74,8 @@ const dataTable = users.map(users => {
       col4: users.admin ? "Si" : "No",
       col5: (
         !users.admin ?
-        <button onClick={changeAdmin} id={users.id} value={true}>Hacer admin</button> :
-        <button onClick={changeAdmin} id={users.id} value={false}>Quitar admin</button>
+        <button onClick={changeAdmin} id={users.id} value={true} style={{background: 'rgba(0, 0, 0, 0.233)',color: 'white', border: '2px solid white'}}>Hacer admin</button> :
+        <button onClick={changeAdmin} id={users.id} value={false} style={{background: 'rgba(0, 0, 0, 0.233)',color: 'white', border: '2px solid white'}}>Quitar admin</button>
       ),
       col6: (<RiDeleteBin2Line id={users.id} onClick={deleteUser}/>)
     }
@@ -133,12 +134,27 @@ const dataTable = users.map(users => {
     setAdmin(e.target.value) 
   }
 
-
+  const trCss = (index) => {
+    let cont = index % 3;
+    switch (cont) {
+        case 0: {
+            return "tr-one";
+        }
+        case 1: {
+            return "tr-two";
+        }
+        case 2: {
+            return "tr-three";
+        }
+        default:
+            return "tr-one";
+    }
+  };
 
     return (
-      <div>
-        <div>
-          <input type="text" value={name} onChange={handleNameChange}/>
+      <div className='edit-user-container'>
+        <div className='edituser-filters-container'>
+          <input type="text" value={name} onChange={handleNameChange} placeholder='Ingresa un nombre'/>
           <span>Filtrar por:</span>
           <select name="select" onChange={filterAdmin}>
           <option value="undefined">Select</option> 
@@ -146,7 +162,7 @@ const dataTable = users.map(users => {
             <option value={false}>No es Admin</option>
             </select>   
         </div>
-          <div>
+          <div className='edit-user-table-container'>
               { users.length ? 
             <table {...getTableProps()}>
               <thead>
@@ -168,12 +184,12 @@ const dataTable = users.map(users => {
               {/* Apply the table body props */}
               <tbody {...getTableBodyProps()}>
                 {// Loop over the table rows
-                  rows.map(row => {
+                  rows.map((row, i) => {
                     // Prepare the row for display
                     prepareRow(row)
                     return (
                       // Apply the row props
-                      <tr {...row.getRowProps()}>
+                      <tr {...row.getRowProps()} className={trCss(i)}>
                         {// Loop over the rows cells
                           row.cells.map(cell => {
                             // Apply the cell props

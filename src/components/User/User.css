@@ -1,14 +1,15 @@
 .perfil{
-    background-color: rgb(255, 255, 255);
     text-align: center;
     width: fit-content;
     padding: 2em;
     border-radius: 2em;
-    border: .2em solid rgb(104,104, 104);
     margin-top: 4em;
     margin-left: 4em;
-    box-shadow: 0.5em .5em 0.4em rgb(104, 104, 104);
+    box-shadow: 1px 1px 10px rgb(20 20 20 / 80%);
     align-items: center;
+    margin: 2em;
+    background-image: url('../../img/PRODUSER.png');
+    color: white;
 }
 .picture_dios_mio_gus{
     border-radius: 10em;
@@ -20,11 +21,36 @@
     align-items: center;
     flex-wrap: wrap;
     align-content: center;
-    flex-direction: row;
+    flex-direction: column;
 }
 .orders{
     width: fit-content;
-    margin-left: 25em;
+    margin: 2em;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    flex-wrap: wrap;
+    align-content: center;
+    flex-direction: column;
+    background-image: url('../../img/PRODUSER2.png');
+    color: white;
+    padding: 2em;
+    border-radius: 2em;
+    box-shadow: 1px 1px 10px rgb(20 20 20 / 80%);
+}
+
+.orders button{
+    color:white;
+    background-color: transparent;
+    border: 3px solid white;
+    transition: 0.3s;
+}
+
+.orders button:hover{
+    transition: 0.3s;
+    background-color: rgba(0, 0, 0, 0.233);
+    box-shadow: 0 0 5px 0 black;
+    transform: translateY(-3px);
 }
 
 .product_dios_mio_gus{
@@ -52,12 +78,39 @@
 
 .orders_history_container{
     margin-right: 4rem;
-}
-
-.each_order_history{
-    
+    margin: 2em;
 }
 
 .each_menu_order {
     border: 2px solid red
+}
+
+.validation-container{
+    width: fit-content;
+    margin: 2em;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    flex-wrap: wrap;
+    align-content: center;
+    flex-direction: column;
+    background-image: url('../../img/PRODUSER3.png');
+    color: white;
+    padding: 2em;
+    border-radius: 2em;
+    box-shadow: 1px 1px 10px rgb(20 20 20 / 80%);
+}
+
+.validation-container button{
+    color:white;
+    background-color: transparent;
+    border: 3px solid white;
+    transition: 0.3s;
+}
+
+.validation-container button:hover{
+    transition: 0.3s;
+    background-color: rgba(0, 0, 0, 0.233);
+    box-shadow: 0 0 5px 0 black;
+    transform: translateY(-3px);
 }

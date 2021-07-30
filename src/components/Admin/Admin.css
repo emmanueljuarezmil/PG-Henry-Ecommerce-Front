@@ -5,8 +5,8 @@
     align-content: center;
     flex-direction: column;
     background-image: url('../../img/PRODDET.png');
-    height: 20rem;
-    width: 25rem;
+    height: 25rem;
+    width: 30rem;
     margin: auto;
     margin-top: 3rem;
     border-radius: 1rem;
@@ -18,6 +18,12 @@
     font-size: 2rem;
     outline: none;
     text-decoration: none;
+    transition: 0.3s;
+}
+.admin_item:hover{
+    transition: 0.3s;
+    
+    transform: translateY(-3px);
 }
 
 .admin_item:link{
