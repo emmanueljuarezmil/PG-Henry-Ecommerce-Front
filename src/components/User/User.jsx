@@ -109,7 +109,7 @@ function User() {
                 )}
             </div>
             <div className='orders'>
-                {address[0].length ?
+                {address && address[0].length ?
                     <div>
                         <p>Direccion de envio: {address[0]}</p>
                         <p>Ciudad: {address[1]}</p>
