@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 import { AddToFavs } from '../addToFavourites/addToFavs';
 
 import './ProductDetail.css';
-// import Review from '../Review/Review';
+import Review from '../Review/Review';
 import RatingPromedio from '../RatingPromedio/RatingPromedio';
 import ReviewsList from '../ReviewsList/ReviewsList';
  
@@ -74,6 +74,7 @@ function ProductDetail({ match }) {
             <div className='detail_description' dangerouslySetInnerHTML={description()}/>
             <Share name={product.name} description={product.description} id={product.id} photo={product.photo} />
         </div>
+        <Review idProd={product.id}/>
         <ReviewsList reviews={product.Reviews}/>
         </Fade>
     )

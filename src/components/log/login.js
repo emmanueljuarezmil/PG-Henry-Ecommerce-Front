@@ -8,7 +8,8 @@ import { useDispatch} from "react-redux";
 import {
   localStorageCartToDB,
   saveUser,
-  authenticationCode
+  authenticationCode,
+  authenticationByCode
 } from "../../Redux/Actions";
 import './log.css'
 
@@ -35,14 +36,15 @@ export default function LoginButton() {
                       hashedPassword: user.sub,
                     };
                   const response = await axios(`${url}/users/login`, { headers });
-                  const { id, admin } = response.data;
+                  const { id, admin, authenticatedByCode } = response.data;
                   headers.iduser = id
     
                   const cookies = new Cookies();
                   cookies.set("id", id, { path: "/" });
                   cookies.set("admin", admin, { path: "/" });
                   dispatch(authenticationCode(id));
-                  dispatch(localStorageCartToDB(id, headers));  
+                  dispatch(localStorageCartToDB(id, headers));
+                  dispatch(authenticationByCode(authenticatedByCode))  
                 } catch (err) {
                     console.error(err);
                 }

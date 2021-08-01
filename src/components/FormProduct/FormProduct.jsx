@@ -451,7 +451,7 @@ function FormProduct() {
                                                     <img src={photo}
                                                         alt="Img not found"
                                                         className='formproduct-images-item-image'/>
-                                                    <button
+                                                    <button className='form_button'
                                                         onClick={(e) => {
                                                             e.preventDefault()
                                                             deletePhoto(index)

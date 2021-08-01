@@ -10,11 +10,11 @@
     box-shadow: 1px 1px 10px rgb(20 20 20 / 70%);
     border-radius: 0.3rem;
     color: white;
+    height: 70rem;
 }
 
 .form_select {
     width: 50%;
-    margin: auto;
     margin-bottom: 2rem;
     box-shadow: 1px 1px 3px rgb(20 20 20 / 70%);
     color: black;
@@ -163,16 +163,23 @@
 
 .form_button{
     display: flex;
-    font-size: 1rem;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    margin-bottom: 1rem;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    margin: 0.3rem;
+    margin-top: 1rem;
+    margin-left: -1em;
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+    transition: 0.3s;
 }
 
 .form_button:hover {
-    background-color: rgb(187, 179, 179);
-    transition: transform .5s ease;
-    transform: scale(1.05);
+    transition: 0.3s;
+    background-color: rgba(0, 0, 0, 0.233);
+    box-shadow: 0 0 3px 0 black;
+    transform: translateY(-2px);
  }
 
 .formproduct-dropzone-section {
@@ -185,4 +192,13 @@
 
 .trash {
     margin: auto
+}
+
+.formproduct-form-input input {
+    margin-left: 23rem
+}
+
+.formproduct-form-input span {
+    align-content: center;
+    width: 12rem
 }
