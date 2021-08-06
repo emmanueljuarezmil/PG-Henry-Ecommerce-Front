@@ -18,6 +18,9 @@ function Nav(fotoLanding) {
     return (
         <div className='nav_container'>
             <div className='nav_item'>
+                <NavLink to='/'><img className='nav_logo_icon' src={pathname === '/' ? LogoLanding : LogoNav} alt="LogoNavbar" /></NavLink>
+            </div>
+            <div className='nav_item'>
                 <NavLink className="NavLink" to='/home' onClick={() => {
                     dispatch(setFilterName(''))
                     dispatch(setCategoryId(''))
@@ -26,9 +29,6 @@ function Nav(fotoLanding) {
             </div>
             <div className='nav_item'>
                 <NavLink className="NavLink" to='/about'>Nosotros</NavLink>
-            </div>
-            <div className='nav_item'>
-                <NavLink to='/'><img className='nav_logo_icon' src={pathname === '/' ? LogoLanding : LogoNav} alt="LogoNavbar" /></NavLink>
             </div>
             <div className='nav_item'>
                 <NavLink className="NavLink" to='/cart'>Carrito</NavLink>
