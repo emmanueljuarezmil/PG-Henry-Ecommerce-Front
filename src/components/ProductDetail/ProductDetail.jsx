@@ -7,11 +7,11 @@ import Cookies from 'js-cookie';
 import Share from '../Share/Share'
 import Swal from 'sweetalert2';
 import { AddToFavs } from '../addToFavourites/addToFavs';
-
 import './ProductDetail.css';
 import Review from '../Review/Review';
 import RatingPromedio from '../RatingPromedio/RatingPromedio';
 import ReviewsList from '../ReviewsList/ReviewsList';
+import { useAuth0 } from '@auth0/auth0-react'
  
 function ProductDetail({ match }) {
     const dispatch = useDispatch(); 
@@ -19,6 +19,7 @@ function ProductDetail({ match }) {
     const product = useSelector((state) => state.product_detail);
     const prod = JSON.parse(localStorage.getItem('cart') || "[]").find(element => element.id === id);
     const [quantity, setQuantity] = useState(prod?.quantity || 1);
+    const { isAuthenticated } = useAuth0()
 
     useEffect(() => {
         dispatch(getProductDetail(id))
@@ -49,7 +50,7 @@ function ProductDetail({ match }) {
         <div className='detail_container'>
             <div className='image_container'> 
             <div className='detail_images'>
-                <CarouselComponent images={product.photo}></CarouselComponent>
+                <CarouselComponent images={product.photo} className='detail_images_carousel'></CarouselComponent>
             </div>
             </div>
             <div className='detail_details'>
@@ -66,7 +67,7 @@ function ProductDetail({ match }) {
                     { product.stock > 0 ? (
                         <button onClick={addToCartBtn}>Agregar al carrito</button>): null}
                 </div>
-                        <AddToFavs product={product} />
+                {isAuthenticated && (<AddToFavs product={product} />)}
                 <div className='detail_stock'>
                     <h3>Stock disponible: {product.stock}</h3>
                 </div>
@@ -74,7 +75,14 @@ function ProductDetail({ match }) {
             <div className='detail_description' dangerouslySetInnerHTML={description()}/>
             <Share name={product.name} description={product.description} id={product.id} photo={product.photo} />
         </div>
-        <Review idProd={product.id}/>
+        {
+            isAuthenticated ?
+            <Review idProd={product.id}/> : 
+            <div className='review_display_none'>
+                <Review idProd={product.id}/>
+            </div>
+        }
+        {/* <Review idProd={product.id} style={!isAuthenticated ? {visibility: 'hidden'}: {}}/> */}
         <ReviewsList reviews={product.Reviews}/>
         </Fade>
     )

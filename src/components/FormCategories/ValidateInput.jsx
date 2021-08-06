@@ -3,7 +3,7 @@ export function validate(input) {
     if (!input) {
         errors = 'El nombre de la categoria es requerido'
         return errors
-    } else if (!/^[a-zA-Z\s]*$/.test(input)) {
+    } else if (!/^[a-zA-Z0-9 ,.\-ñÑáÁéÉíÍóÓúÚ/]+$/.test(input)) {
         errors = 'La categoria es inválida. Solo debe contener letras';
         return errors
     }

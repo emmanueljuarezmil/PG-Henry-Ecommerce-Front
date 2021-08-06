@@ -72,7 +72,7 @@ function FormProduct() {
         const {name, price, stock, category} = input
         let errors = ''
     
-        if (category.length > 2) errors = 'Solo se pueden especificar 2 categorias como máximo'
+        // if (category.length > 2) errors = 'Solo se pueden especificar 2 categorias como máximo'
         if (!category.length) errors = 'Debes especificar al menos una categoria para tu producto'        
         if (stock < 1) errors = 'El stock debe ser un entero positivo'
         if (!stock) errors = 'Se debe especificar el stock del producto'    
@@ -188,10 +188,12 @@ function FormProduct() {
         return {
             col1: (<BsTrash
                 className='trash'
-                onClick={() => deleteProduct(product.id)} />),
+                onClick={() => deleteProduct(product.id)}
+                style={{cursor: 'pointer'}} />),
             col2: (<AiTwotoneEdit
                 className='edit'
-                onClick={() => editProduct(product.id)} />),
+                onClick={() => editProduct(product.id)}
+                style={{cursor: 'pointer'}} />),
             col3: product.name.length > 50 ? `${product.name.slice(0, 50)} ...` : product.name,
             col4: product.Categories.map(category => category.name).join(', '),
             col5: `$ ${product.price}`,

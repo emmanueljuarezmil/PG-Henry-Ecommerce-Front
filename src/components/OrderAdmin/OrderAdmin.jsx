@@ -155,23 +155,6 @@ function OrderAdmin() {
 
   return (
     <div className='edit-padre-order-container'>
-       <div className='edit-order-container'>
-       <span>Filtrar por Estado de orden:</span>
-          <select name="select" onChange={filterOrder} >
-          <option value="">Select</option> 
-            <option value="cart">Carrito</option>
-            <option value="approved">Aprobada</option>
-            <option value="rejected">Rechazada</option>
-          </select> 
-          <span>Filtrar por Estado de envio:</span>
-          <select name="select" onChange={filterShipping}>
-          <option value="">Select</option> 
-          <option value="uninitiated">No iniciado</option>
-          <option value="processing">En proceso</option>
-          <option value="approved">Aprobado</option>
-          <option value="cancelled">Cancelado</option>
-          </select> 
-          </div>
       {
         (stateAux === 'orden') ?
           <div className='order-det-container-padre'>
@@ -180,6 +163,23 @@ function OrderAdmin() {
           </div>
           :
           <div className='edit-order-table-container'>
+            <div className='edit-order-container'>
+              <span>Filtrar por Estado de orden:</span>
+              <select name="select" onChange={filterOrder} >
+                <option value=""></option> 
+                <option value="cart">Carrito</option>
+                <option value="approved">Aprobada</option>
+                <option value="rejected">Rechazada</option>
+              </select> 
+              <span>Filtrar por Estado de envio:</span>
+              <select name="select" onChange={filterShipping}>
+                <option value=""></option> 
+                <option value="uninitiated">No iniciado</option>
+                <option value="processing">En proceso</option>
+                <option value="approved">Aprobado</option>
+                <option value="cancelled">Cancelado</option>
+              </select> 
+            </div>
             <table {...getTableProps()} border="0" cellspacing="0" >
               <thead>
                 {// Loop over the header rows

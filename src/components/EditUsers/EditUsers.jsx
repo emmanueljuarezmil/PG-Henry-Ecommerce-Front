@@ -158,7 +158,7 @@ const dataTable = users.map(user => {
           <input type="text" value={name} onChange={handleNameChange} placeholder='Ingresa un nombre'/>
           <span>Filtrar por:</span>
           <select name="select" onChange={filterAdmin}>
-          <option value="undefined">Select</option> 
+          <option value="undefined"></option> 
             <option value={true}>Es Admin</option>
             <option value={false}>No es Admin</option>
             </select>   
