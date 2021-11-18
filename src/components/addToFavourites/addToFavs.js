@@ -1,6 +1,5 @@
 import React from "react";
 import axios from 'axios';
-import { url } from '../constantURL'
 import { headers } from "../../controllers/GetHeaders";
 import { MdStar } from "react-icons/md";
 import './AddToFavs.css'
@@ -10,7 +9,7 @@ export function AddToFavs(props) {
     // eslint-disable-next-line
     async function handleChange() {
         try {
-            await axios.post(`${url}/users/favs`, { idProduct: props.product.id }, { headers })
+            await axios.post(`/users/favs`, { idProduct: props.product.id }, { headers })
             swal({
                 icon: "success",
                 title: "Se agregó a favoritos!",

@@ -4,7 +4,6 @@ import Cookies from 'universal-cookie'
 import { useDispatch, useSelector } from "react-redux";
 import { authenticationByCode } from '../../Redux/Actions'
 import axios from 'axios'
-import { url } from "../../constantURL"
 import {headers} from '../../controllers/GetHeaders'
 
 const AuthenticationCode = () => {
@@ -18,7 +17,7 @@ const AuthenticationCode = () => {
         else {
             try{
                 const idUser = await cookies.get("id")
-                const {data} = await axios.get(`${url}/users/authenticationByCode/${idUser}?authenticationCode=${code}`, {headers})
+                const {data} = await axios.get(`/users/authenticationByCode/${idUser}?authenticationCode=${code}`, {headers})
                 if(data) {
                     dispatch(authenticationByCode(data))
                     Swal.fire("Su cuenta ha sido verificada");

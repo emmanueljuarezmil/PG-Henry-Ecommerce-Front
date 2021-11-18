@@ -4,7 +4,6 @@ import { getAllUsers } from '../../Redux/Actions/index';
 import { useTable } from 'react-table'
 import axios from 'axios'
 import { RiDeleteBin2Line } from 'react-icons/ri'
-import { url } from "../../constantURL"
 import { headers } from "../../controllers/GetHeaders"
 import Swal from 'sweetalert2';
 import './editUsers.css'
@@ -26,7 +25,7 @@ function EditUsers() {
 
 const deleteUser= async (e) => {
   try {
-    const {data} = await axios.delete(`${url}/users/${e.target.id}`, {headers})
+    const {data} = await axios.delete(`/users/${e.target.id}`, {headers})
     Swal.fire({
       icon: 'success',
       text: 'Usuario eliminado con éxito',
@@ -42,7 +41,7 @@ const deleteUser= async (e) => {
 const changeAdmin = async (e) => {
   e.preventDefault()
   try {
-    await axios.put(`${url}/users/newadmin`, {
+    await axios.put(`/users/newadmin`, {
         id: e.target.id,
         value: e.target.value
       },

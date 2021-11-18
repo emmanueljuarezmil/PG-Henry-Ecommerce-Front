@@ -6,13 +6,11 @@ import Dropzone, { useDropzone } from 'react-dropzone'
 import Select from 'react-select'
 import { useSelector, useDispatch } from 'react-redux'
 import { getAllProducts } from '../../Redux/Actions/index'
-import {url} from '../../constantURL'
 import './FormProduct.css'
 import axios from 'axios'
 import { headers } from '../../controllers/GetHeaders'
 import Swal from 'sweetalert2';
 
-const backendUrl = url
 const compressImageUrl = 'https://imagecompressor.com/'
 const cloudImageUrl = 'https://api.cloudinary.com/v1_1/dn6fn4w40/image/upload'
 
@@ -134,7 +132,7 @@ function FormProduct() {
             }).then(async (result) => {
               if(result.isConfirmed) {
                   try {
-                      await axios.delete(`${backendUrl}/products`,
+                      await axios.delete(`/products`,
                       { data: {id}, headers},
                        )
                       dispatch(getAllProducts())
@@ -159,7 +157,7 @@ function FormProduct() {
 
     const editProduct = async (id) => {
         try {
-            const { data } = await axios.get(`${backendUrl}/products/p/${id}`, { headers })
+            const { data } = await axios.get(`/products/p/${id}`, { headers })
             setActionType('update') 
             data.category = data.Categories.map(category => category.id)
             setInput(data)
@@ -272,7 +270,7 @@ function FormProduct() {
         }
         if(actionType === 'create') {
             try {
-                await axios.post(`${backendUrl}/products`, body, { headers })
+                await axios.post(`/products`, body, { headers })
                 Swal.fire({
                     icon: 'success',
                     text: 'Producto creado con éxito',
@@ -314,7 +312,7 @@ function FormProduct() {
                   if(result.isConfirmed) {
                     try {
                         body.id = input.id
-                        await axios.put(`${backendUrl}/products/update`, body, { headers })
+                        await axios.put(`/products/update`, body, { headers })
                         Swal.fire({
                             icon: 'success',
                             text: 'Producto actualizado con éxito',

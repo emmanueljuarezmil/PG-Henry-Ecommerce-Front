@@ -4,7 +4,6 @@ import {BsFillExclamationTriangleFill} from 'react-icons/bs'
 import {useHistory} from 'react-router-dom'
 import './FormNewUser.css'
 import axios from 'axios'
-import { url } from '../../constantURL';
 import Log from '../log/log.js'
 import Cookies from 'universal-cookie';
 import { headers } from '../../controllers/GetHeaders'
@@ -39,7 +38,7 @@ function FormNewUser() {
             try{
                 const {email,userName,hashedPassword}=inputs
                 const body={email,userName,hashedPassword};
-                const response = await axios.post(`${url}/users/register`,body, { headers })
+                const response = await axios.post(`/users/register`,body, { headers })
                 const {id} = response.data
                 const cookies = new Cookies();
                 cookies.set('id', id, { path: '/' });

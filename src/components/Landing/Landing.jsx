@@ -7,7 +7,6 @@ import baterias from "../../img/PERCUSION.png";
 import otro from "../../img/OTRO.png";
 import otro2 from "../../img/OTRO2.png";
 import axios from "axios";
-import { url } from "../../constantURL";
 import { headers } from "../../controllers/GetHeaders";
 import Footer from '../Footer/Footer';
 
@@ -29,7 +28,7 @@ function Landing(props) {
         const status = objectParams.get("status");
         if(status) {
           await axios(
-            `${url}/user/sendmail?type=${status}&idUser=${headers.idUser}&orderId=${orderId}`
+            `/user/sendmail?type=${status}&idUser=${headers.idUser}&orderId=${orderId}`
           );
         }        
       } catch (error) {

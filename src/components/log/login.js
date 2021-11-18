@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
-import { url } from "../../constantURL";
 import Cookies from "universal-cookie";
 import { useHistory } from "react-router-dom";
 import { useDispatch} from "react-redux";
@@ -35,7 +34,7 @@ export default function LoginButton() {
                       name: user.name,
                       hashedPassword: user.sub,
                     };
-                  const response = await axios(`${url}/users/login`, { headers });
+                  const response = await axios(`/users/login`, { headers });
                   const { id, admin, authenticatedByCode } = response.data;
                   headers.iduser = id
     
