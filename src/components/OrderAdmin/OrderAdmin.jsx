@@ -5,7 +5,6 @@ import { useTable } from 'react-table'
 import { BiDetail } from 'react-icons/bi'
 import OrderDetail from '../OrderDetail/OrderDetail.jsx'
 import axios from 'axios'
-import { url } from "../../constantURL"
 import { headers } from "../../controllers/GetHeaders"
 import './orderadmin.css'
 
@@ -28,7 +27,7 @@ function OrderAdmin() {
       status: e.target.value,
       id: e.target.id
     }   
-    const {data} = await axios.put(`${url}/orders`, body, {headers})
+    const {data} = await axios.put(`/orders`, body, {headers})
     dispatch(getAllOrders(data))
 }
   

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { validate } from './ValidateInput';
-import { url } from '../../constantURL';
 import axios from 'axios'
 import { getAllCategories} from '../../Redux/Actions'
 import './FormCategories.css'
@@ -28,7 +27,7 @@ function FormCategories() {
         if (errors === '') {
             try {
                 const body = {name}
-                await axios.post(`${url}/category`,
+                await axios.post(`/category`,
                     body,
                     {headers}
                 )
@@ -62,7 +61,7 @@ function FormCategories() {
     const handleDelete = async (id)=>{
         try{
             const body={id};
-            await axios.delete(`${url}/category/${body.id}`,{data:body, headers});
+            await axios.delete(`/category/${body.id}`,{data:body, headers});
             dispatch(getAllCategories())
             Swal.fire({
                 icon: 'success',
@@ -93,7 +92,7 @@ function FormCategories() {
             // const ids=Object.keys(newName);
             // const names=Object.values(newName);
             let body={id:id,name:name}
-            await axios.put(`${url}/category/update`,body, {headers});
+            await axios.put(`/category/update`,body, {headers});
             setNewName({...newName,[id]:''});
             dispatch(getAllCategories())
             Swal.fire({

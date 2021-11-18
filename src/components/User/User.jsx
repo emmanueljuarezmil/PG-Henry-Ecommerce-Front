@@ -10,7 +10,6 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Swal from 'sweetalert2';
 import axios from 'axios'
-import { url } from "../../constantURL"
 import { headers } from '../../controllers/GetHeaders'
 
 function User() {
@@ -47,7 +46,7 @@ function User() {
         else {
             try {
                 const idUser = await cookies.get("id")
-                const { data } = await axios.get(`${url}/users/authenticationByCode/${idUser}?authenticationCode=${code}`, { headers })
+                const { data } = await axios.get(`/users/authenticationByCode/${idUser}?authenticationCode=${code}`, { headers })
                 if (data) {
                     dispatch(authenticationByCode(data))
                     Swal.fire("Su cuenta ha sido verificada");

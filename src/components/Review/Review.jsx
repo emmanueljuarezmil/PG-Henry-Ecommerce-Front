@@ -4,7 +4,6 @@ import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Cookies from 'universal-cookie';
-import { url } from '../../constantURL';
 import axios from 'axios';
 import './Review.css'
 import {getProductDetail} from '../../Redux/Actions/index'
@@ -26,7 +25,7 @@ export default function Review(props) {
         const cookie=new Cookies();
         const userId=cookie.get('id');
         try{
-            const {data} = await axios.post(`${url}/review/${userId}`,body, { headers });
+            const {data} = await axios.post(`/review/${userId}`,body, { headers });
             Swal.fire({
               icon: 'success',
               text: data.message,
